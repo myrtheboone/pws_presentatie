@@ -1,0 +1,2163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-12-25 Tue 19:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RMS Titanic: Machine Learning from Disaster (draft version)</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Myrthe Boone" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">RMS Titanic: Machine Learning from Disaster (draft version)</h1>
+
+<div class="figure">
+<p><img src="./titanicfrontpage.png" alt="titanicfrontpage.png" width="400px" />
+</p>
+</div>
+
+<p>
+\newpage
+</p>
+<div id="outline-container-orgc0f77a3" class="outline-2">
+<h2 id="orgc0f77a3"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In this paper we will have a look at the passengers on board of the Titanic. We will try to analyse what sort of people were most likely to survive the disaster using machine learning techniques. Furthermore, we will make a prediction on a part of the dataset whether those passengers have survived or not with the help of particular algorithms. These algorithms are developed using the other part of our dataset. We will try to make our predictions as accurate as possible. The goal of this paper is not to make predictions about the future or about disasters in general. The results of our research may teach us something about the circumstances during the time that the Titanic sank. The passengers all played a different part in society back in those days. It teaches us something about the civilization.
+</p>
+
+<p>
+Moreover, this paper is written because I wanted to learn something about machine learning and programming using Python. I want to study engineering at TU Eindhoven. It will come in handy if I already know a thing or two about programming in Python. Python is a programming language that is becoming more and more popular for things like data analysis and I am certain that I will use it more often in the future.  
+</p>
+
+<p>
+I would like to give a special thanks to the following people. My father, who has helped me learn programming in Python and has taught me the basics of machine learning. Thank you for believing in me. Likewise, I would like to thank my supervisor mr. Kampwart for being enthusiastic and keeping me motivated. Lastly, I wanted to give thanks to DataCamp for providing me with courses on programming in Python and to Kaggle.com for the dataset of the Titanic. 
+</p>
+
+<p>
+\newpage
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc0f77a3">1. Preface</a></li>
+<li><a href="#org016805a">2. Introduction</a>
+<ul>
+<li><a href="#orgae77981">2.1. Machine Learning</a></li>
+<li><a href="#orgdcc0db8">2.2. Different types of Machine Learning</a></li>
+<li><a href="#org4ad62c1">2.3. Algorithms</a></li>
+<li><a href="#org6758820">2.4. Main questions and sub-questions</a></li>
+</ul>
+</li>
+<li><a href="#org9980e90">3. Preparation</a>
+<ul>
+<li><a href="#org8868bf1">3.1. A first look at the dataset</a></li>
+<li><a href="#org1706181">3.2. Preprocessing techniques</a></li>
+<li><a href="#orgf52dc07">3.3. The first algorithm: KNearestNeighbors</a></li>
+<li><a href="#org5e3c43a">3.4. The second algorithm: Logistic Regression</a></li>
+</ul>
+</li>
+<li><a href="#org29461f8">4. Conclusion</a></li>
+<li><a href="#org98c00fd">5. Discussion</a></li>
+<li><a href="#org4b32136">6. Postface</a></li>
+<li><a href="#org320c0ca">7. References</a></li>
+<li><a href="#org552183c">8. Appendix</a>
+<ul>
+<li><a href="#org0991731">8.1. Some more plots</a></li>
+<li><a href="#orgc2cc2a2">8.2. Some more cross-validation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org016805a" class="outline-2">
+<h2 id="org016805a"><span class="section-number-2">2</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In the year 1912 on the 15th of April one of the most infamous ships in history would crash into an iceberg and sink in the North Atlantic Ocean. During its maiden voyage from Southhampton to New York City on the 14th of April at 11:40 p.m. ship's time, the lookout sounded the alarm  when a massive clump of solid ice caught his attention. The first mate had seen the iceberg before the lookout did and tried to turn the ship around. Unfortunately, he was too late. Forty seconds later at a high speed the Titanic collided with a huge rock made of ice with a weight of 30 million kilograms. The collision caused a series of holes along the side of the hull.<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> Six of the watertight compartments were filled with water, whereas the ship could only sail on with a maximum of four compartments flooded. Consequently, the Titanic was doomed to sink. The crew understood they needed to act fast. They deployed the evacuation program. The ship carried twenty lifeboats. In principle the protocol "women and children first" was followed. However, this was not true for everyone on board. The chance of being saved was  dependent on the class in which one travelled and the place where one found itself during the evacuation. Around 2:20 a.m. parts of the Titanic broke off and sunk with one thousand people still on board. On deck were some of the richest people in the world, including millionaires, movie stars, school teachers and immigrants, who were hoping to find a new life in New York City. A life that they would, therefore, never find. Two hours after the ship sank, the liner RMS Carpathia arrived and saved an estimated 705 people.<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> The sinking of the RMS Titanic killed 1502 out of the 2224 people on board, crew members as well as passengers.<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
+</p>
+
+<p>
+The RMS Titanic was the largest ship on water during that time and it was the second of three  ocean liners operated by the White Star Line .<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup> The ship consisted of nine decks, the boat deck, seven decks labelled from A to G which carried the passengers and the Orlop Deck which was below the waterline. The liner had a height of 175 feet and a breadth of 92 feet.<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup> 
+</p>
+
+
+<div id="orge5fb922" class="figure">
+<p><img src="./TitanicProfile.png" alt="TitanicProfile.png" width="400px" /> 
+</p>
+<p><span class="figure-number">Figure 2: </span>Profile of RMS Titanic with the decks indicated</p>
+</div>
+
+<p>
+The Titanic may be one of the most iconic ships in history, its story known the world over.<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup> The tragedy has led to better safety regulations for ships and inspired numerous expeditions, movies, books, plays and characters.
+</p>
+
+<p>
+So many passengers have lost their lives due to the fact that there were not enough lifeboats. Luck played a part in surviving this disaster. Moreover, some groups had an advantage compared to other groups. For instance, the "women and children first" policy left a relatively larger number of men aboard. In the same way as children and teenagers had an advantage because of this principle. Similarly, speculations can be made regarding the advantage of the elderly aboard the Titanic. On the one hand it seems logical that the seniors were helped to the lifeboats because of a policy similar to the one about women and children. Older people are not as physically fit as the rest of the passengers, therefore they need to be assisted. On the other hand however, were the elderly the ones left behind as a result of their physical condition. They would have had more trouble climbing from the lowest deck to the boat deck. Finally, some people travelling first class might have had a better chance at surviving as well. The passengers were able to choose between three classes, varying in price and comfort. There was also a correlation between these three classes and wealth and social class. Most of the people travelling first class were, for example, businessmen, politicians and bankers. Second class travellers included professors, authors and tourists, members of the middle class. Emigrant workers moving to the United States and Canada travelled third class. In general, people travelling first class were closer to the boat deck and had, therefore, more chance to escape the flooding of the cabins (see Figure <a href="#tab:titanicdeckplanone">tab:titanicdeckplanone</a> and Figure <a href="#tab:titanicdeckplantwo">tab:titanicdeckplantwo</a>). They could get to the life boats faster than people whose cabins were on one of the lower decks. The price paid for a ticket is correlated with class. Tickets for travelling first class were in general more expensive than tickets for travelling second or third class. 
+</p>
+
+
+<div id="orgcaa6c98" class="figure">
+<p><img src="./Deck2.png" alt="Deck2.png" width="300px" /> 
+</p>
+<p><span class="figure-number">Figure 3: </span>Deckplan of the Titanic</p>
+</div>
+
+
+<div id="orgd61a09c" class="figure">
+<p><img src="./Deck3.png" alt="Deck3.png" width="300px" /> 
+</p>
+<p><span class="figure-number">Figure 4: </span>Deckplan of the Titanic</p>
+</div>
+
+
+<p>
+In this paper we will take a look at what people were more likely to survive the demise of the Titanic with the help of machine learning. We will predict the chances of survival of certain groups of passengers. In addition, we will see if the expectations that children, women and rich people were indeed benefited are correct. 
+</p>
+</div>
+
+<div id="outline-container-orgae77981" class="outline-3">
+<h3 id="orgae77981"><span class="section-number-3">2.1</span> Machine Learning</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+For the past 15 years, scientists have tried to make computers learn new things from given data with the help of machine learning. The definition of machine learning given by an professor at Stanford University is as follows: "Machine learning is the science of getting computers to act without being explicitly programmed."<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup> It consists of giving computers the ability to learn and make decisions from data. These machine learning techniques are used to build predictive models. To illustrate, we will discuss some examples. 
+</p>
+
+<p>
+Spam emails are sent to everyone who has an emailaccount. Whether the email is from a lottery telling you you have won a $1-million prize or from an unknown travel-agency offering you a trip to an exclusive resort for very little money. It does not matter what the email looks like, your computer is able to distinguish the spam from the usual emails and places the spam in the spam folder of your account. The computer can detect the elements of spam, find patterns and compares the found patterns to new mail. Spam tends to have characteristic elements such as spelling mistakes, an originating address in Nigeria or claims that it needs your bank information. Furthermore, huge tech giants such as Google, Netflix and Spotify use machine learning. The algorithms of these firms offer recommendations and suggestions based on previous user searches, exactly because they can recognise a pattern in these searches.<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup> Maybe one of the best known examples is AlphaGo. The computer programm developed by Google DeepMind in London to play the the boardgame Go.<sup><a id="fnr.9" class="footref" href="#fn.9">9</a></sup> In October 2015, AlphaGo became the first computer Go program to beat a human professional Go player. It was trained on moves of expert players from recorded historical games, a database of around 30 million moves. The algorithm used these moves to mimic human play by attempting to match these moves. Moreover, machine learning is making a breakthrough in the medical field as well. AI pioneer Regina Barzilay carried out research and is now teaching machines to hunt down cancer. Experienced doctors have only a limited amount of patients' experience. Curing cancer is now more a trial-and-error process. With the help of machine learning people can be diagnosed faster and can be cured with the appropriate treatment.<sup><a id="fnr.10" class="footref" href="#fn.10">10</a></sup>   
+</p>
+
+<p>
+A lot of different machine learning techniques exist. In this paper we will discuss two examples.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgdcc0db8" class="outline-3">
+<h3 id="orgdcc0db8"><span class="section-number-3">2.2</span> Different types of Machine Learning</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Machine learning can be divided in roughly three categories: reinforcement, unsupervised and supervised learning. The latter two will be discussed and these can also be divided in subgroups. We have to ask ourselves the questions how does the computer know it is getting better or not, and how does it know how to improve? The different answers to these questions have made these different types of machine learning techniques exist, see Figure <a href="#tab:types">tab:types</a>. 
+</p>
+
+
+<div id="org1bcc428" class="figure">
+<p><img src="./typesmachinelearning.png" alt="typesmachinelearning.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 5: </span>An illustration of the different types of machine learning</p>
+</div>
+
+
+<p>
+<b>Unsupervised learning</b>
+This is a version of machine learning where the computer has to uncover hidden patterns from unlabeled data. Correct responses are not provided. The algorithm has to identify similarities between the inputs. This way the inputs that have something in common are categorised together.<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>
+</p>
+
+<p>
+For instance, grouping customers in categories based on buying behaviour without knowing in advance what these categories might be. 
+</p>
+
+<p>
+<b>Supervised learning</b>
+The majority of machine learning uses supervised learning. Whereas unsupervised learning has to make decisions from data that is not labeled (the correct responses are not provided), supervised machine learning deals with labeled data. The correct answers are already provided in a training set of examples. The algorithm generalises to respond correctly to all possible inputs, based on this training. The computer is provided with a specific input combined with the correct output or prediction. This way, the machine is trained to see the connections between the input and the right output. When a computer has had enough training or has been provided with enough data points, it will make less mistakes with every try. Eventually the computer is able to produce the right output based on a given input. <sup><a id="fnr.12" class="footref" href="#fn.12">12</a></sup>
+</p>
+
+<p>
+The Titanic task is a perfect example of supervised learning. We already know who has survived the disaster and who has not. This way we can train our computer on the complete dataset. Consequently, the computer learns to connect particular variables to the fact if someone has survived or not. Given a new person, of whom we don't know if he or she has survived it, the computer can make a prediction. We can produce the chances of survival for particular variables, e.g. gender, class etc. Picking the right variables is crucial for producing a model. Moreover, choosing how to process your data is important. We will put a lot of effort in choosing the right variables and how to process the data. This will take up a lot of time and is part of the trial-and-error procedure.
+A dataset consists of datapoints. These are samples described using predictor variables and a target variable. Organised in a table with rows and columns. The goal is to predict the target variable, in this case 1 or 0 representing survived or not survived respectively in our Titanic dataset, given the predictor variables, such as class, gender, age, siblings etc. 
+</p>
+
+<p>
+We can specify two different types of supervised learning: 
+</p>
+<ul class="org-ul">
+<li><b>Classification</b>: the target variable consists of categories. Predicting survival on the Titanic is a classification problem. We have to classify, based on our predictor variables, if a person belongs to the class of survived (1) or not survived (0). This is a special case of a classification problem called binary classification. For the Titanic problem we use labelled data. Consequently, we use supervised machine learning.</li>
+<li><b>Regression</b>: the target variable is continuous. For instance, a dataset containing housing price data like the year the house was built, number of bedrooms, acreage. There is a price associated with each house. The goal is to predict the price of a house, given these variables. For the reason that a price is a continuous variable, this problem is an example of regression.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org4ad62c1" class="outline-3">
+<h3 id="org4ad62c1"><span class="section-number-3">2.3</span> Algorithms</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+To train our computer on the dataset we use two different algorithms. Because we approach our problem in two different ways, the results will be more trustworthy. Training our model on the data using an algorithm is called 'fitting' a model to the data. Fitting means minimizing the classification mistakes that we make. We split our data into a training and test set. We fit our model to the training data and predict on the test set. 
+</p>
+</div>
+
+<div id="outline-container-orge1e4dce" class="outline-4">
+<h4 id="orge1e4dce"><span class="section-number-4">2.3.1</span> KNearestNeighbors</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+To begin with, we will use the so-called KNearestNeighbors algorithm. It predicts a label of a datapoint by looking at the 'k' closest labelled data points. KNN takes a majority vote on what label an undecided point has to have. For instance, when we want to decide if a dot on this map is a blue square or a red triangle, we can choose our 'k' as 3 (see Figure <a href="#tab:knn">tab:knn</a>). With choosing our 'k', we create a set of decision boundaries. Our computer will look at the three closest datapoints to classify our undecided point. If two of those three are blue squares, it classifies our undecided point as a blue square. If two of those three points are red triangles, it classifies our undecided point as a red triangle. The trick is to choose the right value for 'k'. Choosing a too large value for 'k', will lead to underfitting therefore creating a smoother decision boundary. This way we will have a less complex model, because our algorithm generalizes too much and uses too little information. On the other side, choosing a too small value for 'k' will lead to overfitting. Consequently, our model will be more complex and will have a more erratic pattern. We use 'too much' information and our model becomes less reliable. These problems of overfitting and underfitting are very common in the world of machine learning. They also occur using other algorithms. Finding the right 'k' is a combination of using other algorithms to find it and a trial-and-error procedure.<sup><a id="fnr.13" class="footref" href="#fn.13">13</a></sup>
+</p>
+
+
+<div id="org922dc3d" class="figure">
+<p><img src="./KnnClassification.png" alt="KnnClassification.png" width="110px" /> 
+</p>
+<p><span class="figure-number">Figure 6: </span>Illustration of the algorithm called KNearestNeighbors</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org73e89ec" class="outline-4">
+<h4 id="org73e89ec"><span class="section-number-4">2.3.2</span> Logistic regression</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+Second, we use an algorithm called logistic regression (logreg). The name may be misleading because logreg is commonly used for classification problems. It outputs probabilities. For example, if the dataset consists of \(n\) different classes, the algorithm calculates the chance that one specific case is classified as belonging to one of these \(n\) classes. In our case, we see \(n=2\). Therefore, we are dealing with a binary classification problem.<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup> This implies the following: if we find \(p>0.5\), the variable is classified as 1, the passenger has survived the disaster; when we see \(p<0.5\), it is classified as 0, the passenger has not survived. 
+</p>
+
+<p>
+To explain the principle of logistic regression, we will have a look at a linear function first:
+</p>
+
+\begin{equation}
+y=ax+b
+\end{equation} 
+
+<p>
+In this case there is only one predictor variable. But we have more than one predictor variable in our dataset of the Titanic. \(a\) and \(b\) are the parameters of our model. We want to fit a line to the data. Fitting, in this case, consists of choosing a slope \(a\) and an intercept \(b\). Our Titanic dataset has more than one feature, because we have more than one predictor variable. Using linear regression, our line will look something like this, where each \(x\) represents a different predictor variable. 
+</p>
+
+\begin{equation}
+y=a_1x_1+a_2x_2+ \dots + a_nx_n+b+\varepsilon_{i}  
+\end{equation}
+
+<p>
+By calculating the vertical distance between each data point and the line, we can get an impression of how accurate our model is. This distance is called the residual (\(\varepsilon\)). One option is to minimze the sum of the residuals. However, this will not work because large positive values will cancel out large negative values. Consequently, shifting the line upwards will always reduce the sum of the residuals. This is because the positive values will be \(\infty\) and the negative values will be \(-\infty\). As a result of this, the sum of the residuals will be zero. So, to make sure that our line is as close to the actual data as possible, we calculate the sum of squared residuals (see Figure <a href="#tab:ols">tab:ols</a> and see Equation \ref{eq:residual}). This is called OLS, which stands for Ordinary Least Squares. When we call fit on our logistic regression model in scitkitlearn, it performs this OLS under the hood. Scikitlearn is a popular machine learning library for Python, which we will use to train our computer (see Footnote \ref{fn:datacamp}).
+</p>
+
+\begin{equation}
+\label{eq:residual}
+\sum_{i=1}^{N}\varepsilon^2_{i}
+\end{equation}
+
+
+
+
+<div id="org305de8a" class="figure">
+<p><img src="./Residual.png" alt="Residual.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Ordinary Least Squares: Minimize sum of squares of residuals</p>
+</div>
+
+<p>
+The red lines in the illustration (see Figure <a href="#tab:ols">tab:ols</a>) represent \(\varepsilon^2_{i}\). 
+The equations mentioned earlier are used most commonly for linear regression. We will use logistic regression, because our target variable is not continuous: our variable is either 0 or 1. The logistic function \(\varsigma(t)\) is defined as follows:
+</p>
+
+\begin{equation}
+\label{eq:2}
+\sigma_t = \frac{e^t}{1+e^t}
+\end{equation}
+
+<p>
+Because we have three variables(i.e. age, gender and class), \(t\) in this case is of the form:
+</p>
+
+\begin{equation}
+y=a_1x_1+a_2x_2+a_3x_3+b+\varepsilon_{i} 
+\end{equation}
+
+<p>
+As the name already tells us suggests, logistic regression is based on the logistic function. This is a sigmoid function (see Figure <a href="#tab:log">tab:log</a>), which takes any real input \(t\) (\(t\in{\rm I\!R}\)), and outputs a value between zero and one, a probability.
+</p>
+
+
+<div id="orgd413d72" class="figure">
+<p><img src="./LogisticCurve.png" alt="LogisticCurve.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 8: </span>The logistic function</p>
+</div>
+
+<p>
+The same principle applies to logistic regression regarding the underfitting and overfitting problem. Adding more independent variables to our model will increase the amount of explained variance. Our model will be more complex and will have a more erratic pattern, as mentioned earlier. Using too little independent variables will result in underfitting, where our model is too 'simple'. 
+</p>
+
+<p>
+After using these two algorithms, we can measure model performance. To do this, we can use metrics such as accuracy. Accuracy is the fraction of correct predictions, think of the fraction of cases where the model correctly predicts that someone survived. How these metrics work, will be explained later on. 
+</p>
+
+<p>
+To sum up, we follow this procedure: We split our dataset into a training set and test set. Then we fit or train the classifier to the training set. Subsequently, we predict on the test set and print the prediction. In the end, we compare our predictions to the known labels and compute the metric of accuracy. 
+</p>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6758820" class="outline-3">
+<h3 id="org6758820"><span class="section-number-3">2.4</span> Main questions and sub-questions</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+This research and information leads us to the following main question and sub-questions: 
+</p>
+
+<p>
+<b>Main question</b>
+</p>
+
+<p>
+<i>Is it possible to make an accurate prediction whether the passengers on board of the Titanic survived the disaster or not using the information about gender, class, age and fare given in the dataset?</i>
+</p>
+
+<p>
+<b>Sub-questions</b> 
+</p>
+
+<ul class="org-ul">
+<li><i>What is the influence of gender on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>What is the influence of fare on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>What is the influence of class on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>What is the influence of age on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>Is there a monotonous relationship between age and survival rate?</i></li>
+</ul>
+
+<p>
+These questions lead to the following hypotheses:
+</p>
+
+<ul class="org-ul">
+<li><b>Main question</b> : Yes this is possible, with the help of machine learning using the algorithms KNearestNeighbours and logistic regression.</li>
+<li><b>Sub-questions</b> :
+
+<ul class="org-ul">
+<li>The survival rate of women is higher than the survival rate of men.</li>
+<li>The survival rate of passengers who paid a higher fare is higher than those who paid less.</li>
+<li>The survival rate of passengers who were travelling in a higher class is higher than those travelling in a lower class.</li>
+<li>The survival rate of children and elderly is higher than the survival rate of the adults.</li>
+<li>The relationship between age and survival rate is not monotonous.</li>
+</ul></li>
+</ul>
+
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9980e90" class="outline-2">
+<h2 id="org9980e90"><span class="section-number-2">3</span> Preparation</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org8868bf1" class="outline-3">
+<h3 id="org8868bf1"><span class="section-number-3">3.1</span> A first look at the dataset</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The adventure begins with importing a couple of packages. We will use other packages as well. These will be imported along the way.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> seaborn <span style="color: #0000FF;">as</span> sns
+</pre>
+</div>
+
+<p>
+The dataset is downloaded from <a href="https://www.kaggle.com/c/titanic/data">Kaggle</a><sup><a id="fnr.15" class="footref" href="#fn.15">15</a></sup> as <code>csv_file</code>. Thereafter, the data is read into a dataframe by using pandas <code>pd.read_csv</code>. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">data</span> = pd.read_csv(<span style="color: #008000;">'titanic.csv'</span>)
+</pre>
+</div>
+
+<p>
+Before we get started with our algorithms, we will have a look at our dataset. First we perform some numerical EDA. EDA stands for Exploratory Data Analysis. This will help us analyse our dataset and get a first impression of the information. It is not necessary to build a dataframe, because all the information is already organised in a table. 
+</p>
+
+<p>
+Using the <code>.head()</code> method, we can see the first five rows of our dataset in Table <a href="#tab:table1">tab:table1</a>. A couple of questions come to
+mind. Which variables play a role by determining the probability of surviving the Titanic? Moreover, <code>Sex</code> for example is not a numeric value. How do we convert this in a way that our computer can deal with this variable? 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data.head()
+</pre>
+</div>
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:table1}Head of the dataframe}
+\begin{adjustwidth}{-2cm}{}
+\begin{tabular}{|l|c|c|c|p{3cm}|l|c|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l|p{0.5cm}|}
+\toprule
+\hline
+{} &  Pass &  Surv &  Class &                                               Name &     Sex &   Age &  SibSp &  Parch &            Ticket &     Fare & Cabin & Emb \\
+\midrule
+\hline
+ 0 &            1 &         0 &       3 &                            Braund, Mr. Owen Harris &    male &  22.0 &      1 &      0 &         A/5 21171 &   7.2500 &   NaN &        S \\
+ 1 &            2 &         1 &       1 &  Cumings, Mrs. John Bradley (Florence Briggs Th... &  female &  38.0 &      1 &      0 &          PC 17599 &  71.2833 &   C85 &        C \\
+ 2 &            3 &         1 &       3 &                             Heikkinen, Miss. Laina &  female &  26.0 &      0 &      0 &  STON/ O2. 3101282 &   7.9250 &   NaN &        S \\
+ 3 &            4 &         1 &       1 &       Futrelle, Mrs. Jacques Heath (Lily May Peel) &  female &  35.0 &      1 &      0 &            113803 &  53.1000 &  C123 &        S \\
+ 4 &            5 &         0 &       3 &                           Allen, Mr. William Henry &    male &  35.0 &      0 &      0 &            373450 &   8.0500 &   NaN &        S \\
+\bottomrule
+\hline
+\end{tabular}
+\end{adjustwidth}
+\end{center}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+<p>
+We see a lot of columns. <code>Pass</code> gives us the PassengerId. <code>Surv</code> shows us a 0 or 1, which stands for not survived and survived respectively. <code>SibSp</code> represents the number of siblings and <code>Parch</code> represents the number of parents of the passenger on board. <code>Emb</code> tells us the port of embarkation: <code>C</code> stands for Cherbourg, <code>Q</code> for Queenstown and <code>S</code> for Southampton. With the <code>.describe()</code> method we can see the static data. The mean, standarddeviation etcetera are given in Table <a href="#tab:table2">tab:table2</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data.describe()
+</pre>
+</div>
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:table2}Description of the dataframe}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\toprule
+\hline
+{} &  Pass &    Surv &      Class &           Age &       SibSp &       Parch &        Fare \\
+\midrule
+\hline
+count &   891.000000 &  891.000000 &  891.000000 &  8.910000e+02 &  891.000000 &  891.000000 &  891.000000 \\
+mean  &   446.000000 &    0.383838 &    2.308642 & -1.832252e+18 &    0.523008 &    0.381594 &   32.204208 \\
+std   &   257.353842 &    0.486592 &    0.836071 &  3.682066e+18 &    1.102743 &    0.806057 &   49.693429 \\
+min   &     1.000000 &    0.000000 &    1.000000 & -9.223372e+18 &    0.000000 &    0.000000 &    0.000000 \\
+25\%   &   223.500000 &    0.000000 &    2.000000 &  6.000000e+00 &    0.000000 &    0.000000 &    7.910400 \\
+50\%   &   446.000000 &    0.000000 &    3.000000 &  2.400000e+01 &    0.000000 &    0.000000 &   14.454200 \\
+75\%   &   668.500000 &    1.000000 &    3.000000 &  3.500000e+01 &    1.000000 &    0.000000 &   31.000000 \\
+max   &   891.000000 &    1.000000 &    3.000000 &  8.000000e+01 &    8.000000 &    6.000000 &  512.329200 \\
+\bottomrule
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+
+<p>
+It is also possible to search for particular passengers in the dataset. Such as passengers with a particular name or with a particular age of, for example, eighty years old. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data[data.Name == <span style="color: #008000;">'Braund, Mr. Owen Harris'</span>]
+</pre>
+</div>
+
+<pre class="example">
+   PassengerId  Survived  Pclass                     Name   Sex   Age  SibSp  \
+0            1         0       3  Braund, Mr. Owen Harris  male  22.0      1   
+
+   Parch     Ticket  Fare Cabin Embarked  
+0      0  A/5 21171  7.25   NaN        S  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.25</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span> data[data.Age == 80]
+</pre>
+</div>
+
+<pre class="example">
+     PassengerId  Survived  Pclass                                  Name  \
+630          631         1       1  Barkworth, Mr. Algernon Henry Wilson   
+
+      Sex   Age  SibSp  Parch Ticket  Fare Cabin Embarked  
+630  male  80.0      0      0  27042  30.0   A23        S  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>630</th>
+      <td>631</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30.0</td>
+      <td>A23</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+It is also possible to see who has paid more than 400 dollars for his or her ticket. We see that it is easy to make a selection in our dataset using the <code>&gt;</code> sign.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data[data.Fare &gt; 400]
+</pre>
+</div>
+
+<pre class="example">
+     PassengerId  Survived  Pclass                                Name  \
+258          259         1       1                    Ward, Miss. Anna   
+679          680         1       1  Cardeza, Mr. Thomas Drake Martinez   
+737          738         1       1              Lesurer, Mr. Gustave J   
+
+        Sex  Age  SibSp  Parch    Ticket      Fare        Cabin Embarked  
+258  female   35      0      0  PC 17755  512.3292          NaN        C  
+679    male   36      0      1  PC 17755  512.3292  B51 B53 B55        C  
+737    male   35      0      0  PC 17755  512.3292         B101        C  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>258</th>
+      <td>259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Ward, Miss. Anna</td>
+      <td>female</td>
+      <td>35</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>NaN</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>679</th>
+      <td>680</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cardeza, Mr. Thomas Drake Martinez</td>
+      <td>male</td>
+      <td>36</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B51 B53 B55</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>737</th>
+      <td>738</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Lesurer, Mr. Gustave J</td>
+      <td>male</td>
+      <td>35</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B101</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+<p>
+Next we perform some visual EDA. We do this in order to have a look at possible correlation between variables and at how our data is distributed. We can make a couple of plots, such as the Seaborn's binary countplot or a scatter matrix. We do this using the <code>matplotlib.pyplot</code> and <code>seaborn</code> packages. Scatterplots are not the best choice to illustrate some of our variables. We have plotted these figures just to take a look at possible correlation, not at causality.
+</p>
+
+<p>
+Let's start with plotting <code>Age</code> against <code>Survived</code>. The result is Figure <a href="#tab:agesurvived">tab:agesurvived</a>. <code>Survived</code> is not a continuous variable, so we see two strokes of dots. Looking at the plot, we can conclude that there was someone of eighty who has survived. However, it is not possible to draw more conclusions from this plot because the distribution for instance is not visible. 
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(data.Age,data.Survived)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Age'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.savefig (<span style="color: #008000;">'AgeSurvived.png'</span>)
+</pre>
+</div>
+
+<p width="400px">
+<img src="./AgeSurvived.png" alt="AgeSurvived.png" width="400px" />
+Now we have a look at the relationship between class and price paid for a ticket in Figure <a href="#tab:classfare">tab:classfare</a>. It is likely that we will see some correlation. The line relating to first class has higher values than the ones relating to second and third class. Below we write the same code for plotting the scatter plots. We will not, however, show the code everytime because this would make it less readable.
+</p>
+
+
+<div id="orgfa26a13" class="figure">
+<p><img src="./PclassFare.png" alt="PclassFare.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 9: </span>Plot of Class against Fare</p>
+</div>
+
+<p>
+A couple of values stand out. We see that a passenger or more passengers travelling first class have paid more than 500 pounds for their ticketprice.
+</p>
+
+<p>
+After we have plotted  <code>Fare</code> against <code>Survived</code>, we take a look at Figure <a href="#tab:faresurvived">tab:faresurvived</a>. 
+</p>
+
+<div id="orgd8cd597" class="figure">
+<p><img src="./FareSurvived.png" alt="FareSurvived.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 10: </span>Plot of Fare against Survived</p>
+</div>
+
+<p>
+Between <code>Fare</code> and <code>Age</code> we can conclude that passengers younger than ten years have not paid a lot for their ticket as opposed to other passengers (see Figure <a href="#tab:fareage">tab:fareage</a>). People who paid more for their tickets were older. But not everyone who was older, has paid more for their tickets. 
+</p>
+
+<div id="org16ce84a" class="figure">
+<p><img src="./FareAge.png" alt="FareAge.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 11: </span>Plot of Fare against Age</p>
+</div>
+
+
+<p>
+If we plot a scatter matrix, we get Figure <a href="#tab:scattermatrix">tab:scattermatrix</a>.   
+\newpage
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> pandas.plotting <span style="color: #0000FF;">import</span> scatter_matrix
+
+<span style="color: #BA36A5;">axs</span> = scatter_matrix(P_titanic[[<span style="color: #008000;">'Pclass'</span>,<span style="color: #008000;">'Fare'</span>,<span style="color: #008000;">'Age'</span>]], alpha=0.2, figsize=(10, 10), diagonal=<span style="color: #008000;">'hist'</span>)
+plt.savefig(<span style="color: #008000;">'scatter.png'</span>)
+</pre>
+</div>
+
+
+<div id="org6af9d3b" class="figure">
+<p><img src="./scatter.png" alt="scatter.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 12: </span>Scatter matrix with histograms on the diagonal</p>
+</div>
+
+
+<p>
+The scatter matrix plots all the combinations of our variables in the scatter plots. This gives us a nice overview. On the diagonal we see a histogram that represents the relative distribution of the variables. Looking at the histogram for <code>Age</code> for example, it shows how many people of each particular age group were on board of the Titanic. 
+</p>
+
+
+<p>
+We will now plot a <code>binary Seaborn Counplot</code>. Plotting <code>Class</code> against <code>Survived</code>, we can see that there were more people in the third than in the first class. This makes it difficult to compare them to eachother and to draw a conclusion. One option is to calculate a percentage. In general, we cannot draw a conclusion regarding survival probabilities. In the third class, more passengers died than survived. In the first class, more people survived than perished. The plot only shows us one variable. This is another reason why we cannot be sure about the influence of class on the chance of survival. The effect of first class on the chance of survival can be different for a woman than for a man for example. This is because the variables have an influence on eachother as well. We will have a further look at this problem in the <a href="#orga7aede3">Discussion</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"Pclass"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=data, palette=<span style="color: #008000;">"Set3"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377NAW.png" alt="b948b903cfc3de03a79616959b021996-1377NAW.png" />
+</p>
+</div>
+
+<p>
+Here we see a plot with <code>Age</code> against <code>Survived</code>. We can see some blue points for the passengers of a younger age. Furthermore, a lot of people of middle age have not survived. This is caused to a great extent by the fact that there were more passengers of middle age on board.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">data.Age</span> = data.Age.astype(<span style="color: #008000;">'int'</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #006FE0;">type</span>(data.Age[0])
+</pre>
+</div>
+
+<pre class="example">
+numpy.int64
+
+</pre>
+
+
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377CGG.png" alt="b948b903cfc3de03a79616959b021996-1377CGG.png" />
+</p>
+</div>
+
+<p>
+Here we see a plot of our <code>male_dummy</code>. <code>False</code> represents in this case the women on board of the Titanic. We see that there were more women who have survived than women who did not. <code>True</code> stands in this case for the men on board. We see that more men have perished than survived. Could this mean that the "women and children first" policy was helpful? 
+</p>
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377ocd.png" alt="b948b903cfc3de03a79616959b021996-1377ocd.png" />
+</p>
+</div>
+
+<p>
+For more plots, take a look at the <a href="#org5797b44">Appendix</a>. 
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org1706181" class="outline-3">
+<h3 id="org1706181"><span class="section-number-3">3.2</span> Preprocessing techniques</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Now we have explored our dataset and have seen what it looks like, we will adjust a couple of things. This adjusting will be done using the so-called "preprocessing techniques". As mentioned, the package <code>scikitlearn</code> cannot work with non-numerical values like the values of <code>Sex</code>. We have to come up with a solution. In addition to this, our dataset is not complete. We still miss values of particular passengers. We write the following code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">df_cleaned</span> = data.dropna()
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">df_cleaned</span>[<span style="color: #008000;">'male_dummy'</span>] = (df_cleaned.Sex == <span style="color: #008000;">'male'</span>) 
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">X</span> = df_cleaned[[<span style="color: #008000;">'Age'</span>,<span style="color: #008000;">'male_dummy'</span>, <span style="color: #008000;">'Pclass'</span>, <span style="color: #008000;">'SibSp'</span>, <span style="color: #008000;">'Fare'</span>]]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">y</span> = df_cleaned[[<span style="color: #008000;">'Survived'</span>]]
+</pre>
+</div>
+
+<p>
+We "clean" our dataset for the first time to make it more suitable for
+the packages we will be using. All rows with missing values, these are called
+NaNs (this is short for Not a Number), are deleted. We delete these by using
+<code>.dropna()</code>. There are other ways than deleting rows to handle this problem.
+Such as, replacing the NaNs with the mean or interpolating. However, the
+choice was made this time to delete these rows. Furthermore, we see that the
+problem of the <code>Sex</code> column not being a numeric value is handled. The values
+in the <code>Sex</code> column are changed into a boolean. A boolean is a datatype with
+only two possible values, i.e. <code>True or False</code>. Males are given a <code>True</code> (1) and
+the females are given a <code>False</code> (0). Next we have added a couple of variables
+to <code>X</code>: <code>Age</code>, <code>male_dummy</code>, <code>Pclass</code>, <code>SibSp</code> and <code>Fare</code>. These are all numeric
+values and therefore easy to use.
+Here we see the cleaned dataframe in Table <a href="#tab:tabledfcleaned">tab:tabledfcleaned</a> with the new added column <code>male_dummy</code>. 
+</p>
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:tabledfcleaned}Head of the cleaned dataframe}
+\begin{adjustwidth}{-2cm}{}
+\begin{tabular}{|l|c|c|c|p{3cm}|l|c|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l|l|p{1cm}|}
+\toprule
+\hline
+{} &  Pass &  Surv &  Class &                                               Name &     Sex &   Age &  SibSp &  Parch &    Ticket &     Fare & Cabin & Emb &  male\_dummy \\
+\midrule
+\hline
+1  &            2 &         1 &       1 &  Cumings, Mrs. John Bradley (Florence Briggs Th... &  female &  38.0 &      1 &      0 &  PC 17599 &  71.2833 &   C85 &        C &       False \\
+3  &            4 &         1 &       1 &       Futrelle, Mrs. Jacques Heath (Lily May Peel) &  female &  35.0 &      1 &      0 &    113803 &  53.1000 &  C123 &        S &       False \\
+6  &            7 &         0 &       1 &                            McCarthy, Mr. Timothy J &    male &  54.0 &      0 &      0 &     17463 &  51.8625 &   E46 &        S &        True \\
+10 &           11 &         1 &       3 &                    Sandstrom, Miss. Marguerite Rut &  female &   4.0 &      1 &      1 &   PP 9549 &  16.7000 &    G6 &        S &       False \\
+11 &           12 &         1 &       1 &                           Bonnell, Miss. Elizabeth &  female &  58.0 &      0 &      0 &    113783 &  26.5500 &  C103 &        S &       False \\
+\bottomrule
+\hline
+\end{tabular}
+\end{adjustwidth}
+\end{center}
+\end{table}
+
+
+
+
+<p>
+In this paper we will only have a look at the variables <code>Age</code>, <code>Sex</code>, <code>Class</code> and <code>Fare</code>. For a more accessible dataset, we will delete the columns with data we will not use when making a prediction. This new dataset is called <code>P_titanic</code>. See Table <a href="#tab:ptitanichead">tab:ptitanichead</a>.
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">P_titanic</span> = df_cleaned[[<span style="color: #008000;">'Pclass'</span>, <span style="color: #008000;">'Fare'</span>, <span style="color: #008000;">'Age'</span>, <span style="color: #008000;">'male_dummy'</span>]]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">P_titanic.head()
+</pre>
+</div>
+
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:ptitanichead}Head of P_titanic}
+\begin{tabular}{|l|c|c|c|l|}
+\toprule
+\hline
+{} &  Pclass &     Fare &   Age &  male\_dummy \\
+\midrule
+\hline
+1  &       1 &  71.2833 &  38.0 &       False \\
+3  &       1 &  53.1000 &  35.0 &       False \\
+6  &       1 &  51.8625 &  54.0 &        True \\
+10 &       3 &  16.7000 &   4.0 &       False \\
+11 &       1 &  26.5500 &  58.0 &       False \\
+\hline
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+<p>
+The corresponding column with the information about who has survived and who has not survived is called <code>q_titanic</code> and is given in Table <a href="#tab:qtitanichead">tab:qtitanichead</a>. 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">q_titanic</span> = df_cleaned.Survived
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">q_titanic.head()
+</pre>
+</div>
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:qtitanichead}Head of q_titanic}
+\begin{tabular}{|l|c|}
+\toprule
+\hline
+{} &  Survived \\
+\midrule
+\hline
+1  &         1 \\
+3  &         1 \\
+6  &         0 \\
+10 &         1 \\
+11 &         1 \\
+\bottomrule
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+<p>
+We see that numbers 2, 4, 5 etcetera are missing. This makes sense because we have deleted these rows with missing values earlier. 
+</p>
+
+<p>
+Using this data it is possible to make a graphic illustration of a prediction. We select the data concerning three of our variables, which includes <code>Survived</code> in any case. 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">survived</span> = df_cleaned[df_cleaned.Survived == 1]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">not_survived</span> = df_cleaned[df_cleaned.Survived == 0]
+
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(survived.Fare, survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(not_survived.Fare, not_survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'not survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Fare'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Age'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.legend()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377OBd.png" alt="b948b903cfc3de03a79616959b021996-1377OBd.png" />
+</p>
+</div>
+
+<p>
+Here we see one of the first graphic illustrations of the relation between <code>Fare</code>, <code>Age</code>
+and <code>Survived</code>. The relation is not very clear but we see that the higher the fare the more people survived and the higher the age the less people survived. However, this figure is not very accurate, because of the fact that only three variables were used. It is not possible to draw a reliable conclusion from this plot.
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">survived</span> = df_cleaned[df_cleaned.Survived == 1]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">not_survived</span> = df_cleaned[df_cleaned.Survived == 0]
+
+
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(not_survived.Pclass, not_survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'not survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(survived.Pclass, survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Class'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Age'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.legend()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377bLj.png" alt="b948b903cfc3de03a79616959b021996-1377bLj.png" />
+</p>
+</div>
+
+
+<p>
+It is very inconvenient to plot discrete variables such as <code>Class</code> and <code>Age</code>. It is harder to distinguish how many blue and how many green triangles there are in the plot. In the <a href="#org5797b44">Appendix</a> we will plot other variables against eachother. 
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-orgf52dc07" class="outline-3">
+<h3 id="orgf52dc07"><span class="section-number-3">3.3</span> The first algorithm: KNearestNeighbors</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+One way to approach our problem is using the algorithm called KNearestNeighbors. We import the classifier from the library <code>sklearn.neighbours</code>. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.neighbors <span style="color: #0000FF;">import</span> KNeighborsClassifier
+</pre>
+</div>
+
+<p>
+To start with we can choose 6 as our number of neighbors, just to explore how the algorithm works and to see how reliable the results are. In KNN finding the value of \(k\) is not easy. A small value of k means that noise will have a higher influence on the result and a large value makes it computationally expensive. We will not spend a lot of time on finding the right \(k\) for the reason that the emphasis of this paper is on getting a general idea of how the algorithms work. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">knn</span> = KNeighborsClassifier(n_neighbors=6)
+</pre>
+</div>
+
+<p>
+We split our data into a training set and a test set.  The
+arguments give us information about how much of our data we use as a
+test set and how much of our data we use as a training set. This and
+the parameters will be varied to see which values gives the best
+prediction. We find that our model performance is dependent on the way our data is split. If we choose our test size to be 0.2 and we compute our accuracy score, we get the following:   
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> train_test_split
+<span style="color: #BA36A5;">P_titanic_train</span>, <span style="color: #BA36A5;">P_titanic_test</span>, <span style="color: #BA36A5;">q_titanic_train</span>, <span style="color: #BA36A5;">q_titanic_test</span> = \
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   train_test_split(P_titanic,q_titanic, test_size=0.2, random_state=42)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>
+</pre>
+</div>
+
+<p>
+We fit our classifier on the training set and consequently predict on the test set.  
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>knn.fit(P_titanic_train, q_titanic_train)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span><span style="color: #BA36A5;">prediction</span>= knn.predict(P_titanic_test) 
+
+</pre>
+</div>
+
+<p>
+If we compute our accuracy score, which is the fraction of correct predictions, we find the following value:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">knn.score(P_titanic_test, q_titanic_test)
+</pre>
+</div>
+
+<pre class="example">
+0.7027027027027027
+
+</pre>
+
+<p>
+If we <code>print</code> our prediction, this is what it looks like: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">print</span>(<span style="color: #008000;">'Prediction{}'</span>.<span style="color: #006FE0;">format</span>(prediction))
+</pre>
+</div>
+
+<pre class="example">
+Prediction[1 1 1 0 1 0 1 1 1 1 0 1 0 1 1 1 1 0 \
+1 1 1 1 0 1 0 1 1 1 1 0 1 1 0 1 1 1 1]
+
+
+</pre>
+
+<p>
+This is a prediction for the first 38 passengers with his or her specific characteristics. If we take a look at the head of our <code>P_titanic_test</code> (Table <a href="#tab:tableptest">tab:tableptest</a>), we can see for whom the algorithm has predicted that he or she has survived. The third '1' corresponds with the passenger number 742 on the list. 
+</p>
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:tableptest}Head of the test set}
+\begin{tabular}{|l|c|c|c|l|}
+\toprule
+\hline
+{} &  Pclass &      Fare &   Age &  male\_dummy \\
+\midrule
+\hline
+118 &       1 &  247.5208 &  24.0 &        True \\
+251 &       3 &   10.4625 &  29.0 &       False \\
+742 &       1 &  262.3750 &  21.0 &       False \\
+544 &       1 &  106.4250 &  50.0 &        True \\
+712 &       1 &   52.0000 &  48.0 &        True \\
+\bottomrule
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+<p>
+So number 742 has, according to our model, survived the disaster. The <code>PassengerID</code> of this passenger is 743, because the ID is one higher than the row number. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">df_cleaned[df_cleaned.PassengerId == 743]
+</pre>
+</div>
+
+<pre class="example">
+     PassengerId  Survived  Pclass                                   Name  \
+742          743         1       1  Ryerson, Miss. Susan Parker "Suzette"   
+
+        Sex   Age  SibSp  Parch    Ticket     Fare            Cabin Embarked  \
+742  female  21.0      2      2  PC 17608  262.375  B57 B59 B63 B66        C   
+
+     male_dummy  
+742       False  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>742</th>
+      <td>743</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Ryerson, Miss. Susan Parker "Suzette"</td>
+      <td>female</td>
+      <td>21.0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>PC 17608</td>
+      <td>262.375</td>
+      <td>B57 B59 B63 B66</td>
+      <td>C</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+Miss Ryerson has survived! Congratulations Suzette!
+</p>
+
+
+<p>
+Back to varying our test size. If we choose a value of 0.4 for our test size, we get a different outcome.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">P_titanic_train</span>, <span style="color: #BA36A5;">P_titanic_test</span>, <span style="color: #BA36A5;">q_titanic_train</span>, <span style="color: #BA36A5;">q_titanic_test</span> = \
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   train_test_split(P_titanic,q_titanic, test_size=0.4, random_state=42)
+knn.fit(P_titanic_train, q_titanic_train)
+<span style="color: #BA36A5;">prediction</span>= knn.predict(P_titanic_test)
+knn.score(P_titanic_test, q_titanic_test)
+
+</pre>
+</div>
+
+<pre class="example">
+0.6756756756756757
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">print</span>(<span style="color: #008000;">'Prediction{}'</span>.<span style="color: #006FE0;">format</span>(prediction))
+</pre>
+</div>
+
+<pre class="example">
+Prediction[1 1 1 0 0 0 1 1 1 0 0 1 1 1 1 1 1 1 1 1 /
+1 1 1 1 1 1 1 0 1 1 1 1 0 0 1 1 1
+1 1 1 1 0 1 0 0 1 0 1 1 1 1 1 0 1 0 0 1 1 0 1 0 1 /
+0 1 1 0 1 1 1 1 1 0 0 1]
+
+
+</pre>
+
+
+<p>
+A larger test set gives us consequently a lower accuracy score, because we have a smaller training set. However, the accuracy score is not always reliable. See the <a href="#orga7aede3">Discussion</a> for an explanation. It is not always obvious which size gives the best result. In the future we will use a test size of 0.2 for KNN and one of 0.25 for logistic regression. 
+</p>
+
+<p>
+Now we will use a couple of methods to make our model better and more reliable. To prevent that our results are influenced by one particular way of splitting our data, we perform a technique called <i>cross-validation</i>. We ask ourselves the questions: Do we see these results because we have accidentally chosen a very specific part of the data as our test set? Or is this a representative result of our entire dataset? This uncertainty can influence the reliability of our outcome. Using cross-validation we split our data into \(k\) folds and let our computer perform the algorithm \(k\) times on \(k\) different but equally large selections of our data of test and training sets. To illustrate, if we choose \(k\) is 5 we perform 5-fold cross-validation (see Figure <a href="#tab:5-foldcross">tab:5-foldcross</a>) . Note well, we are not gaining more accuracy with this technique for we are not using more data. The dataset stays the same. 
+</p>
+
+<p>
+We use five different parts of our data as test set and the rest of the data as training set.
+</p>
+
+
+
+<div id="org6672719" class="figure">
+<p><img src="./CrossValidation.png" alt="CrossValidation.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 18: </span>5-fold cross-validation</p>
+</div>
+
+
+<p>
+First we split our data into five groups. We hold out the first fold as a test set, fit our model on the remaining four groups and we then predict on the first fold. In the next fold we use the second block as test set and fit on the remaining data and so on. Working with more folds is more computationally expensive and thus taking the computer longer to perform the cross-validation. 
+</p>
+
+<p>
+To get an idea about how this cross-validation works, we will perform cv with 5 folds. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> cross_val_score
+<span style="color: #BA36A5;">cv_scores</span> = cross_val_score(knn, P_titanic, q_titanic, cv=5, scoring=<span style="color: #008000;">'roc_auc'</span>)
+<span style="color: #0000FF;">print</span>(cv_scores)
+</pre>
+</div>
+
+<pre class="example">
+[0.41666667 0.48833333 0.53833333 0.5   /
+    0.50694444]
+
+
+</pre>
+
+<p>
+Here we see five values of \(R^{2}\) from which we can compute statistics of interest such as the mean or median. \(R^{2}\) is a statistical measure of how close the datapoints are to the fitted regression line. It is also known as the coefficient of determination or the coefficient of multiple determination for multiple regression.<sup><a id="fnr.16" class="footref" href="#fn.16">16</a></sup> It is the percentage of the response variable variation that is explained by a linear or <i>logistic?</i> model. 0% indicates that the model explains none of the variability of the response data around its mean, whereas 100% indicates that the model explains all the variability of the response data around its mean. 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython">cv_scores.mean()
+</pre>
+</div>
+
+<pre class="example">
+0.4900555555555556
+
+</pre>
+
+<p>
+To get an idea what the influence is of different sizes of cross-validation on our score, we will perform other cross-validations in the <a href="#org5797b44">Appendix</a>.  
+</p>
+
+<p>
+Another way to find out how well our model performs is the so-called confusion matrix. The confusion matrix is a table with four different combinations of predicted and actual values. The name stems from the fact that it makes it easy to see if the system is confusing two classes.<sup><a id="fnr.17" class="footref" href="#fn.17">17</a></sup> These four different combinations are: true positive (TP), true negative (TN), false positive (FP) and false negative (FN). This table has two dimensions: "actual" and "predicted". TP indicates that the algorithm predicted positive and that it was right. So this is a correct prediction that the passenger has survived. TN says that the algorithm predicted negative (so the passenger did not survive) and that the prediction was true. FP: the computer predicted positive but it is false. FN means that the algorithm predicted negative but was not right. For an example for the prediction of spam emails in a confusion matrix, see Figure <a href="#tab:matrix">tab:matrix</a>. 
+</p>
+
+<div id="orgf11a06b" class="figure">
+<p><img src="./CONFUSIONMATRIX.png" alt="CONFUSIONMATRIX.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 19: </span>The confusion matrix</p>
+</div>
+
+<p>
+So accuracy can be described as follows: 
+</p>
+\begin{equation}
+accuracy = \frac{tp+tn}{tp+tn+fp+fn}
+\end{equation}
+
+<p>
+We want our values on the diagonal to be as high as possible. A high number of values off the diagonal indicate problem areas. There are a lot of metrics that work with the classes in the confusion matrix in order to measure our model performance. A very popular metric for classifcation is the ROC (i.e. receiver operating characteristic) Curve and especially the area under this curve (AUC). This curve has to do with the threshold we set for our model. Using the logistic regression model, we have set our threshold at \(p=0.5\) (\(p<0.5\) indicates that the passenger has not survived and \(p>0.5\) that he has survived). We have also set a threshold for our KNN model. So, what happens if we vary this threshold? What happens to our True Positive and False Positive rates? When \(p=0\), the model predicts 1 for all the data, which means the True Positive rate is equal to our False Positive rate which is equal to 1. When we set \(p=1\), the model predicts 0 for all the data. Both True and False Positive rates are 0. If we vary the threshold, we get a series of different True Positive and False Positive rates. The series of points we get when trying all possible thresholds is called the ROC curve. If we plot the ROC curve for our predictions with KNN, we get the following: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> train_test_split
+<span style="color: #BA36A5;">P_titanic_train</span>, <span style="color: #BA36A5;">P_titanic_test</span>, <span style="color: #BA36A5;">q_titanic_train</span>, <span style="color: #BA36A5;">q_titanic_test</span> = \
+train_test_split(P_titanic,q_titanic, test_size=0.2, random_state=42)
+<span style="color: #BA36A5;">prediction</span>= knn.predict(P_titanic_test)
+<span style="color: #0000FF;">from</span> sklearn.metrics <span style="color: #0000FF;">import</span> roc_curve, auc
+<span style="color: #BA36A5;">false_positive_rate</span>, <span style="color: #BA36A5;">true_positive_rate</span>, <span style="color: #BA36A5;">thresholds</span> = roc_curve(q_titanic_test, prediction)
+plt.plot(false_positive_rate, true_positive_rate, label=<span style="color: #008000;">'KNN'</span>)
+plt.xlabel(<span style="color: #008000;">'False Positive Rate'</span>)
+plt.ylabel(<span style="color: #008000;">'True Positive Rate'</span>)
+plt.title(<span style="color: #008000;">'KNN ROC Curve'</span>)
+plt.show()
+
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-13770zE.png" alt="b948b903cfc3de03a79616959b021996-13770zE.png" />
+</p>
+</div>
+
+<p>
+The larger the area under the ROC Curve, the better our model is. One way to understand this, is the following. We would have a great model if we had a model which produced an ROC Curve that had a single point in the upper left corner representing a True Positive rate of 1 and a False Positive Rate of 0. The ROC Curve is in the case of Figure <a href="#tab:auc">tab:auc</a>, the red line. The area under this curve (the light blue square) is at it's maximum. Therefore AUC is another popular metric for classification  models. 
+</p>
+
+
+<div id="orgb8efdec" class="figure">
+<p><img src="./AUC2.png" alt="AUC2.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 21: </span>AUC</p>
+</div>
+
+<p>
+To compute our AUC score, we program the following code: 
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">roc_auc</span> = auc(false_positive_rate, true_positive_rate)
+roc_auc
+</pre>
+</div>
+
+<pre class="example">
+0.6708074534161491
+
+</pre>
+
+<p>
+If the AUC is greater than 0.5, it means that our model is better than just random guessing. 
+</p>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-org5e3c43a" class="outline-3">
+<h3 id="org5e3c43a"><span class="section-number-3">3.4</span> The second algorithm: Logistic Regression</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Another way to approach our problem is by using the algorithm logistic regression (logreg for short). This is the algorithm that outputs probablities, which is exactly what we need in order to answer our main- and subquestions. We follow almost the same procedure as we did with KNearestNeighbors. We import the regressor from the library <code>sklearn.linear_model</code>. Thereafter, we split our dataset into training and test set, perform k-fold cross-validation, fit our regressor to the training set and predict on the test set. We choose 0.25 for our test size. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> sklearn.linear_model <span style="color: #0000FF;">import</span> LogisticRegression
+<span style="color: #BA36A5;">logreg</span> = LogisticRegression()
+<span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> train_test_split
+<span style="color: #BA36A5;">P_titanic_train</span>, <span style="color: #BA36A5;">P_titanic_test</span>, <span style="color: #BA36A5;">q_titanic_train</span>, <span style="color: #BA36A5;">q_titanic_test</span> = \
+train_test_split(P_titanic,q_titanic, test_size=0.25, random_state=42)
+<span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> cross_val_score
+<span style="color: #BA36A5;">cv_scores</span> = cross_val_score(logreg, P_titanic, q_titanic, cv=5, scoring=<span style="color: #008000;">'roc_auc'</span>)
+logreg.fit(P_titanic_train, q_titanic_train)
+<span style="color: #BA36A5;">ylog_pred</span> = logreg.predict(P_titanic)
+<span style="color: #0000FF;">print</span>(cv_scores)
+</pre>
+</div>
+
+<pre class="example">
+[0.86666667 0.80333333 0.74666667 0.73263889 0.92361111]
+
+
+</pre>
+
+<p>
+Here we see our cross-validation scores. These show us how well our model performs and give us an indication about the fitting proces of our model. We see that these scores of \(R^{2}\) are much higher than the ones we found using the algorithm KNearestNeighbors. This algorithm might be more helpful than KNN. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">from</span> sklearn.metrics <span style="color: #0000FF;">import</span> roc_curve, auc
+<span style="color: #BA36A5;">y_pred_prob</span>=logreg.predict_proba(P_titanic_test)[:,1]
+<span style="color: #BA36A5;">false_positive_rate</span>, <span style="color: #BA36A5;">true_positive_rate</span>, <span style="color: #BA36A5;">thresholds</span> = roc_curve(q_titanic_test, y_pred_prob)
+plt.plot(false_positive_rate, true_positive_rate, label=<span style="color: #008000;">'LogisticRegression'</span>)
+plt.xlabel(<span style="color: #008000;">'False Positive Rate'</span>)
+plt.ylabel(<span style="color: #008000;">'True Positive Rate'</span>)
+plt.title(<span style="color: #008000;">'Logistic Regression ROC Curve'</span>)
+plt.show()
+
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377B-K.png" alt="b948b903cfc3de03a79616959b021996-1377B-K.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">roc_auc</span> = auc(false_positive_rate, true_positive_rate)
+roc_auc
+</pre>
+</div>
+
+<pre class="example">
+0.8154761904761904
+
+</pre>
+<p>
+Our AUC score is also higher than the one we calculated while using KNN. 
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">print</span>(<span style="color: #008000;">'Prediction{}'</span>.<span style="color: #006FE0;">format</span>(ylog_pred))
+</pre>
+</div>
+
+<pre class="example">
+Prediction[1 1 0 1 1 0 0 1 1 0 0 1 0 1 0 0 0 1 0 1 1 0 /
+1 0 1 0 1 0 0 1 1 1 1 1 1 0 1
+ 1 0 1 0 0 1 0 1 0 0 1 1 0 1 1 0 1 1 1 /
+ 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 1 1 1
+ 1 1 0 1 1 1 1 1 0 0 0 1 1 1 0 0 0 0 0 0 1 /
+ 1 1 0 0 1 1 1 1 0 0 1 1 1 0 1 1
+ 0 1 1 1 1 0 1 1 0 1 0 1 0 1 1 0 0 1 0 0 1 0 0 /
+0 0 0 1 0 1 0 0 0 1 0 0 1 0
+ 0 1 1 0 1 1 0 1 0 0 1 1 1 1 1 1 1 0 0 1 1 0 1 / 
+ 1 1 1 1 0 1 0 1 0 1 1 0]
+
+
+</pre>
+
+<p>
+Here we see our first prediction using logistic regression. Once again this is the prediction for a fraction of 0.25 of our dataset. If we print our coefficients we get the following. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">logreg.coef_
+</pre>
+</div>
+
+<pre class="example">
+array([[ 0.07374214,  0.00377371, -0.00684224, -2.0694906 ]])
+
+</pre>
+
+
+<p>
+These coefficients correspond to the four columns of  <code>P_titanic</code>, which are <code>Pclass</code>, <code>Fare</code>, <code>Age</code> and <code>male_dummy</code> respectively (as seen in Table <a href="#tab:ptitanichead">tab:ptitanichead</a>). One can interpret the coefficients as follows: The higher your class, the higher your chance of survival. Same goes for <code>Fare</code>, because 0.00377371 is a positive number. We see that the coefficient corresponding to <code>Age</code> is negative, which indicates that the higher your age the lower your chance of surviving. In the case of <code>male_dummy</code>, the coefficient is negative as well which indicates that the chance of surviving decreases when <code>male_dummy</code> equals one. 
+</p>
+
+<p>
+If we take a look at the coefficient corresponding to <code>Pclass</code> we see something counterintuitive. The positive coefficient 0.07374214 suggests that the higher the class (in this case 3 is a higher class than 1), the higher the chance of survival. One might expect that the chance of survival is highest when travelling first class.
+</p>
+
+<p>
+This paradox is resolved once we observe that the higher the fare, the higher the chance of survival. We have seen that plotting <code>Fare</code> against <code>Pclass</code> gives us a positive correlation. The coefficient of <code>Pclass</code> gives the effect of class on the chance of survival with a <b>given</b> fare, age and gender. This situation does not necessarily arise because there belongs a certain value of Fare to the first class: these two variables are positively correlated. When travelling first class instead of second class, two things change: the class and the price paid for a ticket (<code>Fare</code>). If we want to calculate the overall chance of surviving when travelling first class, we will have to take the effect of Fare into account as well.  
+</p>
+
+<p>
+In order to solve this problem we will have a closer look at the dataset. We will group the mean of  <code>Fare</code>, <code>Age</code> and <code>male_dummy</code> by the column <code>Pclass</code> in Table <a href="#tab:tablegroupby">tab:tablegroupby</a>. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">P_titanic.groupby(P_titanic.Pclass).mean()
+</pre>
+</div>
+
+\begin{table}
+\small
+\begin{center}
+\caption{\label{tab:tablegroupby}The mean of Fare, Age and male_dummy grouped by PClass.
+\begin{tabular}{|l|c|c|c|}
+\toprule
+\hline
+{} &       Fare &        Age &  male\_dummy \\
+Pclass &            &            &             \\
+\midrule
+\hline
+1      &  88.683228 &  37.591266 &    0.531646 \\
+2      &  18.444447 &  25.266667 &    0.400000 \\
+3      &  11.027500 &  21.000000 &    0.500000 \\
+\bottomrule
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+<p>
+Here we calculate the effect on the chances of survival of someone travelling first, second or third class that paid the average fare 
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">print</span>(0.07374214*1+0.00377371*88.683228)
+<span style="color: #0000FF;">print</span>(0.07374214*2+0.00377371*18.444447)
+<span style="color: #0000FF;">print</span>(0.07374214*3+0.00377371*11.027500)
+</pre>
+</div>
+
+<pre class="example">
+0.40840692433588
+0.21708827408837
+0.26284100702499996
+
+
+</pre>
+
+<p>
+The chance of surviving the disaster when travelling first class and having paid the average fare is 0.41. The chance of surviving the disaster when travelling second class and having paid the average fare is 0.22. In the case of travelling third class the chance of surviving is 0.26. 
+</p>
+
+<p>
+The fact that the variables influence eachother will be discussed further in the <a href="#orga7aede3">Discussion</a>. We can follow the same procedure when calculating the chances in the case of <code>Age</code> and <code>male_dummy</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">print</span>(-0.00684224*42)
+</pre>
+</div>
+
+<pre class="example">
+-0.28737408000000003
+
+
+</pre>
+
+<p>
+Chance of survival of someone of forty-two years old? For the actual chances of survival we have to multiply our coefficients with the corresponding <code>Age</code>, <code>Class</code>, <code>Fare</code> and <code>Sex</code>. After this we calculate the chance by putting these numbers in the equation of logistic regression. We have set the threshold at \(p = 0.5\), which means that if \(p < 0.5\),  we will see a zero in our prediction which indicates that the passenger has not survived the disaster. To calculate the chance of survival for, for instance, the woman of 40 years old travelling first class we get: 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">t</span>= 0.07374214*1+0.00377371*88.683228 - 0.0068422 * 40 -2.0694906*0
+
+</pre>
+</div>
+
+\begin{equation}
+t= 0.07374214*1+0.00377371*88.683228 - 0.0068422 * 40 -2.0694906*0
+\end{equation}
+
+<p>
+We fill in this value for \(t\) in our sigmoid function. 
+</p>
+
+
+\begin{equation}
+\label{sigmoid}
+\sigma_t = \frac{e^{0.1347189243}}{1+e^{0.1347189243}}
+\end{equation}
+
+<p>
+This gives us a chance of 0.53362885 ≈ 0.53. This is higher than 0.5, which means that the woman of 40 years old travelling first class was likely to have survived. However, we do not need to calculate all the chances of survival for each particular passenger to find an answer to our main question and sub-questions. The logreg coefficients tell us enough about the influence of the chosen variables on the chance of surviving the disaster of the Titanic. See the following chapter <a href="#org4c5bcf3">Conclusion</a> for the answer to our main question and sub-questions.  
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org29461f8" class="outline-2">
+<h2 id="org29461f8"><span class="section-number-2">4</span> Conclusion</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a id="org4c5bcf3"></a>
+The goal of this paper is to answer the following questions and compare the answers to the hypotheses. 
+</p>
+
+<p>
+<b>Main question</b>
+</p>
+
+<p>
+<i>Is it possible to make an accurate prediction whether the passengers on board of the Titanic survived the disaster or not using the information about gender, class and age given in the dataset?</i>
+</p>
+
+<p>
+Yes, this is indeed possible with the help of machine learning algorithms such as KNearestNeighbours and Logistic Regression. 
+</p>
+
+<p>
+<b>Sub-questions</b> 
+</p>
+
+<ul class="org-ul">
+<li><i>What is the influence of gender on the chance of surviving after the Titanic had sunk?</i></li>
+</ul>
+<p>
+Women had a higher chance of surviving than men. 
+</p>
+
+
+<ul class="org-ul">
+<li><i>What is the influence of class on the chance of surviving after the Titanic had sunk?</i></li>
+</ul>
+<p>
+Looking at the positive correlation between <code>Fare</code> and <code>Pclass</code> and the fact that a higher Fare increased the chance of surviving, the lower your class (1 is lower than 3) the higher your chance of surviving. 
+</p>
+
+<ul class="org-ul">
+<li><i>What is the influence of age on the chance of surviving after the Titanic had sunk?</i></li>
+</ul>
+<p>
+The higher your age, the lower your chance of survival. 
+</p>
+
+<ul class="org-ul">
+<li><i>Is there a monotonous relationship between age and survival rate?</i></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><b>Main question</b> : Yes this is possible, with the help of machine learning using the algorithms KNearestNeighbours and logistic regression.</li>
+<li><b>Sub-questions</b> :
+
+<ul class="org-ul">
+<li>The survival rate of women is higher than the survival rate of men.</li>
+<li>The survival rate of passengers who were travelling in a higher class is higher than those travelling in a lower class.</li>
+<li>The survival rate of children and elderly is higher than the survival rate of the adults.</li>
+<li>The relationship between age and survival rate is not monotonous.</li>
+</ul></li>
+</ul>
+
+
+
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-org98c00fd" class="outline-2">
+<h2 id="org98c00fd"><span class="section-number-2">5</span> Discussion</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a id="orga7aede3"></a>
+</p>
+
+<p>
+A number of factors can have an influence on our model's prediction. To begin with, the more variables we use, the better  our model predicts on the training set. This is evident, because using more information given in the dataset will give the computer more details to create a fitting algorithm. The downside is that more variables can lead to overfitting. We see patterns in our training set that are not present in our whole dataset. Furthermore, using all the variables of the Titanic dataset and making sure that our computer can handle these costs a lot of time. The emphasis of this paper was not necessarily on the precision of our algorithm but on learning the basics and getting a taste of machine learning. Because of this and because of the deadlines, the choice was made to go with the four variables <code>Fare</code>, <code>Age</code>, <code>Gender</code> and <code>Class</code>. To make the algorithm more reliable we can use more variables next time.  
+</p>
+
+<p>
+When we want to grade our model performance, we use classification metrics such as accuracy. In the case of accuracy there is a catch however. For instance, if we take a look at spam classification. 99% of the emails we receive is real and 1% is spam. We instantiate a classifier which classifies all emails as real. Computing the accuracy will give us a score of 99%, which is pretty high, but our classifier is horrible at predicting spam. For this reason, we can use more nuanced metrics the next time with  help of the confusion matrix. The negative predictive value (NPV), for example, is another metric from the confusion matrix (see Figure <a href="#tab:matrix">tab:matrix</a>)
+</p>
+\begin{equation}
+TNR = \frac{tn}{tn+fn}
+\end{equation} 
+
+<p>
+In the case of our horrible spam predictor, the NPV rate is zero and shows that our model is not able to classify the 1% spam. Including this metric and maybe some others, will give us a more reliable interpretation of our model. 
+</p>
+
+<p>
+Furthermore, the variables influence each other indirectly as well. A higher fare is more likely to pair with a passenger travelling first class. Not all combinations are possible. We have to take this into account when interpreting the coefficients. Although, this does not affect our algorithm. An example of this was the coefficient corresponding to <code>Pclass</code>. It seemed counterintuitive at first that a higher class (in this case third class is higher than first class) gives a higher chance of survival, because we expected that first class would increase the chance of survival. After we found that when travelling first class instead of second class, two things change (i.e. the class and the price paid for a ticket (<code>Fare</code>)), we find that a higher <code>Fare</code> pairs with a higher chance of survival and consequently with a lower class. So indirectly lower class and a higher price paid for a ticket increases the chance of survival which makes more sense. Still, it is important to note that it is not easy to draw conclusions from the coefficients. 
+</p>
+
+<p>
+Finally, we have used a statistical model to explain chances of survival on board of the Titanic. We need to keep in mind that during a disaster impulsivity and unexpected actions play an important role. Our model will never match the exact situation during the demise of the Titanic, because of the reason that a disaster is not logic or it does not make sense like a mathematical function does. Regardless of this, the goal is not to make predictions about disasters and therefore making predictions about future catastrophes. The goal is that these results teach us something about the circumstances during that period. It teaches us something about the civilization. We can, for example, assume that the women and children first policy did work, because we have seen that the higher your age, the lower your chance of survival. Similarly, women had a higher chance of survival. 
+</p>
+
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-org4b32136" class="outline-2">
+<h2 id="org4b32136"><span class="section-number-2">6</span> Postface</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Writing this paper has taught me a lot. First, before I started I did not know anything about programming or machine learning. With the help of DataCamp and my father I have experienced what it is like writing code. The job prospects of programmers who know how to deal with a lot of data and machine learning algorithm are pretty good. Python is one of the easiest en most accessible languages to learn how to program in. So knowing your way around machine learning is a very good idea during this time, because a lot of big steps are made in the field of artificial intelligence. A lot of big steps will be made in the future if the developments will follow up each other as quickly as they do now.  Big tech giants such as Netflix, Apple and Google are still looking for faster and more efficient ways of making our life on the internet easier.  Furthermore, there are not a lot of girls who take interest in subjects as these so I wanted to show that it is not impossible for a girl to like machine learning and programming. During my presentation of my paper I want to show that programming is fun for boys and girls our age too. Lastly, writing this paper in English has given me a head start in my career, because I am sure that I will write more papers in English in the future. My plan is to get my PhD after my study at TU Eindhoven. 
+</p>
+
+<p>
+All in all writing this paper was a lot of fun. I have learned a lot and I think it has been a great preparation for my education at TU Eindhoven. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org320c0ca" class="outline-2">
+<h2 id="org320c0ca"><span class="section-number-2">7</span> References</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+\printbibliography
+</p>
+
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-org552183c" class="outline-2">
+<h2 id="org552183c"><span class="section-number-2">8</span> Appendix</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<a id="org5797b44"></a>
+</p>
+</div>
+
+<div id="outline-container-org0991731" class="outline-3">
+<h3 id="org0991731"><span class="section-number-3">8.1</span> Some more plots</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+A plot of <code>Fare</code> against <code>Survived</code>: 
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"Fare"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=data)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/b948b903cfc3de03a79616959b021996-1377bSX.png" alt="b948b903cfc3de03a79616959b021996-1377bSX.png" />
+</p>
+</div>
+
+<p>
+We can see that the quantity of green points kind of increases if  <code>Fare</code> increases.
+</p>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-orgc2cc2a2" class="outline-3">
+<h3 id="orgc2cc2a2"><span class="section-number-3">8.2</span> Some more cross-validation</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+We will now perform 10-fold cv. This way we are able to compare the results and have a look at what the influence of more folds is on our values of \(R^{2}\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">cv_scores</span> = cross_val_score(knn, P_titanic, q_titanic, cv=10, scoring=<span style="color: #008000;">'roc_auc'</span>)
+<span style="color: #0000FF;">print</span>(cv_scores)
+</pre>
+</div>
+
+<pre class="example">
+[0.37179487 0.57692308 0.55128205 0.63888889 0.36111111 0.64583333
+ 0.54166667 0.44444444 0.52083333 0.54861111]
+
+
+</pre>
+
+<p>
+Our array consists of ten columns, which makes sense because we split our data in ten different ways. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">cv_scores.mean()
+</pre>
+</div>
+
+<pre class="example">
+0.5201388888888889
+
+</pre>
+
+<p>
+Using more folds does not necessarily have to mean that our results are more reliable. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #BA36A5;">cv_scores</span> = cross_val_score(knn, P_titanic, q_titanic, cv=50, scoring=<span style="color: #008000;">'roc_auc'</span>)
+<span style="color: #0000FF;">print</span>(cv_scores)
+</pre>
+</div>
+
+<pre class="example">
+[0.08333333 0.41666667 0.5        0.58333333 0.5        0.16666667
+ 0.5        1.         0.33333333 0.33333333 1.         0.33333333
+ 1.         0.5        0.         0.83333333 1.         0.16666667
+ 0.         0.83333333 0.5        0.83333333 0.16666667 0.25
+ 1.         1.         1.         1.         0.5        0.25
+ 0.5        0.25       0.25       1.         1.         0.25
+ 0.25       0.         0.5        1.         0.25       0.5
+ 0.75       0.25       0.5        0.25       0.75       0.75
+ 0.         0.5       ]
+
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython">cv_scores.mean()
+</pre>
+</div>
+
+<pre class="example">
+0.5216666666666666
+
+</pre>
+
+<p>
+We see that our mean is very close to a value of 0.52. 
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><a href="http://www.bbc.co.uk/history/titanic">http://www.bbc.co.uk/history/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><a href="https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage">https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><a href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><a href="https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage">https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><a href="https://www.encyclopedia-titanica.org/titanic/">https://www.encyclopedia-titanica.org/titanic/</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><a href="http://www.bbc.co.uk/history/titanic">http://www.bbc.co.uk/history/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara">Quote created by Stanford University on the course of Machine Learning, taught by: Andrew Ng, Co-founder, Coursera; Adjunct Professor, Stanford University; formerly head of Baidu AI Group/Google Brain. <a href="https://www.coursera.org/learn/machine-learning">https://www.coursera.org/learn/machine-learning</a> (consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><a href="https://www.redpixie.com/blog/examples-of-machine-learning">https://www.redpixie.com/blog/examples-of-machine-learning</a>(consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.9" class="footnum" href="#fnr.9">9</a></sup> <div class="footpara"><a href="https://deepmind.com/blog/alphago-zero-learning-scratch/">https://deepmind.com/blog/alphago-zero-learning-scratch/</a>(consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.10" class="footnum" href="#fnr.10">10</a></sup> <div class="footpara">New Scientist Weekly, 21 July 2018, I teach machines to hunt down cancer, Interview by Chelsea Whyte</div></div>
+
+<div class="footdef"><sup><a id="fn.11" class="footnum" href="#fnr.11">11</a></sup> <div class="footpara">Machine Learning, An Algorithmic Perspective second edition by Stephen Marsland, 2015 by Taylor &amp; Francis Group.</div></div>
+
+<div class="footdef"><sup><a id="fn.12" class="footnum" href="#fnr.12">12</a></sup> <div class="footpara"><a href="https://machinelearningmastery.com/supervised-and-unsupervised-machine-learning-algorithms/">https://machinelearningmastery.com/supervised-and-unsupervised-machine-learning-algorithms/</a>(consulted on the 26th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.13" class="footnum" href="#fnr.13">13</a></sup> <div class="footpara">DataCamp courses on Supervised Learning with scikitlearn: <a href="https://www.datacamp.com/courses/q:supervised">https://www.datacamp.com/courses/q:supervised</a> (consulted on the 13th of February, 2018). \label{fn:datacamp}</div></div>
+
+<div class="footdef"><sup><a id="fn.14" class="footnum" href="#fnr.14">14</a></sup> <div class="footpara"><a href="https://www.statisticssolutions.com/what-is-logistic-regression/">https://www.statisticssolutions.com/what-is-logistic-regression/</a>(consulted on the 5th of September, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.15" class="footnum" href="#fnr.15">15</a></sup> <div class="footpara"><a href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic</a> (consulted on the 18th of January 2018)</div></div>
+
+<div class="footdef"><sup><a id="fn.16" class="footnum" href="#fnr.16">16</a></sup> <div class="footpara"><a href="https://www.datasciencecentral.com/profiles/blogs/regression-analysis-how-do-i-interpret-r-squared-and-assess-the">https://www.datasciencecentral.com/profiles/blogs/regression-analysis-how-do-i-interpret-r-squared-and-assess-the</a> (consulted on the 10th of December, 2018)</div></div>
+
+<div class="footdef"><sup><a id="fn.17" class="footnum" href="#fnr.17">17</a></sup> <div class="footpara"><a href="https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62">https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62</a> (consulted on the 2nd of December, 2018)</div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Myrthe Boone</p>
+<p class="date">Created: 2018-12-25 Tue 19:37</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

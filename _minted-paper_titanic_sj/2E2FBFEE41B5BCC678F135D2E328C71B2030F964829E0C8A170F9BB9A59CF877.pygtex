@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{survived} \PYG{o}{=} \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[}\PYG{n}{df\PYGZus{}cleaned}\PYG{o}{.}\PYG{n}{Survived} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{]}
+    \PYG{n}{not\PYGZus{}survived} \PYG{o}{=} \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[}\PYG{n}{df\PYGZus{}cleaned}\PYG{o}{.}\PYG{n}{Survived} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{]}
+
+
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{not\PYGZus{}survived}\PYG{o}{.}\PYG{n}{Pclass}\PYG{p}{,} \PYG{n}{not\PYGZus{}survived}\PYG{o}{.}\PYG{n}{Age}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZca{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{label} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}not survived\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{survived}\PYG{o}{.}\PYG{n}{Pclass}\PYG{p}{,} \PYG{n}{survived}\PYG{o}{.}\PYG{n}{Age}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZca{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{label} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}survived\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Class\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Age\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{()}
+\end{Verbatim}

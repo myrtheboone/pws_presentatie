@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[}\PYG{n}{df\PYGZus{}cleaned}\PYG{o}{.}\PYG{n}{PassengerId} \PYG{o}{==} \PYG{l+m+mi}{743}\PYG{p}{]}
+\end{Verbatim}

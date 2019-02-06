@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{pandas.plotting} \PYG{k+kn}{import} \PYG{n}{scatter\PYGZus{}matrix}
+
+\PYG{n}{axs} \PYG{o}{=} \PYG{n}{scatter\PYGZus{}matrix}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}Pclass\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}Fare\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}Age\PYGZsq{}}\PYG{p}{]],} \PYG{n}{alpha}\PYG{o}{=}\PYG{l+m+mf}{0.2}\PYG{p}{,} \PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{),} \PYG{n}{diagonal}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}hist\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}scatter.png\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

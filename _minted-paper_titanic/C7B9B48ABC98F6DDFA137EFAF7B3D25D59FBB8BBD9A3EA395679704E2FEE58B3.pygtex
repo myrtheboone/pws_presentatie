@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+   \PYG{k+kn}{from} \PYG{n+nn}{sklearn.linear\PYGZus{}model} \PYG{k+kn}{import} \PYG{n}{LogisticRegression}
+\PYG{n}{logreg} \PYG{o}{=} \PYG{n}{LogisticRegression}\PYG{p}{()}
+\PYG{k+kn}{from} \PYG{n+nn}{sklearn.model\PYGZus{}selection} \PYG{k+kn}{import} \PYG{n}{train\PYGZus{}test\PYGZus{}split}
+\PYG{n}{P\PYGZus{}titanic\PYGZus{}train}\PYG{p}{,} \PYG{n}{P\PYGZus{}titanic\PYGZus{}test}\PYG{p}{,} \PYG{n}{q\PYGZus{}titanic\PYGZus{}train}\PYG{p}{,} \PYG{n}{q\PYGZus{}titanic\PYGZus{}test} \PYG{o}{=} \PYGZbs{}
+\PYG{n}{train\PYGZus{}test\PYGZus{}split}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic}\PYG{p}{,}\PYG{n}{q\PYGZus{}titanic}\PYG{p}{,} \PYG{n}{test\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mf}{0.25}\PYG{p}{,} \PYG{n}{random\PYGZus{}state}\PYG{o}{=}\PYG{l+m+mi}{42}\PYG{p}{)}
+\PYG{k+kn}{from} \PYG{n+nn}{sklearn.model\PYGZus{}selection} \PYG{k+kn}{import} \PYG{n}{cross\PYGZus{}val\PYGZus{}score}
+\PYG{n}{cv\PYGZus{}scores} \PYG{o}{=} \PYG{n}{cross\PYGZus{}val\PYGZus{}score}\PYG{p}{(}\PYG{n}{logreg}\PYG{p}{,} \PYG{n}{P\PYGZus{}titanic}\PYG{p}{,} \PYG{n}{q\PYGZus{}titanic}\PYG{p}{,} \PYG{n}{cv}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{scoring}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}roc\PYGZus{}auc\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{cv\PYGZus{}scores}\PYG{p}{)}
+\PYG{n}{logreg}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic\PYGZus{}train}\PYG{p}{,} \PYG{n}{q\PYGZus{}titanic\PYGZus{}train}\PYG{p}{)}
+\PYG{n}{ylog\PYGZus{}pred} \PYG{o}{=} \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic}\PYG{p}{)}
+\end{Verbatim}

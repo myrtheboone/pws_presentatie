@@ -1,0 +1,177 @@
+#+OPTIONS: toc:nil num:nil
+
+
+* RMS TITANIC: Machine learning from disaster
+Profielwerkstuk Wiskunde D  
+
+7 februari 2019
+
+Myrthe Boone 6E
+
+#+caption: RMS Titanic
+#+attr_html: :width 400px
+[[./Titanic.png]]
+
+** Doodle
+https://quickdraw.withgoogle.com/
+
+* Inhoudsopgave
+
++ Introductie
++ Wat is machine learning?
++ Mijn onderzoek
+  + Algoritmes
+  + Hoofd- en deelvragen
++ Resultaten
++ Conclusie
++ Discussie
++ Afsluiting
+
+* Introductie
+** Waarom dit onderwerp?
+
++ Meer weten over machine learning en programmeren in Python
++ Machine learning is overal om ons heen
++ Organiseren en analyseren van de werkelijkheid
++ TU Eindhoven
+
+** Titanic
+
++ Voorspellen welke groep passagiers een grotere kans had om te overleven.
++ 'Vrouwen en kinderen eerst' beleid 
++ Geluk, geslacht, leeftijd, klasse en prijs betaald voor een ticket
+#+name: 
+#+caption: Deck Titanic
+#+attr_html: :width 600px
+#+attr_latex: :width 600
+[[./Deck3.png]]
+
+
+* Wat is machine learning?
+
++ Zonder specifiek geprogrammeerd te zijn voor de taken
++ Voorbeeld: spam emails, Google zoekopdrachten
+
+#+attr_html: :width 400px
+#+attr_latex: :width 600
+[[./google.png]]
+
+** Soorten machine learning 
+
++ Supervised, unsupervised en reinforcement learning 
++ Unsupervised: Correcte labels zijn *niet* gegeven
++ Supervised: Computer weet welke categorieën er zijn 
++ Supervised learning kan ingedeeld worden in regression en classification
+
+#+caption: Machine learning
+#+attr_html: :width 500px
+#+attr_latex: :width 600
+[[./typesmachinelearning.png]]
+
+** Soorten machine learning 
++ Classification: categorieën
++ Regression: continue variabelen
+#+caption: Classification vs. Regression
+#+attr_html: :width 500px
+#+attr_latex: :width 600
+[[./regvsclass.png]]
+
+
+** Soorten machine learning
++ Titanic is supervised learning
++ Binary classification
++ 1 = overleefd
++ 0 = niet overleefd
+
+* Mijn onderzoek: algoritmes
+** Werkplan
+
++ We splitsen onze dataset in een training en een test set
++ We trainen / fitten ons model op de training set
++ We voorspellen op de test set
++ Dus we gebruiken de gegevens van de passagiers (leeftijd, geslacht, prijs betaald voor een ticket, klasse)
+
+
+** Logistic Regression
+
++ Gebaseerd op de logistische functie 
++ Grenswaarde $p>0.5$, passagier heeft het overleefd
+ 
+\begin{equation}
+\label{eq:2}
+\sigma(y) = \frac{e^y}{1+e^y}
+\end{equation}
+
++ Vier variabelen dus $y$ is in dit geval:
+
+\begin{equation}
+y=a_1x_1+a_2x_2+a_3x_3+a_4x_4+b+\varepsilon_{i} 
+\end{equation}
+
+#+caption: Logistische functie
+#+attr_html: :width 400px
+#+attr_latex: :width 600
+[[./LogisticCurve.png]]
+
+
+** Hoofd- en deelvragen
+
++ Is het mogelijk een nauwkeurige voorspelling te maken of de passagiers aan boord van de Titanic het hebben overleefd met behulp van informatie over geslacht, klasse, leeftijd en prijs betaald voor een ticket? 
+  + Wat is de invloed van geslacht op de overlevingskans?
+  + Wat is de invloed van klasse op de overlevingskans? 
+  + Wat is de invloed van leeftijd op de overlevingskans? 
+  + Wat is de invloed van prijs betaald voor een ticket op de overlevingskans?
+  
+* Resultaten
+** Dataset verkennen
+
++ Begonnen met plots maken, dataset ontdekken 
+
+
+#+caption: Plot van reisklasse
+#+attr_html: :width 400px
+#+attr_latex: :width 600
+[[./ClassCount.png]]
+
+** Resultaten
+
++ Coëfficiënten
++ Wat vertellen ze ons?
+
+** Resultaten
++ Coëfficiënt behorend bij leeftijd is negatief
++ Coëfficiënt behorend bij ticketprijs is positief
++ Geslacht coëfficiënt negatief (dummy) 
+
+
+#+caption: 
+#+attr_html: :width 500px
+#+attr_latex: :width 600
+[[./coefficients.png]]
+
+#+caption: 
+#+attr_html: :width 400px
+#+attr_latex: :width 600
+[[./Table7.png]]
+
+* Conclusie
+
++ Het is mogelijk een voorspelling te maken
++ Vrouwen hadden een voordeel t.o.v. mannen
++ Jongere passagiers hadden een voordeel t.o.v. oudere
++ Passagiers die een hogere ticketprijs hadden betaald hadden voordeel t.o.v. zij die minder betaalden
+
+
+
+* Discussie
++ Blijft een ongeluk: toeval, geluk, corruptie etc.
++ Meer variabelen
++ Nauwkeurigheid?
++ Invloed variabelen onderling
+
+
+#+attr_html: :width 600px
+#+attr_latex: :width 600
+[[./titanic3.png]]
+* Afsluiting
+Zijn er nog vragen? 

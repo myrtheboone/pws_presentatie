@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{P\PYGZus{}titanic}\PYG{o}{.}\PYG{n}{groupby}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic}\PYG{o}{.}\PYG{n}{Pclass}\PYG{p}{)}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{()}
+\end{Verbatim}

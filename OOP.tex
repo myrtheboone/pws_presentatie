@@ -1,0 +1,172 @@
+% Created 2018-12-25 Tue 14:34
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[version=3]{mhchem}
+\usepackage[numbers,super,sort&compress]{natbib}
+\usepackage{natmove}
+\usepackage{url}
+\usepackage{minted}
+\usepackage{underscore}
+\usepackage[linktocpage,pdfstartview=FitH,colorlinks,
+linkcolor=blue,anchorcolor=blue,
+citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue]{hyperref}
+\usepackage{attachfile}
+\author{Myrthe Boone}
+\date{\today}
+\title{}
+\begin{document}
+
+\tableofcontents
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+class employee:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.z = self.x+self.y
+\end{minted}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+myrthe = employee(1,2)
+jan = employee(5,6)
+\end{minted}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+print(myrthe.y)
+print(jan.z)
+\end{minted}
+
+\begin{verbatim}
+3
+11
+
+\end{verbatim}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+myrthe.hair
+\end{minted}
+
+\begin{verbatim}
+'brown'
+\end{verbatim}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+miek_hair = 'red'
+\end{minted}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.random((5, 5)))
+
+df
+\end{minted}
+
+\begin{verbatim}
+          0         1         2         3         4
+0  0.354813  0.837191  0.403546  0.085888  0.782431
+1  0.389026  0.573013  0.048319  0.681065  0.147479
+2  0.419524  0.690255  0.062686  0.052759  0.252656
+3  0.284843  0.524268  0.201925  0.828355  0.932566
+4  0.830313  0.638663  0.260559  0.662381  0.270753
+\end{verbatim}
+
+
+\begin{verbatim}
+\begin{tabular}{lrrrrr}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+\bottomrule
+\end{tabular}
+
+
+\end{verbatim}
+
+
+\begin{tabular}{l|c|c|c|c|c}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\hline
+pw0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+\bottomrule
+\end{tabular}
+
+\begin{tabular}{lrrrrr}
+toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+:0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+: 1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+: 2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+: 3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+: 4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+: \bottomrule
+: \end{tabular}
+
+
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+pq = pd.DataFrame(np.random.random((5, 5)))
+\end{minted}
+
+\begin{minted}[frame=lines,fontsize=\scriptsize,linenos]{ipython}
+print(pq.to_latex())
+\end{minted}
+
+\begin{verbatim}
+\begin{tabular}{lrrrrr}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+0 &  0.404934 &  0.481067 &  0.257389 &  0.352876 &  0.966894 \\
+1 &  0.321359 &  0.614149 &  0.563271 &  0.232894 &  0.739181 \\
+2 &  0.078475 &  0.362242 &  0.940386 &  0.397011 &  0.237748 \\
+3 &  0.119574 &  0.380566 &  0.490025 &  0.558063 &  0.694235 \\
+4 &  0.141048 &  0.054591 &  0.204718 &  0.115091 &  0.938184 \\
+\bottomrule
+\end{tabular}
+
+
+\end{verbatim}
+
+\begin{tabular}{lrrrrr}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+\hline
+0 &  0.404934 &  0.481067 &  0.257389 &  0.352876 &  0.966894 \\
+1 &  0.321359 &  0.614149 &  0.563271 &  0.232894 &  0.739181 \\
+2 &  0.078475 &  0.362242 &  0.940386 &  0.397011 &  0.237748 \\
+3 &  0.119574 &  0.380566 &  0.490025 &  0.558063 &  0.694235 \\
+4 &  0.141048 &  0.054591 &  0.204718 &  0.115091 &  0.938184 \\
+\hline
+\bottomrule
+\end{tabular}
+\end{document}

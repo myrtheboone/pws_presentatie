@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{df\PYGZus{}cleaned} \PYG{o}{=} \PYG{n}{data}\PYG{o}{.}\PYG{n}{dropna}\PYG{p}{()}
+    \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}male\PYGZus{}dummy\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{df\PYGZus{}cleaned}\PYG{o}{.}\PYG{n}{Sex} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}male\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{X} \PYG{o}{=} \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}Age\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}male\PYGZus{}dummy\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pclass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}SibSp\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Fare\PYGZsq{}}\PYG{p}{]]}
+    \PYG{n}{y} \PYG{o}{=} \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}Survived\PYGZsq{}}\PYG{p}{]]}
+\end{Verbatim}

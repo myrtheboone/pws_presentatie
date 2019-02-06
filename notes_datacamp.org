@@ -1,0 +1,1894 @@
+#+TITLE: Datacamp notes
+
+
+* Preface
+
+The goal of this paper is not to make predictions about the future. These results may teach us something about the circumstances during the time that the Titanic sank. Teaches us something about the civilization back in those days. (Women, children etc saved first?). Furthermore, this paper is written because I wanted to learn something about machine learning and programming using Python. 
+
+I would like to give a special thanks to the following people. My father, who has helped me learn programming in Python and has taught me the basics of machine learning. Thank you for believing in me. Furthermore I would like to thank my supervisor mr. Kampwart for being enthusiastic and keeping me motivated. 
+
+* Introduction
+
+In the year 1912 on the 15th of April one of the most infamous ships in history would crash into an iceberg and sink in the North Atlantic Ocean. During its maiden voyage from Southhampton to New York City on the 14th of April at 11:40 p.m. ship's time, the lookout sounded the alarm  when a massive clump of solid ice caught his attention. The first mate had seen the iceberg before the lookout did and tried to turn the ship around. Unfortunately, he was too late. Forty seconds later at a high speed the Titanic collided with a huge rock made of ice with a weight of 30 million kilograms. The collision caused a series of holes along the side of the hull.[fn::[[http://www.bbc.co.uk/history/titanic]] (consulted on the 5th of August, 2018).] Six of the watertight compartments were filled with water, whereas the ship could only sail on with a maximum of four compartments flooded. Consequently, the Titanic was doomed to sink. The crew understood they needed to act fast. They deployed the evacuation program. The ship carried twenty lifeboats. In principle the protocol "women and children first" was followed. However, this was not true for everyone on board. The chance of being saved was  dependent on the class in which one travelled and the place where one found itself during the evacuation. Around 2:20 a.m. parts of the Titanic broke off and sunk with one thousand people still on board. On deck were some of the richest people in the world, including millionaires, movie stars, school teachers and immigrants, who were hoping to find a new life in New York City. A life that they would, therefore, never find. Two hours after the ship sank, the liner RMS Carpathia arrived and saved an estimated 705 people.[fn::[[https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage]] (consulted on the 5th of August, 2018).] The sinking of the RMS Titanic killed 1502 out of the 2224 people on board, crew members as well as passengers.[fn::[[https://www.kaggle.com/c/titanic]] (consulted on the 5th of August, 2018).]
+
+The RMS Titanic was the largest ship on water during that time and it was the second of three  ocean liners operated by the White Star Line .[fn::https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage (consulted on the 5th of August, 2018).] The ship consisted of nine decks, the boat deck, seven decks labelled from A to G which carried the passengers and the Orlop Deck which was below the waterline. The liner had a height of 175 feet and a breadth of 92 feet.[fn::https://www.encyclopedia-titanica.org/titanic/ (consulted on the 5th of August, 2018).] 
+
+#+CAPTION: Profile of RMS Titanic with the decks indicated
+#+NAME: tab:titanicprofile
+#+attr_html: :width 400px
+#+attr_latex: :width 400px
+[[./TitanicProfile.png]] 
+
+The Titanic may be one of the most iconic ships in history, its story known the world over.[fn::http://www.bbc.co.uk/history/titanic (consulted on the 5th of August, 2018).] The tragedy has led to better safety regulations for ships and inspired numerous expeditions, movies, books, plays and characters.
+
+So many passengers have lost their lives due to the fact that there were not enough lifeboats. Luck played a part in surviving this disaster. Moreover, some groups had an advantage compared to other groups. For instance, the "women and children first" policy left a relatively larger number of men aboard. In the same way as children and teenagers had an advantage because of this principle. Similarly, speculations can be made regarding the advantage of the elderly aboard the Titanic. On the one hand it seems logical that the seniors were helped to the lifeboats because of a policy similar to the one about women and children. Older people are not as physically fit as the rest of the passengers, therefore they need to be assisted. On the other hand however, were the elderly the ones left behind as a result of their physical condition. They would have had more trouble climbing from the lowest deck to the boat deck. Finally, some people travelling first class might have had a better chance at surviving as well. The passengers were able to choose between three classes, varying in price and comfort. There was also a correlation between these three classes and wealth and social class. Most of the people travelling first class were, for example, businessmen, politicians and bankers. Second class travellers included professors, authors and tourists, members of the middle class. Emigrant workers moving to the United States and Canada travelled third class. In general, people travelling first class were closer to the boat deck and had, therefore, more chance to escape the flooding of the cabins (see Figure ref:tab:titanicdeckplanone and Figure ref:tab:titanicdeckplantwo). They could get to the life boats faster than people whose cabins were on one of the lower decks.
+
+#+CAPTION: Deckplan of the Titanic 
+#+NAME: tab:titanicdeckplanone
+#+attr_html: :width 300px
+#+attr_latex: :width 300px
+[[./Deck2.png]] 
+
+#+CAPTION: Deckplan of the Titanic 
+#+NAME: tab:titanicdeckplantwo
+#+attr_html: :width 300px
+#+attr_latex: :width 300px
+[[./Deck3.png]] 
+
+
+In this paper we will take a look at what people were more likely to survive the demise of the Titanic with the help of machine learning. We will predict the chances of survival of certain groups of passengers. In addition, we will see if the expectations that children, women and rich people were indeed benefited are correct. 
+
+** Machine Learning
+For the past 15 years, scientists have tried to make computers learn new things from given data with the help of machine learning. The definition of machine learning given by an professor at Stanford University is as follows: "Machine learning is the science of getting computers to act without being explicitly programmed."[fn::Quote created by Stanford University on the course of Machine Learning, taught by: Andrew Ng, Co-founder, Coursera; Adjunct Professor, Stanford University; formerly head of Baidu AI Group/Google Brain. https://www.coursera.org/learn/machine-learning (consulted on the 6th of August, 2018).] It consists of giving computers the ability to learn and make decisions from data. These machine learning techniques are used to build predictive models. To illustrate, we will discuss some examples. 
+
+Spam emails are sent to everyone who has an emailaccount. Whether the email is from a lottery telling you you have won a $1-million prize or from an unknown travel-agency offering you a trip to an exclusive resort for very little money. It does not matter what the email looks like, your computer is able to distinguish the spam from the usual emails and places the spam in the spam folder of your account. The computer can detect the elements of spam, find patterns and compares the found patterns to new mail. Spam tends to have characteristic elements such as spelling mistakes, an originating address in Nigeria or claims that it needs your bank information. Furthermore, huge tech giants such as Google, Netflix and Spotify use machine learning. The algorithms of these firms offer recommendations and suggestions based on previous user searches, exactly because they can recognise a pattern in these searches.[fn::https://www.redpixie.com/blog/examples-of-machine-learning(consulted on the 6th of August, 2018).] Maybe one of the best known examples is AlphaGo. The computer programm developed by Google DeepMind in London to play the the boardgame Go.[fn::https://deepmind.com/blog/alphago-zero-learning-scratch/(consulted on the 6th of August, 2018).] In October 2015, AlphaGo became the first computer Go program to beat a human professional Go player. It was trained on moves of expert players from recorded historical games, a database of around 30 million moves. The algorithm used these moves to mimic human play by attempting to match these moves. Moreover, machine learning is making a breakthrough in the medical field as well. AI pioneer Regina Barzilay carried out research and is now teaching machines to hunt down cancer. Experienced doctors have only a limited amount of patients' experience. Curing cancer is now more a trial-and-error process. With the help of machine learning people can be diagnosed faster and can be cured with the appropriate treatment.[fn::New Scientist Weekly, 21 July 2018, I teach machines to hunt down cancer, Interview by Chelsea Whyte]   
+
+A lot of different machine learning techniques exist. In this paper we will discuss two examples.
+ 
+
+** Different types of Machine Learning
+Machine learning can be divided in roughly three categories: reinforcement, unsupervised and supervised learning. The latter two will be discussed and these can also be divided in subgroups. We have to ask ourselves the questions how does the computer know it is getting better or not, and how does it know how to improve? The different answers to these questions have made these different types of machine learning techniques exist, see Figure ref:tab:types. 
+
+#+CAPTION: An illustration of the different types of machine learning
+#+NAME: tab:types
+#+attr_html: :width 300px
+#+attr_latex: :width 200
+[[./typesmachinelearning.png]]
+
+
+*Unsupervised learning*
+This is a version of machine learning where the computer has to uncover hidden patterns from unlabeled data. Correct responses are not provided. The algorithm has to identify similarities between the inputs. This way the inputs that have something in common are categorised together.[fn::Machine Learning, An Algorithmic Perspective second edition by Stephen Marsland, 2015 by Taylor & Francis Group.]
+
+For instance, grouping customers in categories based on buying behaviour without knowing in advance what these categories might be. 
+
+*Supervised learning*
+The majority of machine learning uses supervised learning. Whereas unsupervised learning has to make decisions from data that is not labeled (the correct responses are not provided), supervised machine learning deals with labeled data. The correct answers are already provided in a training set of examples. The algorithm generalises to respond correctly to all possible inputs, based on this training. The computer is provided with a specific input combined with the correct output or prediction. This way, the machine is trained to see the connections between the input and the right output. When a computer has had enough training or has been provided with enough data points, it will make less mistakes with every try. Eventually the computer is able to produce the right output based on a given input. [fn::https://machinelearningmastery.com/supervised-and-unsupervised-machine-learning-algorithms/(consulted on the 26th of August, 2018).]
+
+The Titanic task is a perfect example of supervised learning. We already know who has survived the disaster and who has not. This way we can train our computer on the complete dataset. Consequently, the computer learns to connect particular variables to the fact if someone has survived or not. Given a new person, of whom we don't know if he or she has survived it, the computer can make a prediction. We can produce the chances of survival for particular variables, e.g. gender, class etc. Picking the right variables is crucial for producing a model. Moreover, choosing how to process your data is important. We will put a lot of effort in choosing the right variables and how to process the data. This will take up a lot of time and is part of the trial-and-error procedure.
+A dataset consists of datapoints. These are samples described using predictor variables and a target variable. Organised in a table with rows and columns. The goal is to predict the target variable, in this case 1 or 0 representing survived or not survived respectively in our Titanic dataset, given the predictor variables, such as class, gender, age, siblings etc. 
+
+We can specify two different types of supervised learning: 
+- *Classification*: the target variable consists of categories. Predicting survival on the Titanic is a classification problem. We have to classify, based on our predictor variables, if a person belongs to the class of survived (1) or not survived (0). This is a special case of a classification problem called binary classification. For the Titanic problem we use labelled data. Consequently, we use supervised machine learning. 
+- *Regression*: the target variable is continuous. For instance, a dataset containing housing price data like the year the house was built, number of bedrooms, acreage. There is a price associated with each house. The goal is to predict the price of a house, given these variables. For the reason that a price is a continuous variable, this problem is an example of regression.
+
+
+** Algorithms
+To train our computer on the dataset we use two different algorithms. Because we approach our problem in two different ways, the results will be more trustworthy. Training our model on the data using an algorithm is called 'fitting' a model to the data. Fitting means minimizing the classification mistakes that we make. We split our data into a training and test set. We fit our model to the training data and predict on the test set. 
+
+*** KNearestNeighbours
+
+To begin with, we will use the so-called KNearestNeighbours algorithm. It predicts a label of a datapoint by looking at the 'k' closest labelled data points. KNN takes a majority vote on what label an undecided point has to have. For instance, when we want to decide if a dot on this map is a blue square or a red triangle, we can choose our 'k' as 3 (see Figure ref:tab:knn). With choosing our 'k', we create a set of decision boundaries. Our computer will look at the three closest datapoints to classify our undecided point. If two of those three are blue squares, it classifies our undecided point as a blue square. If two of those three points are red triangles, it classifies our undecided point as a red triangle. The trick is to choose the right value for 'k'. Choosing a too large value for 'k', will lead to underfitting therefore creating a smoother decision boundary. This way we will have a less complex model, because our algorithm generalizes too much and uses too little information. On the other side, choosing a too small value for 'k' will lead to overfitting. Consequently, our model will be more complex and will have a more erratic pattern. We use 'too much' information and our model becomes less reliable. These problems of overfitting and underfitting are very common in the world of machine learning. They also occur using other algorithms. Finding the right 'k' is a combination of using other algorithms to find it and a trial-and-error procedure.[fn::DataCamp courses on Supervised Learning with scikitlearn: https://www.datacamp.com/courses/q:supervised (consulted on the 13th of February, 2018). \label{fn:datacamp}]
+
+#+CAPTION: Illustration of the algorithm called KNearestNeighbours
+#+NAME:   tab:knn
+#+attr_html: :width 110px
+#+attr_latex: :width 100px
+[[./KnnClassification.png]] 
+
+*** Logistic regression
+Second, we use an algorithm called logistic regression (LogReg). The name may be misleading because LogReg is commonly used for classification problems. It outputs probabilities. For example, if the dataset consists of $n$ different classes, the algorithm calculates the chance that one specific case is classified as belonging to one of these $n$ classes. In our case, we see $n=2$. Therefore, we are dealing with a binary classification problem.[fn::https://www.statisticssolutions.com/what-is-logistic-regression/(consulted on the 5th of September, 2018).] This implies the following: if we find $p>0.5$, the variable is classified as 1, the passenger has survived the disaster; when we see $p<0.5$, it is classified as 0, the passenger has not survived. 
+
+To explain the principle of logistic regression, we will have a look at a linear function first:
+
+\begin{equation}
+y=ax+b
+\end{equation} 
+
+In this case there is only one predictor variable. But we have more than one predictor variable in our dataset of the Titanic. $a$ and $b$ are the parameters of our model. We want to fit a line to the data. Fitting, in this case, consists of choosing a slope $a$ and an intercept $b$. Our Titanic dataset has more than one feature, because we have more than one predictor variable. Using linear regression, our line will look something like this, where each $x$ represents a different predictor variable. 
+
+\begin{equation}
+y=a_1x_1+a_2x_2+ \dots + a_nx_n+b+\varepsilon_{i}  
+\end{equation}
+
+By calculating the vertical distance between each data point and the line, we can get an impression of how accurate our model is. This distance is called the residual ($\varepsilon$). One option is to minimze the sum of the residuals. However, this will not work because large positive values will cancel out large negative values. Consequently, shifting the line upwards will always reduce the sum of the residuals. This is because the positive values will be $\infty$ and the negative values will be $-\infty$. As a result of this, the sum of the residuals will be zero. So, to make sure that our line is as close to the actual data as possible, we calculate the sum of squared residuals (see Figure ref:tab:ols and see Equation \ref{eq:residual}). This is called OLS, which stands for Ordinary Least Squares. When we call fit on our logistic regression model in scitkitlearn, it performs this OLS under the hood. Scikitlearn is a popular machine learning library for Python, which we will use to train our computer (see Footnote \ref{fn:datacamp}).
+
+\begin{equation}
+\label{eq:residual}
+\sum_{i=1}^{N}\varepsilon^2_{i}
+\end{equation}
+
+
+
+#+CAPTION: Ordinary Least Squares: Minimize sum of squares of residuals
+#+NAME:   tab:ols
+#+attr_html: :width 300px
+#+attr_latex: :width 200px
+[[./Residual.png]]
+
+The red lines in the illustration (see Figure ref:tab:ols) represent $\varepsilon^2_{i}$. 
+The equations mentioned earlier are used most commonly for linear regression. We will use logistic regression, because our target variable is not continuous: our variable is either 0 or 1. The logistic function $\varsigma(t)$ is defined as follows:
+
+\begin{equation}
+\label{eq:2}
+\sigma_t = \frac{e^t}{1+e^t}
+\end{equation}
+
+Because we have three variables(i.e. age, gender and class), $t$ in this case is of the form:
+
+\begin{equation}
+y=a_1x_1+a_2x_2+a_3x_3+b+\varepsilon_{i} 
+\end{equation}
+
+As the name already tells us suggests, logistic regression is based on the logistic function. This is a sigmoid function (see Figure ref:tab:log), which takes any real input $t$ ($t\in{\rm I\!R}$), and outputs a value between zero and one, a probability.
+
+#+CAPTION: The logistic function
+#+NAME:   tab:log
+#+attr_html: :width 300px
+#+attr_latex: :width 200px 
+[[./LogisticCurve.png]]
+
+The same principle applies to logistic regression regarding the underfitting and overfitting problem. Adding more independent variables to our model will increase the amount of explained variance. Our model will be more complex and will have a more erratic pattern, as mentioned earlier. Using too little independent variables will result in underfitting, where our model is too 'simple'. 
+
+After using these two algorithms, we can measure model performance. To do this, we can use metrics such as accuracy. Accuracy is the fraction of correct predictions, think of the fraction of cases where the model correctly predicts that someone survived. How these metrics work, will be explained later on. 
+
+To sum up, we follow this procedure: We split our dataset into a training set and test set. Then we fit or train the classifier to the training set. Subsequently, we predict on the test set and print the prediction. In the end, we compare our predictions to the known labels and compute the metric of accuracy. 
+
+** Main questions and sub-questions
+This research and information leads us to the following main question and sub-questions: 
+
+*Main question*
+
+/Is it possible to make an accurate prediction whether the passengers on board of the Titanic survived the disaster or not using the information about gender, class and age given in the dataset?/
+
+*Sub-questions* 
+
++ /What is the influence of gender on the chance of surviving after the Titanic had sunk?/
++ /What is the influence of class on the chance of surviving after the Titanic had sunk?/
++ /What is the influence of age on the chance of surviving after the Titanic had sunk?/
++ /Is there a monotonous relationship between age and survival rate?/ 
+
+These questions lead to the following hypotheses:
+
++ *Main question* : Yes this is possible, with the help of machine learning using the algorithms KNearestNeighbours and logistic regression.
++ *Sub-questions* :
+
+  - The survival rate of women is higher than the survival rate of men.
+  - The survival rate of passengers who were travelling in a higher class is higher than those travelling in a lower class.
+  - The survival rate of children and elderly is higher than the survival rate of the adults.
+  - The relationship between age and survival rate is not monotonous.
+
+
+
+
+Goal is to learn from data for which the right output is known so we can make predictions on new data for which we don't know the output.
+
+
+How well will model perform on new data that the algorithm has never seen before. Splitting of your dataset. 
+
++ Aanhalingstekens bij fitting
++ age: protocol, children, elderly benefited, or maybe disadvantaged
++ Verwijzen naar een equation?
+
+
+Choose the line that minimizes the error function / loss function. What is an error function? Explain.
+
+Larger area under ROC curve = better model. Area is called AUC. Popular metric for classification models. AUC using cross validation. If AUC is greater than 0,5, the model is better than just random guessing. 
+
+
+~matplotlib~
+
+#+BEGIN_SRC ipython
+import numpy as np
+#+END_SRC
+
+
+1,2,3 - steps Introduction
+2. Split dataset into a training set and test set, new dataset. 
+4. Fit/train classifier to the training set, what is fitting? Difference Knearest and Logistic
+5. Predict on the test set
+6. Print the prediction
+7. Compare predictions with known labels
+
+
+Perform your split so that your split reflects labels on your data. You want labels to be distributed as they are in the original dataset. 
+
+*Problems*
+ 
+Model performance is dependent on the way our data is split. Results are not reliable because of this. We solve this by using cross-validation. /insert image of folds/. Second fold as test set, fit on remaining data, predict on test set and compute metric of interest. 5-fold cross-validation. k-fold cross validation. More folds is more computationally expensive. 
+
+Measuring model performance using accuracy. This is a fraction of correctly classified samples. However, this is not always a useful metric. For instance, if we take a look at spam classification. 99% of your email is real and 1% is spam. We instantiate a classifier which classifies all emails as real. Computing the accuracy will give us a score of 99%, which is pretty high. But our classifier is horrible at predicting spam. *Class imbalance*. We have to use more nuanced metrics, such as the confusion matrix. /insert image of confusion matrix/. Accuracy, precision, recall, F1 score. High precision \rightarrow not many real emails are predicted as spam. High recall \rightarrow predicted most spam emails correctly. Confusion matrix in N dimensions? 
+
++ Underfitting and overfitting
++ Train-test split
++ Cross-validation
++ GridSearch
+
+
+* Preparation
+
+** A first look at the dataset
+
+First we perform some numerical EDA. EDA stands for exploratory data analysis. This will help us explore our dataset and get a first impression of the information. Not necessary to build a dataframa, for the information is already organised in a table. 
+
+/code with describe etc/ 
+
+Next we perform some visual EDA. Scatter matrix, plotting, binary Seaborn's countplot. Possible correlation? Explain / describe diagrams. 
+
+** Preprocessing techniques
+
+How to deal with missing values, dummies, place of boarding, gender, cabin numbers. Map of Titanic? Need to encode categorical features numerically \rightarrow convert to dummy variables. 0 = not that category. 
+
+Missing data
+- NaN replace
+- drop missing data
+- impute missing data: make an educated guess
+
+Centering and scaling
+- Features on larger scales can unduly influence the model.
+- We want features on a similar scale. *Normalizing*
+- Standardization: substract the mean and divide by variance.
+- Substract minimum and divide by the range
+- Normalize so that data ranges from -1 to +1
+
+
+
+We have to build a classifier that needs to learn from already labeled data. Training data = already labeled data.
+
+
+Using GridSearchCV or RandomizedSearchCV, we can choose our parameters for KNearestNeighbours (K) and LogisticRegression (C). Large C kan lead to overfitting, small C kan lead to underfitting. 
+* Results
+
+
+We use information from [[http://www.encyclopedia-titanica.org][this
+site]].
+
+This is one of the first drafts to get to know the dataset and to
+experiment with the python and all the packages included.
+
+
+* Preparation
+  :PROPERTIES:
+  :CUSTOM_ID: preparation
+  :END:
+
+#+BEGIN_SRC ipython
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[1]:
+:END:
+
+The adventure begins with importing the right packages. The dataset is
+downloaded from [[https://www.kaggle.com/c/titanic/data][kaggle site]]
+as csv\_file. Next the data is read into a dataframe by using pandas'
+pd.read\_csv
+
+#+BEGIN_SRC ipython
+    data = pd.read_csv('titanic.csv')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[2]:
+:END:
+
+Here we see the head of our dataframe. A couple of questions come to
+mind. Which variables play a role by determining the probability of
+surviving the Titanic. Sex and Cabin are not numeric values. How do we
+convert these to numeric values?
+
+* A first look at the dataset
+  :PROPERTIES:
+  :CUSTOM_ID: a-first-look-at-the-dataset
+  :END:
+
+#+BEGIN_SRC ipython
+    data.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[3]:
+# text/plain
+:    PassengerId  Survived  Pclass  \
+: 0            1         0       3   
+: 1            2         1       1   
+: 2            3         1       3   
+: 3            4         1       1   
+: 4            5         0       3   
+: 
+:                                                 Name     Sex   Age  SibSp  \
+: 0                            Braund, Mr. Owen Harris    male  22.0      1   
+: 1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1   
+: 2                             Heikkinen, Miss. Laina  female  26.0      0   
+: 3       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+: 4                           Allen, Mr. William Henry    male  35.0      0   
+: 
+:    Parch            Ticket     Fare Cabin Embarked  
+: 0      0         A/5 21171   7.2500   NaN        S  
+: 1      0          PC 17599  71.2833   C85        C  
+: 2      0  STON/O2. 3101282   7.9250   NaN        S  
+: 3      0            113803  53.1000  C123        S  
+: 4      0            373450   8.0500   NaN        S  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+Here are the summary statistics of the dataframe. The mean,
+standarddeviation etc are given in this table.
+
+#+BEGIN_SRC ipython
+    data.describe()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[4]:
+# text/plain
+:        PassengerId    Survived      Pclass         Age       SibSp  \
+: count   891.000000  891.000000  891.000000  714.000000  891.000000   
+: mean    446.000000    0.383838    2.308642   29.699118    0.523008   
+: std     257.353842    0.486592    0.836071   14.526497    1.102743   
+: min       1.000000    0.000000    1.000000    0.420000    0.000000   
+: 25%     223.500000    0.000000    2.000000   20.125000    0.000000   
+: 50%     446.000000    0.000000    3.000000   28.000000    0.000000   
+: 75%     668.500000    1.000000    3.000000   38.000000    1.000000   
+: max     891.000000    1.000000    3.000000   80.000000    8.000000   
+: 
+:             Parch        Fare  
+: count  891.000000  891.000000  
+: mean     0.381594   32.204208  
+: std      0.806057   49.693429  
+: min      0.000000    0.000000  
+: 25%      0.000000    7.910400  
+: 50%      0.000000   14.454200  
+: 75%      0.000000   31.000000  
+: max      6.000000  512.329200  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>714.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>446.000000</td>
+      <td>0.383838</td>
+      <td>2.308642</td>
+      <td>29.699118</td>
+      <td>0.523008</td>
+      <td>0.381594</td>
+      <td>32.204208</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>257.353842</td>
+      <td>0.486592</td>
+      <td>0.836071</td>
+      <td>14.526497</td>
+      <td>1.102743</td>
+      <td>0.806057</td>
+      <td>49.693429</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.420000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>223.500000</td>
+      <td>0.000000</td>
+      <td>2.000000</td>
+      <td>20.125000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>7.910400</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>446.000000</td>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>28.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>14.454200</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>668.500000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>38.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>31.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>891.000000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>80.000000</td>
+      <td>8.000000</td>
+      <td>6.000000</td>
+      <td>512.329200</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+It is possible to search for particular passenger in the dataset. Such
+as passengers who were older than eighty years.
+
+#+BEGIN_SRC ipython
+    data[data.Age == 80]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[5]:
+# text/plain
+:      PassengerId  Survived  Pclass                                  Name  \
+: 630          631         1       1  Barkworth, Mr. Algernon Henry Wilson   
+: 
+:       Sex   Age  SibSp  Parch Ticket  Fare Cabin Embarked  
+: 630  male  80.0      0      0  27042  30.0   A23        S  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>630</th>
+      <td>631</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30.0</td>
+      <td>A23</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+* First figures
+  :PROPERTIES:
+  :CUSTOM_ID: first-figures
+  :END:
+
+To get a good impression of the dataset and the influence of the
+variables, a couple of diagrams are made using =mathplotlib=.
+
+#+BEGIN_SRC ipython
+    plt.scatter(data.Age,data.Survived)
+    plt.xlabel('Age')
+    plt.ylabel('Survived')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[6]:
+# text/plain
+: Text(0,0.5,'Survived')
+
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377maP.png]]
+:END:
+
+
+Scatterplots are not always the best choice to illustrate some of the
+variables. There is not much to say about the variance because of the
+fact that a lot of points are close to eachother. A couple of values
+however stand out. We see that a passenger or more passengers travelling
+first class have paid more than 500 pounds for their ticketprice.
+
+#+BEGIN_SRC ipython
+    plt.scatter(data.Pclass,data.Fare)
+    plt.xlabel('Pclass')
+    plt.ylabel('Fare')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[7]:
+# text/plain
+: Text(0,0.5,'Fare')
+
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377zkV.png]]
+:END:
+
+#+BEGIN_SRC ipython
+    plt.scatter(data.Fare, data.Survived)
+    plt.xlabel('Fare')
+    plt.ylabel('Survived')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[8]:
+# text/plain
+: Text(0,0.5,'Survived')
+
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377Avb.png]]
+:END:
+
+#+BEGIN_SRC ipython
+    plt.scatter(data.Fare, data.Age)
+    plt.xlabel('Fare')
+    plt.ylabel('Age')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[9]:
+# text/plain
+: Text(0,0.5,'Age')
+
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377N5h.png]]
+:END:
+
+I was curious to see who had paid more than 400 pounds for their ticket.
+We see that it is easy to make a selection in our dataset using the =>=
+sign
+
+#+BEGIN_SRC ipython
+    data[data.Fare > 400]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[10]:
+# text/plain
+:      PassengerId  Survived  Pclass                                Name  \
+: 258          259         1       1                    Ward, Miss. Anna   
+: 679          680         1       1  Cardeza, Mr. Thomas Drake Martinez   
+: 737          738         1       1              Lesurer, Mr. Gustave J   
+: 
+:         Sex   Age  SibSp  Parch    Ticket      Fare        Cabin Embarked  
+: 258  female  35.0      0      0  PC 17755  512.3292          NaN        C  
+: 679    male  36.0      0      1  PC 17755  512.3292  B51 B53 B55        C  
+: 737    male  35.0      0      0  PC 17755  512.3292         B101        C  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>258</th>
+      <td>259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Ward, Miss. Anna</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>NaN</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>679</th>
+      <td>680</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cardeza, Mr. Thomas Drake Martinez</td>
+      <td>male</td>
+      <td>36.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B51 B53 B55</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>737</th>
+      <td>738</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Lesurer, Mr. Gustave J</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B101</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+#+BEGIN_SRC ipython
+    df_cleaned = data.dropna()
+    df_cleaned['male_dummy'] = (df_cleaned.Sex == 'male') #nieuwe kolom definiëren om male te veranderen in een boolean
+    X = df_cleaned[['Age','male_dummy', 'Pclass', 'SibSp', 'Fare']]
+    y = df_cleaned[['Survived']]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[11]:
+# output
+: /Users/myrthe/anaconda3/lib/python3.6/site-packages/ipykernel_launcher.py:2: SettingWithCopyWarning: 
+: A value is trying to be set on a copy of a slice from a DataFrame.
+: Try using .loc[row_indexer,col_indexer] = value instead
+: 
+: See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+:   
+: 
+:END:
+
+Here we see that we clean our dataset for the first time to make it more
+suitable for the packages we will be using. All rows with missing values
+(these are called NaNs, short for Not a Number) are deleted for
+scikit\_learn can't work with NaNs by using =.dropna()=. There are other
+ways than deleting rows to handle this problem. Replace the NaNs with
+the mean or to interpolate for example. However the choice was made to
+delete these rows. Furthermore we see that the problem of the =Sex=
+column not being a numeric value is handled. The values in the =Sex=
+column are changed into a boolean. Males are given a =True= and the
+females are given a =False=. Next a couple of variables have added to
+=X=. =Age=,=male_dummy=, =Pclass=, =SibSp=, =Fare= are all numeric
+values and therefore easy to use.
+
+Here we see the cleaned dataframe with the new added column =male_dummy=
+
+#+BEGIN_SRC ipython
+    df_cleaned.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[12]:
+# text/plain
+:     PassengerId  Survived  Pclass  \
+: 1             2         1       1   
+: 3             4         1       1   
+: 6             7         0       1   
+: 10           11         1       3   
+: 11           12         1       1   
+: 
+:                                                  Name     Sex   Age  SibSp  \
+: 1   Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1   
+: 3        Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+: 6                             McCarthy, Mr. Timothy J    male  54.0      0   
+: 10                    Sandstrom, Miss. Marguerite Rut  female   4.0      1   
+: 11                           Bonnell, Miss. Elizabeth  female  58.0      0   
+: 
+:     Parch    Ticket     Fare Cabin Embarked  male_dummy  
+: 1       0  PC 17599  71.2833   C85        C       False  
+: 3       0    113803  53.1000  C123        S       False  
+: 6       0     17463  51.8625   E46        S        True  
+: 10      1   PP 9549  16.7000    G6        S       False  
+: 11      0    113783  26.5500  C103        S       False  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>0</td>
+      <td>1</td>
+      <td>McCarthy, Mr. Timothy J</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17463</td>
+      <td>51.8625</td>
+      <td>E46</td>
+      <td>S</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Sandstrom, Miss. Marguerite Rut</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>PP 9549</td>
+      <td>16.7000</td>
+      <td>G6</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Bonnell, Miss. Elizabeth</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113783</td>
+      <td>26.5500</td>
+      <td>C103</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+#+BEGIN_SRC ipython
+    from sklearn.linear_model import LogisticRegression
+    logreg = LogisticRegression()
+    logreg.fit(X, y)
+    y_pred = logreg.predict(X)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[13]:
+# output
+: /Users/myrthe/anaconda3/lib/python3.6/site-packages/sklearn/utils/validation.py:578: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+:   y = column_or_1d(y, warn=True)
+: 
+:END:
+
+Here we initialize the first regression called logistic regression. We
+don't split our dataframe in test and training set yet. For a general
+indication we only use the regressor and fit it on the cleaned dataset.
+After that we predict on the same dataset.
+
+#+BEGIN_SRC ipython
+    logreg.coef_
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[14]:
+# text/plain
+: array([[-0.01636209, -2.08109476,  0.01318695,  0.2035389 ,  0.00296447]])
+:END:
+
+Here we see the outcome of our first try with the logistic regression.
+
+To interpret these coefficients, let's look at the order of the columns
+in =X=:
+
+#+BEGIN_SRC ipython
+    X.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[15]:
+# text/plain
+:      Age  male_dummy  Pclass  SibSp     Fare
+: 1   38.0       False       1      1  71.2833
+: 3   35.0       False       1      1  53.1000
+: 6   54.0        True       1      0  51.8625
+: 10   4.0       False       3      1  16.7000
+: 11  58.0       False       1      0  26.5500
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>male_dummy</th>
+      <th>Pclass</th>
+      <th>SibSp</th>
+      <th>Fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>38.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>1</td>
+      <td>71.2833</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>35.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>1</td>
+      <td>53.1000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>54.0</td>
+      <td>True</td>
+      <td>1</td>
+      <td>0</td>
+      <td>51.8625</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>4.0</td>
+      <td>False</td>
+      <td>3</td>
+      <td>1</td>
+      <td>16.7000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>58.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>26.5500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+* Graphic illustration of a prediction
+  :PROPERTIES:
+  :CUSTOM_ID: graphic-illustration-of-a-prediction
+  :END:
+
+One of the first graphic illustrations of the relation between fare, age
+and survival. The relation is not very clear but we see that the higher
+the fare the more people survived and the higher the age the less people
+survived. However, this figure is not very accurate, because of the fact
+that only three variables were used.
+
+#+BEGIN_SRC ipython
+    survived = df_cleaned[df_cleaned.Survived == 1]
+    not_survived = df_cleaned[df_cleaned.Survived == 0]
+
+    plt.scatter(survived.Fare, survived.Age, marker='^', label = 'survived')
+    plt.scatter(not_survived.Fare, not_survived.Age, marker='^', label = 'not survived')
+    plt.legend()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[16]:
+
+
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377aDo.png]]
+:END:
+
+#+BEGIN_SRC ipython 
+    P = df_cleaned[['Pclass', 'Fare','Age','male_dummy']]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[17]:
+:END:
+
+We select from our df\_cleaned only the columns with numeric values.
+This is convenient for the splitting into train and testsets, for
+scikit\_learn can only work with numbers. Difference between P and X
+here is that X also has the column siblings, whereas P only has four
+columns
+
+#+BEGIN_SRC ipython
+    P.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[18]:
+# text/plain
+:     Pclass     Fare   Age  male_dummy
+: 1        1  71.2833  38.0       False
+: 3        1  53.1000  35.0       False
+: 6        1  51.8625  54.0        True
+: 10       3  16.7000   4.0       False
+: 11       1  26.5500  58.0       False
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>71.2833</td>
+      <td>38.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>53.1000</td>
+      <td>35.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>51.8625</td>
+      <td>54.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>16.7000</td>
+      <td>4.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>26.5500</td>
+      <td>58.0</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+#+BEGIN_HTML
+  <div>
+  <style scoped>
+      .dataframe tbody tr th:only-of-type {
+          vertical-align: middle;
+      }
+
+      .dataframe tbody tr th {
+          vertical-align: top;
+      }
+
+      .dataframe thead th {
+          text-align: right;
+      }
+  </style>
+  <table border="1" class="dataframe">
+    <thead>
+      <tr style="text-align: right;">
+        <th></th>
+        <th>Pclass</th>
+        <th>Fare</th>
+        <th>Age</th>
+        <th>male_dummy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>1</th>
+        <td>1</td>
+        <td>71.2833</td>
+        <td>38.0</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <th>3</th>
+        <td>1</td>
+        <td>53.1000</td>
+        <td>35.0</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <th>6</th>
+        <td>1</td>
+        <td>51.8625</td>
+        <td>54.0</td>
+        <td>True</td>
+      </tr>
+      <tr>
+        <th>10</th>
+        <td>3</td>
+        <td>16.7000</td>
+        <td>4.0</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <th>11</th>
+        <td>1</td>
+        <td>26.5500</td>
+        <td>58.0</td>
+        <td>False</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+#+END_HTML
+
+#+BEGIN_SRC ipython
+    from sklearn.linear_model import LogisticRegression
+    logreg = LogisticRegression(fit_intercept=True)
+    logreg.fit(P, y)
+    y_pred = logreg.predict(P)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[19]:
+# output
+: /Users/myrthe/anaconda3/lib/python3.6/site-packages/sklearn/utils/validation.py:578: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+:   y = column_or_1d(y, warn=True)
+: 
+:END:
+
+We fit our regressor on our dataset and predict on that same dataset.
+Once again without splitting into train and testset. Just to get a
+general idea about the values of the coeffecients.
+
+#+BEGIN_SRC ipython
+    logreg.coef_
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[20]:
+# text/plain
+: array([[ 0.00917324,  0.00337838, -0.01693475, -2.07643966]])
+:END:
+
+One could interpret the found coeffecients as follows: The coeffecients
+for class and fare are positive, which may indicate that the higher the
+class and price paid for a ticket, the higher the chance of surviving
+the Titanic. When we look at age and sex we see the exact opposite for
+the coeffecients are negative. The higher the age the lower your chances
+and if you were a man on board of the titanic your chances of surviving
+were lower.
+
+#+BEGIN_SRC ipython
+    from sklearn.neighbors import KNeighborsClassifier
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[21]:
+:END:
+
+Another regression is used in the following lines. (explanation K
+nearest neighbours)
+
+#+BEGIN_SRC ipython
+    knn = KNeighborsClassifier(n_neighbors=6)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[22]:
+:END:
+
+#+BEGIN_SRC ipython
+    knn.fit(P,y)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[23]:
+# output
+: /Users/myrthe/anaconda3/lib/python3.6/site-packages/ipykernel_launcher.py:1: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+:   """Entry point for launching an IPython kernel.
+: 
+# text/plain
+: KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+:            metric_params=None, n_jobs=1, n_neighbors=6, p=2,
+:            weights='uniform')
+:END:
+
+#+BEGIN_SRC ipython
+    prediction = knn.predict(P)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[24]:
+:END:
+
+#+BEGIN_SRC ipython
+    P.shape
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[25]:
+# text/plain
+: (183, 4)
+:END:
+
+#+BEGIN_SRC ipython
+    print('Prediction{}'.format(prediction))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[26]:
+# output
+: Prediction[1 0 0 1 0 1 1 1 1 0 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 0 1 1 1 1
+:  1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 1
+:  1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 0 1 1 1 0 0 1 1 1 1 1 0 1 1 1 0 1 1
+:  0 1 0 0 0 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 1 1 0 0 0 1 1 1 1 1 0 0 1 1 0 1 1
+:  1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 1 1 1 0 1 1 0 0 0 1 1 1 1 1 1 1 0 1 1 1]
+: 
+:END:
+
+Here we see one of our first predictions. 1 indicates the passenger has
+survived and 0 indicates that the passenger has died
+
+Elke persoon heeft andere karakteristieken, dus dit zijn voorspellingen
+per persoon. Dus er komt een kans uit en dan kijkt de regressor, boven
+of onder 0.5
+
+#+BEGIN_SRC ipython
+    knn.score(P,y)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[27]:
+# text/plain
+: 0.7486338797814208
+:END:
+
+This score gives a number between 0 and 1 and gives an impression of the
+accuracy of our model. However, this accuracy is not an indication of
+how well our model performs (explanation spam mail etc.)
+
+#+BEGIN_SRC ipython
+    P.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[28]:
+# text/plain
+:     Pclass     Fare   Age  male_dummy
+: 1        1  71.2833  38.0       False
+: 3        1  53.1000  35.0       False
+: 6        1  51.8625  54.0        True
+: 10       3  16.7000   4.0       False
+: 11       1  26.5500  58.0       False
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>71.2833</td>
+      <td>38.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>53.1000</td>
+      <td>35.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>51.8625</td>
+      <td>54.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>16.7000</td>
+      <td>4.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>26.5500</td>
+      <td>58.0</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+#+BEGIN_SRC ipython
+    q = df_cleaned.Survived
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[29]:
+:END:
+
+#+BEGIN_SRC ipython
+    q.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[30]:
+# text/plain
+: 1     1
+: 3     1
+: 6     0
+: 10    1
+: 11    1
+: Name: Survived, dtype: int64
+:END:
+
+#+BEGIN_SRC ipython
+    from sklearn.linear_model import LogisticRegression
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[31]:
+:END:
+
+#+BEGIN_SRC ipython
+    from sklearn.model_selection import train_test_split
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[32]:
+:END:
+
+#+BEGIN_SRC ipython
+    logreg = LogisticRegression()
+    P_train, P_test, q_train, q_test = train_test_split(P,q, test_size=0.2, random_state=42)
+    logreg.fit(P_train, q_train)
+    q_pred = logreg.predict(P_test)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[33]:
+:END:
+
+Here we see the dataset being split into a test and a training set. The
+arguments give us information about how much of our data we use as a
+test\_set and how much of our data we use as a training\_set. This and
+the parameters will be varied to see which parameter gives the best
+prediction. We fit our regressor on the training\_set and predict on the
+test\_set.
+
+#+BEGIN_SRC ipython
+    print('Prediction {}'.format(q_pred))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[34]:
+# output
+: Prediction [1 1 1 0 0 0 1 1 1 0 0 1 0 1 0 0 1 0 0 1 1 1 0 1 0 1 1 0 1 1 1 1 0 1 1 1 1]
+: 
+:END:
+
+#+BEGIN_SRC ipython
+    P_train.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[35]:
+# text/plain
+:      Pclass     Fare   Age  male_dummy
+: 331       1  28.5000  45.5        True
+: 336       1  66.6000  29.0        True
+: 193       2  26.0000   3.0        True
+: 75        3   7.6500  25.0        True
+: 248       1  52.5542  37.0        True
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>331</th>
+      <td>1</td>
+      <td>28.5000</td>
+      <td>45.5</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>1</td>
+      <td>66.6000</td>
+      <td>29.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>2</td>
+      <td>26.0000</td>
+      <td>3.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>3</td>
+      <td>7.6500</td>
+      <td>25.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>1</td>
+      <td>52.5542</td>
+      <td>37.0</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+#+BEGIN_SRC ipython
+    from sklearn.metrics import roc_auc_score
+    q_pred_prob = logreg.predict_proba(P_test)[:,1]
+    roc_auc_score(q_test, q_pred_prob)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[36]:
+# text/plain
+: 0.8416149068322981
+:END:
+
+When the test\_size is changed from 0.4 to 0.2 , the score increases
+with more than 10%. This makes sense because a smaller test\_set gives a
+higher accuracy score.
+
+#+BEGIN_SRC ipython
+    from sklearn.model_selection import cross_val_score
+    cv_scores = cross_val_score(logreg, P, q, cv=5, scoring='roc_auc')
+    print(cv_scores)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[37]:
+# output
+: [0.86666667 0.80333333 0.74666667 0.73263889 0.92361111]
+: 
+:END:
+
+#+BEGIN_SRC ipython
+    len(P)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[38]:
+# text/plain
+: 183
+:END:
+
+#+BEGIN_SRC ipython
+    len(prediction)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[39]:
+# text/plain
+: 183
+:END:
+
+Seaborn countplot option? plt.figure()
+
+sns.countplot(x='education', hue='party', data=df, palette='RdBu')
+
+plt.xticks([0,1], ['No', 'Yes']) plt.show()
+
+Given all the variables (age, gender, place of boarding etc.), you make
+a linear function (a1x1+a2x2+anxn+b). Computer puts this in the logistic
+function for x. For a particular x, you get a value between zero and
+one. This is your chance of survival. Boundary is 0,5. X < 0,5 passenger
+didn't survive. Computer tries to plot a logistic function where R2 is
+as small as possible. This is called the fitting process. The logistic
+function has to be as close to the datapoints as possible.
+
+#+BEGIN_SRC ipython
+    sns.countplot?
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[40]:
+:END:
+
+#+BEGIN_SRC ipython
+    sns.set(style="darkgrid")
+    ax = sns.countplot(x="Pclass",hue="Survived", data=data, palette="Set3")
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[41]:
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377nNu.png]]
+:END:
+
+More people in class 3 than in class 1, makes it difficult to compare
+and draw a conclusion. Percentage? In general, we cannot draw a
+conclusion regarding survival probabilities because there were more
+people in class 3 than in one 1. In the third class, more passengers
+died than survived. In the first class, more people survived than
+perished. We cannot compare the results from the first class to the
+third class. The plot only shows us one variable. This is another reason
+why we cannot be sure about the influence of class on the chance of
+survival. /Simpson paradox/
+
+#+BEGIN_SRC ipython 
+    sns.set(style="darkgrid")
+    ax = sns.countplot(x="Age",hue="Survived", data=data, palette="Set1")
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[42]:
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-13770X0.png]]
+:END:
+
+#+BEGIN_SRC ipython 
+    sns.set(style="darkgrid")
+    ax = sns.countplot(x="Fare",hue="Survived", data=data)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[43]:
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377mhD.png]]
+:END:
+
+#+BEGIN_SRC ipython
+    sns.set(style="darkgrid")
+    ax = sns.countplot(x="male_dummy",hue="Survived", data=df_cleaned, palette="Set2")
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[44]:
+
+
+# image/png
+[[file:obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377zrJ.png]]
+:END:
+
+
+
+
+* Conclusion
+
+* Discussion
+
+* References
+
+\printbibliography
+

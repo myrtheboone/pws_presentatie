@@ -1,0 +1,254 @@
+
+#+BEGIN_SRC ipython
+class employee:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.z = self.x+self.y
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[9]:
+:END:
+
+
+#+BEGIN_SRC ipython
+myrthe = employee(1,2)
+jan = employee(5,6)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[10]:
+:END:
+
+
+
+#+BEGIN_SRC ipython
+print(myrthe.y)
+print(jan.z)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[14]:
+# output
+: 3
+: 11
+: 
+:END:
+
+#+BEGIN_SRC ipython
+myrthe.hair
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[4]:
+# text/plain
+: 'brown'
+:END:
+
+#+BEGIN_SRC ipython
+miek_hair = 'red'
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[6]:
+:END:
+
+
+#+BEGIN_SRC ipython
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.random((5, 5)))
+
+df
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[15]:
+# text/plain
+:           0         1         2         3         4
+: 0  0.354813  0.837191  0.403546  0.085888  0.782431
+: 1  0.389026  0.573013  0.048319  0.681065  0.147479
+: 2  0.419524  0.690255  0.062686  0.052759  0.252656
+: 3  0.284843  0.524268  0.201925  0.828355  0.932566
+: 4  0.830313  0.638663  0.260559  0.662381  0.270753
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.354813</td>
+      <td>0.837191</td>
+      <td>0.403546</td>
+      <td>0.085888</td>
+      <td>0.782431</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.389026</td>
+      <td>0.573013</td>
+      <td>0.048319</td>
+      <td>0.681065</td>
+      <td>0.147479</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.419524</td>
+      <td>0.690255</td>
+      <td>0.062686</td>
+      <td>0.052759</td>
+      <td>0.252656</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.284843</td>
+      <td>0.524268</td>
+      <td>0.201925</td>
+      <td>0.828355</td>
+      <td>0.932566</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.830313</td>
+      <td>0.638663</td>
+      <td>0.260559</td>
+      <td>0.662381</td>
+      <td>0.270753</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+
+#+BEGIN_SRC ipython :exports results
+print(df.to_latex())
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[17]:
+# output
+: \begin{tabular}{lrrrrr}
+: \toprule
+: {} &         0 &         1 &         2 &         3 &         4 \\
+: \midrule
+: 0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+: 1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+: 2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+: 3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+: 4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+: \bottomrule
+: \end{tabular}
+: 
+: 
+:END:
+
+
+\begin{tabular}{l|c|c|c|c|c}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\hline
+pw0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+\bottomrule
+\end{tabular}
+
+\begin{tabular}{lrrrrr}
+toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+:0 &  0.354813 &  0.837191 &  0.403546 &  0.085888 &  0.782431 \\
+: 1 &  0.389026 &  0.573013 &  0.048319 &  0.681065 &  0.147479 \\
+: 2 &  0.419524 &  0.690255 &  0.062686 &  0.052759 &  0.252656 \\
+: 3 &  0.284843 &  0.524268 &  0.201925 &  0.828355 &  0.932566 \\
+: 4 &  0.830313 &  0.638663 &  0.260559 &  0.662381 &  0.270753 \\
+: \bottomrule
+: \end{tabular}
+
+
+
+#+BEGIN_SRC ipython
+pq = pd.DataFrame(np.random.random((5, 5)))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[18]:
+:END:
+
+#+BEGIN_SRC ipython
+print(pq.to_latex())
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[19]:
+# output
+: \begin{tabular}{lrrrrr}
+: \toprule
+: {} &         0 &         1 &         2 &         3 &         4 \\
+: \midrule
+: 0 &  0.404934 &  0.481067 &  0.257389 &  0.352876 &  0.966894 \\
+: 1 &  0.321359 &  0.614149 &  0.563271 &  0.232894 &  0.739181 \\
+: 2 &  0.078475 &  0.362242 &  0.940386 &  0.397011 &  0.237748 \\
+: 3 &  0.119574 &  0.380566 &  0.490025 &  0.558063 &  0.694235 \\
+: 4 &  0.141048 &  0.054591 &  0.204718 &  0.115091 &  0.938184 \\
+: \bottomrule
+: \end{tabular}
+: 
+: 
+:END:
+
+\begin{tabular}{lrrrrr}
+\toprule
+{} &         0 &         1 &         2 &         3 &         4 \\
+\midrule
+\hline
+0 &  0.404934 &  0.481067 &  0.257389 &  0.352876 &  0.966894 \\
+1 &  0.321359 &  0.614149 &  0.563271 &  0.232894 &  0.739181 \\
+2 &  0.078475 &  0.362242 &  0.940386 &  0.397011 &  0.237748 \\
+3 &  0.119574 &  0.380566 &  0.490025 &  0.558063 &  0.694235 \\
+4 &  0.141048 &  0.054591 &  0.204718 &  0.115091 &  0.938184 \\
+\hline
+\bottomrule
+\end{tabular}
+ 
+ 

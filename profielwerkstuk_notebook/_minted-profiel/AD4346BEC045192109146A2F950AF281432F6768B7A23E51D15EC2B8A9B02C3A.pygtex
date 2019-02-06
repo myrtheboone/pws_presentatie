@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{P} \PYG{o}{=} \PYG{n}{df\PYGZus{}cleaned}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}Pclass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Fare\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}Age\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}male\PYGZus{}dummy\PYGZsq{}}\PYG{p}{]]}
+\end{Verbatim}

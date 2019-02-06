@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{P\PYGZus{}titanic}\PYG{o}{.}\PYG{n}{Pclass}\PYG{p}{,}\PYG{n}{P\PYGZus{}titanic}\PYG{o}{.}\PYG{n}{Fare}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

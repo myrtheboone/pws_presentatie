@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k+kn}{from} \PYG{n+nn}{sklearn.metrics} \PYG{k+kn}{import} \PYG{n}{roc\PYGZus{}auc\PYGZus{}score}
+    \PYG{n}{q\PYGZus{}pred\PYGZus{}prob} \PYG{o}{=} \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{predict\PYGZus{}proba}\PYG{p}{(}\PYG{n}{P\PYGZus{}test}\PYG{p}{)[:,}\PYG{l+m+mi}{1}\PYG{p}{]}
+    \PYG{n}{roc\PYGZus{}auc\PYGZus{}score}\PYG{p}{(}\PYG{n}{q\PYGZus{}test}\PYG{p}{,} \PYG{n}{q\PYGZus{}pred\PYGZus{}prob}\PYG{p}{)}
+\end{Verbatim}

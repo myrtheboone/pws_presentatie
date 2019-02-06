@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{sklearn.metrics} \PYG{k+kn}{import} \PYG{n}{roc\PYGZus{}curve}\PYG{p}{,} \PYG{n}{auc}
+\PYG{n}{false\PYGZus{}positive\PYGZus{}rate}\PYG{p}{,} \PYG{n}{true\PYGZus{}positive\PYGZus{}rate}\PYG{p}{,} \PYG{n}{thresholds} \PYG{o}{=} \PYG{n}{roc\PYGZus{}curve}\PYG{p}{(}\PYG{n}{q\PYGZus{}titanic\PYGZus{}test}\PYG{p}{,} \PYG{n}{ylog\PYGZus{}pred}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{false\PYGZus{}positive\PYGZus{}rate}\PYG{p}{,} \PYG{n}{true\PYGZus{}positive\PYGZus{}rate}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}LogisticRegression\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}False Positive Rate\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}True Positive Rate\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Logistic Regression ROC Curve\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

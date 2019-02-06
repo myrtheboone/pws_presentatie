@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(Myrthe Boone)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2 class="author">Myrthe Boone</h2><p class="date">Created: 2019-02-06 Wed 20:36</p>
+</section>
+
+
+<section>
+<section id="slide-orgd52b5c8">
+<h2 id="orgd52b5c8">RMS TITANIC: Machine learning from disaster</h2>
+<p>
+Profielwerkstuk Wiskunde D  
+</p>
+
+<p>
+7 februari 2019
+</p>
+
+<p>
+Myrthe Boone 6E
+</p>
+
+
+<div class="figure">
+<p><img src="./Titanic.png" alt="Titanic.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>RMS Titanic</p>
+</div>
+
+</section>
+<section id="slide-org7158c1b">
+<h3 id="org7158c1b">Doodle</h3>
+<p>
+<a href="https://quickdraw.withgoogle.com/">https://quickdraw.withgoogle.com/</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org58c34c5">
+<h2 id="org58c34c5">Inhoudsopgave</h2>
+<ul>
+<li>Introductie</li>
+<li>Wat is machine learning?</li>
+<li>Mijn onderzoek
+<ul>
+<li>Algoritmes</li>
+<li>Hoofd- en deelvragen</li>
+
+</ul></li>
+<li>Resultaten</li>
+<li>Conclusie</li>
+<li>Discussie</li>
+<li>Afsluiting</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgccc9197">
+<h2 id="orgccc9197">Introductie</h2>
+<div class="outline-text-2" id="text-orgccc9197">
+</div>
+</section>
+<section id="slide-org6b27799">
+<h3 id="org6b27799">Waarom dit onderwerp?</h3>
+<ul>
+<li>Meer weten over machine learning en programmeren in Python</li>
+<li>Machine learning is overal om ons heen</li>
+<li>Organiseren en analyseren van de werkelijkheid</li>
+<li>TU Eindhoven</li>
+
+</ul>
+
+</section>
+<section id="slide-orge7a562c">
+<h3 id="orge7a562c">Titanic</h3>
+<ul>
+<li>Voorspellen welke groep passagiers een grotere kans had om te overleven.</li>
+<li>'Vrouwen en kinderen eerst' beleid</li>
+<li>Geluk, geslacht, leeftijd, klasse en prijs betaald voor een ticket</li>
+
+</ul>
+
+<div id="org769394e" class="figure">
+<p><img src="./Deck3.png" alt="Deck3.png" width="600px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Deck Titanic</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org486692b">
+<h2 id="org486692b">Wat is machine learning?</h2>
+<ul>
+<li>Zonder specifiek geprogrammeerd te zijn voor de taken</li>
+<li>Voorbeeld: spam emails, Google zoekopdrachten</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./google.png" alt="google.png" width="400px" />
+</p>
+</div>
+
+</section>
+<section id="slide-org41138d7">
+<h3 id="org41138d7">Soorten machine learning</h3>
+<ul>
+<li>Supervised, unsupervised en reinforcement learning</li>
+<li>Unsupervised: Correcte labels zijn <b>niet</b> gegeven</li>
+<li>Supervised: Computer weet welke categorieën er zijn</li>
+<li>Supervised learning kan ingedeeld worden in regression en classification</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./typesmachinelearning.png" alt="typesmachinelearning.png" width="500px" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Machine learning</p>
+</div>
+
+</section>
+<section id="slide-org14b6f59">
+<h3 id="org14b6f59">Soorten machine learning</h3>
+<ul>
+<li>Classification: categorieën</li>
+<li>Regression: continue variabelen</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./regvsclass.png" alt="regvsclass.png" width="500px" />
+</p>
+<p><span class="figure-number">Figure 5: </span>Classification vs. Regression</p>
+</div>
+
+
+</section>
+<section id="slide-org6dc58a2">
+<h3 id="org6dc58a2">Soorten machine learning</h3>
+<ul>
+<li>Titanic is supervised learning</li>
+<li>Binary classification</li>
+<li>1 = overleefd</li>
+<li>0 = niet overleefd</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org75ae66d">
+<h2 id="org75ae66d">Mijn onderzoek: algoritmes</h2>
+<div class="outline-text-2" id="text-org75ae66d">
+</div>
+</section>
+<section id="slide-orgb05f3b0">
+<h3 id="orgb05f3b0">Werkplan</h3>
+<ul>
+<li>We splitsen onze dataset in een training en een test set</li>
+<li>We trainen / fitten ons model op de training set</li>
+<li>We voorspellen op de test set</li>
+<li>Dus we gebruiken de gegevens van de passagiers (leeftijd, geslacht, prijs betaald voor een ticket, klasse)</li>
+
+</ul>
+
+
+</section>
+<section id="slide-org4e874fb">
+<h3 id="org4e874fb">Logistic Regression</h3>
+<ul>
+<li>Gebaseerd op de logistische functie</li>
+<li>Grenswaarde \(p>0.5\), passagier heeft het overleefd</li>
+
+</ul>
+
+<div>
+\begin{equation}
+\label{eq:2}
+\sigma(y) = \frac{e^y}{1+e^y}
+\end{equation}
+
+</div>
+
+<ul>
+<li>Vier variabelen dus \(y\) is in dit geval:</li>
+
+</ul>
+
+<div>
+\begin{equation}
+y=a_1x_1+a_2x_2+a_3x_3+a_4x_4+b+\varepsilon_{i} 
+\end{equation}
+
+</div>
+
+
+<div class="figure">
+<p><img src="./LogisticCurve.png" alt="LogisticCurve.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Logistische functie</p>
+</div>
+
+
+</section>
+<section id="slide-orgf8ab7ae">
+<h3 id="orgf8ab7ae">Hoofd- en deelvragen</h3>
+<ul>
+<li>Is het mogelijk een nauwkeurige voorspelling te maken of de passagiers aan boord van de Titanic het hebben overleefd met behulp van informatie over geslacht, klasse, leeftijd en prijs betaald voor een ticket? 
+<ul>
+<li>Wat is de invloed van geslacht op de overlevingskans?</li>
+<li>Wat is de invloed van klasse op de overlevingskans?</li>
+<li>Wat is de invloed van leeftijd op de overlevingskans?</li>
+<li>Wat is de invloed van prijs betaald voor een ticket op de overlevingskans?</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd7d701e">
+<h2 id="orgd7d701e">Resultaten</h2>
+<div class="outline-text-2" id="text-orgd7d701e">
+</div>
+</section>
+<section id="slide-org1201d9e">
+<h3 id="org1201d9e">Dataset verkennen</h3>
+<ul>
+<li>Begonnen met plots maken, dataset ontdekken</li>
+
+</ul>
+
+
+
+<div class="figure">
+<p><img src="./ClassCount.png" alt="ClassCount.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Plot van reisklasse</p>
+</div>
+
+</section>
+<section id="slide-orge07d988">
+<h3 id="orge07d988">Resultaten</h3>
+<ul>
+<li>Coëfficiënten</li>
+<li>Wat vertellen ze ons?</li>
+
+</ul>
+
+</section>
+<section id="slide-org251b371">
+<h3 id="org251b371">Resultaten</h3>
+<ul>
+<li>Coëfficiënt behorend bij leeftijd is negatief</li>
+<li>Coëfficiënt behorend bij ticketprijs is positief</li>
+<li>Geslacht coëfficiënt negatief (dummy)</li>
+
+</ul>
+
+
+
+<div class="figure">
+<p><img src="./coefficients.png" alt="coefficients.png" width="500px" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./Table7.png" alt="Table7.png" width="600px" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf4d3bfc">
+<h2 id="orgf4d3bfc">Conclusie</h2>
+<ul>
+<li>Het is mogelijk een voorspelling te maken</li>
+<li>Vrouwen hadden een voordeel t.o.v. mannen</li>
+<li>Jongere passagiers hadden een voordeel t.o.v. oudere</li>
+<li>Passagiers die een hogere ticketprijs hadden betaald hadden voordeel t.o.v. zij die minder betaalden</li>
+
+</ul>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org4b16851">
+<h2 id="org4b16851">Discussie</h2>
+<ul>
+<li>Blijft een ongeluk: toeval, geluk, corruptie etc.</li>
+<li>Meer variabelen</li>
+<li>Nauwkeurigheid?</li>
+<li>Invloed variabelen onderling</li>
+
+</ul>
+
+
+
+<div class="figure">
+<p><img src="./titanic3.png" alt="titanic3.png" width="600px" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgecc334a">
+<h2 id="orgecc334a">Afsluiting</h2>
+<p>
+Zijn er nog vragen? 
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

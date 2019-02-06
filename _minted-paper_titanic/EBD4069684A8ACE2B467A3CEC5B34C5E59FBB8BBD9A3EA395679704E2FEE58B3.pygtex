@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{logreg} \PYG{o}{=} \PYG{n}{LogisticRegression}\PYG{p}{()}
+    \PYG{n}{P\PYGZus{}train}\PYG{p}{,} \PYG{n}{P\PYGZus{}test}\PYG{p}{,} \PYG{n}{q\PYGZus{}train}\PYG{p}{,} \PYG{n}{q\PYGZus{}test} \PYG{o}{=} \PYG{n}{train\PYGZus{}test\PYGZus{}split}\PYG{p}{(}\PYG{n}{P}\PYG{p}{,}\PYG{n}{q}\PYG{p}{,} \PYG{n}{test\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mf}{0.2}\PYG{p}{,} \PYG{n}{random\PYGZus{}state}\PYG{o}{=}\PYG{l+m+mi}{42}\PYG{p}{)}
+    \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{P\PYGZus{}train}\PYG{p}{,} \PYG{n}{q\PYGZus{}train}\PYG{p}{)}
+    \PYG{n}{q\PYGZus{}pred} \PYG{o}{=} \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{P\PYGZus{}test}\PYG{p}{)}
+\end{Verbatim}

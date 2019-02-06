@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{data}\PYG{o}{.}\PYG{n}{Pclass}\PYG{p}{,}\PYG{n}{data}\PYG{o}{.}\PYG{n}{Fare}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Pclass\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Fare\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}PclassFare.png\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,83 @@
+#+Title: Titanic
+#+Author: Myrthe
+
+
+* Preface
+
+
+* Introduction
+
+
+\begin{equation*}
+\label{eq:1}
+a^2 + b^2 = c^2
+\end{equation*}
+
+
+\begin{equation}
+\label{eq:3}
+\delta
+\end{equation}
+
+
+\begin{equation}
+\label{eq:2}
+\Sigma + \delta \psi = \sum_{i=1}^{N} x_i^2
+\end{equation}
+
+/italics/
+
+*bold*
+
+See equation\footnote{in een voetnoot}
+see equation (ref:eq:2)
+
+
+
+* Research
+
+
+
+** python 2
+
+** python
+
+lhalkjd 
+
+aldkjfjasd 
+
+
++ bullet 1
++ bullet
++ 3
+
+
+
+aljlaskjd
+
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[3]:
+:END:
+
+
+#+BEGIN_SRC ipython 
+range_x = np.arange(-2,2.1,0.1)
+plt.plot(range_x,[x**2 for x in range_x])
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[4]:
+
+
+# image/png
+[[file:obipy-resources/c7aa849f2540e8b998ec298a9559d3bf-13165Xwa.png]]
+:END:

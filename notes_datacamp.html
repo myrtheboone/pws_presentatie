@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-21 Fri 13:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Datacamp notes</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Myrthe Boone" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Datacamp notes</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9532cfc">1. Preface</a></li>
+<li><a href="#org3d82e98">2. Introduction</a>
+<ul>
+<li><a href="#orged45662">2.1. Machine Learning</a></li>
+<li><a href="#orgb82491c">2.2. Different types of Machine Learning</a></li>
+<li><a href="#orgf92c08c">2.3. Algorithms</a>
+<ul>
+<li><a href="#orga5d64ba">2.3.1. KNearestNeighbours</a></li>
+<li><a href="#orga1d5391">2.3.2. Logistic regression</a></li>
+</ul>
+</li>
+<li><a href="#org8bda484">2.4. Main questions and sub-questions</a></li>
+</ul>
+</li>
+<li><a href="#org06c285c">3. Preparation</a>
+<ul>
+<li><a href="#org3dcd56a">3.1. A first look at the dataset</a></li>
+<li><a href="#org98f6326">3.2. Preprocessing techniques</a></li>
+</ul>
+</li>
+<li><a href="#org4d14f1b">4. Results</a></li>
+<li><a href="#orgfe2799a">5. Conclusion</a></li>
+<li><a href="#org343066e">6. Discussion</a></li>
+<li><a href="#org3a03a0f">7. References</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org9532cfc" class="outline-2">
+<h2 id="org9532cfc"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The goal of this paper is not to make predictions about the future. These results may teach us something about the circumstances during the time that the Titanic sank. Teaches us something about the civilization back in those days. (Women, children etc saved first?). Furthermore, this paper is written because I wanted to learn something about machine learning and programming using Python. 
+</p>
+
+<p>
+I would like to give a special thanks to the following people. My father, who has helped me learn programming in Python and has taught me the basics of machine learning. Thank you for believing in me. Furthermore I would like to thank my supervisor mr. Kampwart for being enthusiastic and keeping me motivated. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d82e98" class="outline-2">
+<h2 id="org3d82e98"><span class="section-number-2">2</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In the year 1912 on the 15th of April one of the most infamous ships in history would crash into an iceberg and sink in the North Atlantic Ocean. During its maiden voyage from Southhampton to New York City on the 14th of April at 11:40 p.m. ship's time, the lookout sounded the alarm  when a massive clump of solid ice caught his attention. The first mate had seen the iceberg before the lookout did and tried to turn the ship around. Unfortunately, he was too late. Forty seconds later at a high speed the Titanic collided with a huge rock made of ice with a weight of 30 million kilograms. The collision caused a series of holes along the side of the hull.<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> Six of the watertight compartments were filled with water, whereas the ship could only sail on with a maximum of four compartments flooded. Consequently, the Titanic was doomed to sink. The crew understood they needed to act fast. They deployed the evacuation program. The ship carried twenty lifeboats. In principle the protocol "women and children first" was followed. However, this was not true for everyone on board. The chance of being saved was  dependent on the class in which one travelled and the place where one found itself during the evacuation. Around 2:20 a.m. parts of the Titanic broke off and sunk with one thousand people still on board. On deck were some of the richest people in the world, including millionaires, movie stars, school teachers and immigrants, who were hoping to find a new life in New York City. A life that they would, therefore, never find. Two hours after the ship sank, the liner RMS Carpathia arrived and saved an estimated 705 people.<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> The sinking of the RMS Titanic killed 1502 out of the 2224 people on board, crew members as well as passengers.<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
+</p>
+
+<p>
+The RMS Titanic was the largest ship on water during that time and it was the second of three  ocean liners operated by the White Star Line .<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup> The ship consisted of nine decks, the boat deck, seven decks labelled from A to G which carried the passengers and the Orlop Deck which was below the waterline. The liner had a height of 175 feet and a breadth of 92 feet.<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup> 
+</p>
+
+
+<div id="orgf4fa6fb" class="figure">
+<p><img src="./TitanicProfile.png" alt="TitanicProfile.png" width="400px" /> 
+</p>
+<p><span class="figure-number">Figure 1: </span>Profile of RMS Titanic with the decks indicated</p>
+</div>
+
+<p>
+The Titanic may be one of the most iconic ships in history, its story known the world over.<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup> The tragedy has led to better safety regulations for ships and inspired numerous expeditions, movies, books, plays and characters.
+</p>
+
+<p>
+So many passengers have lost their lives due to the fact that there were not enough lifeboats. Luck played a part in surviving this disaster. Moreover, some groups had an advantage compared to other groups. For instance, the "women and children first" policy left a relatively larger number of men aboard. In the same way as children and teenagers had an advantage because of this principle. Similarly, speculations can be made regarding the advantage of the elderly aboard the Titanic. On the one hand it seems logical that the seniors were helped to the lifeboats because of a policy similar to the one about women and children. Older people are not as physically fit as the rest of the passengers, therefore they need to be assisted. On the other hand however, were the elderly the ones left behind as a result of their physical condition. They would have had more trouble climbing from the lowest deck to the boat deck. Finally, some people travelling first class might have had a better chance at surviving as well. The passengers were able to choose between three classes, varying in price and comfort. There was also a correlation between these three classes and wealth and social class. Most of the people travelling first class were, for example, businessmen, politicians and bankers. Second class travellers included professors, authors and tourists, members of the middle class. Emigrant workers moving to the United States and Canada travelled third class. In general, people travelling first class were closer to the boat deck and had, therefore, more chance to escape the flooding of the cabins (see Figure <a href="#tab:titanicdeckplanone">tab:titanicdeckplanone</a> and Figure <a href="#tab:titanicdeckplantwo">tab:titanicdeckplantwo</a>). They could get to the life boats faster than people whose cabins were on one of the lower decks.
+</p>
+
+
+<div id="org5121f05" class="figure">
+<p><img src="./Deck2.png" alt="Deck2.png" width="300px" /> 
+</p>
+<p><span class="figure-number">Figure 2: </span>Deckplan of the Titanic</p>
+</div>
+
+
+<div id="org05693a9" class="figure">
+<p><img src="./Deck3.png" alt="Deck3.png" width="300px" /> 
+</p>
+<p><span class="figure-number">Figure 3: </span>Deckplan of the Titanic</p>
+</div>
+
+
+<p>
+In this paper we will take a look at what people were more likely to survive the demise of the Titanic with the help of machine learning. We will predict the chances of survival of certain groups of passengers. In addition, we will see if the expectations that children, women and rich people were indeed benefited are correct. 
+</p>
+</div>
+
+<div id="outline-container-orged45662" class="outline-3">
+<h3 id="orged45662"><span class="section-number-3">2.1</span> Machine Learning</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+For the past 15 years, scientists have tried to make computers learn new things from given data with the help of machine learning. The definition of machine learning given by an professor at Stanford University is as follows: "Machine learning is the science of getting computers to act without being explicitly programmed."<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup> It consists of giving computers the ability to learn and make decisions from data. These machine learning techniques are used to build predictive models. To illustrate, we will discuss some examples. 
+</p>
+
+<p>
+Spam emails are sent to everyone who has an emailaccount. Whether the email is from a lottery telling you you have won a $1-million prize or from an unknown travel-agency offering you a trip to an exclusive resort for very little money. It does not matter what the email looks like, your computer is able to distinguish the spam from the usual emails and places the spam in the spam folder of your account. The computer can detect the elements of spam, find patterns and compares the found patterns to new mail. Spam tends to have characteristic elements such as spelling mistakes, an originating address in Nigeria or claims that it needs your bank information. Furthermore, huge tech giants such as Google, Netflix and Spotify use machine learning. The algorithms of these firms offer recommendations and suggestions based on previous user searches, exactly because they can recognise a pattern in these searches.<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup> Maybe one of the best known examples is AlphaGo. The computer programm developed by Google DeepMind in London to play the the boardgame Go.<sup><a id="fnr.9" class="footref" href="#fn.9">9</a></sup> In October 2015, AlphaGo became the first computer Go program to beat a human professional Go player. It was trained on moves of expert players from recorded historical games, a database of around 30 million moves. The algorithm used these moves to mimic human play by attempting to match these moves. Moreover, machine learning is making a breakthrough in the medical field as well. AI pioneer Regina Barzilay carried out research and is now teaching machines to hunt down cancer. Experienced doctors have only a limited amount of patients' experience. Curing cancer is now more a trial-and-error process. With the help of machine learning people can be diagnosed faster and can be cured with the appropriate treatment.<sup><a id="fnr.10" class="footref" href="#fn.10">10</a></sup>   
+</p>
+
+<p>
+A lot of different machine learning techniques exist. In this paper we will discuss two examples.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb82491c" class="outline-3">
+<h3 id="orgb82491c"><span class="section-number-3">2.2</span> Different types of Machine Learning</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Machine learning can be divided in roughly three categories: reinforcement, unsupervised and supervised learning. The latter two will be discussed and these can also be divided in subgroups. We have to ask ourselves the questions how does the computer know it is getting better or not, and how does it know how to improve? The different answers to these questions have made these different types of machine learning techniques exist, see Figure <a href="#tab:types">tab:types</a>. 
+</p>
+
+
+<div id="org3c3af3b" class="figure">
+<p><img src="./typesmachinelearning.png" alt="typesmachinelearning.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 4: </span>An illustration of the different types of machine learning</p>
+</div>
+
+
+<p>
+<b>Unsupervised learning</b>
+This is a version of machine learning where the computer has to uncover hidden patterns from unlabeled data. Correct responses are not provided. The algorithm has to identify similarities between the inputs. This way the inputs that have something in common are categorised together.<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>
+</p>
+
+<p>
+For instance, grouping customers in categories based on buying behaviour without knowing in advance what these categories might be. 
+</p>
+
+<p>
+<b>Supervised learning</b>
+The majority of machine learning uses supervised learning. Whereas unsupervised learning has to make decisions from data that is not labeled (the correct responses are not provided), supervised machine learning deals with labeled data. The correct answers are already provided in a training set of examples. The algorithm generalises to respond correctly to all possible inputs, based on this training. The computer is provided with a specific input combined with the correct output or prediction. This way, the machine is trained to see the connections between the input and the right output. When a computer has had enough training or has been provided with enough data points, it will make less mistakes with every try. Eventually the computer is able to produce the right output based on a given input. <sup><a id="fnr.12" class="footref" href="#fn.12">12</a></sup>
+</p>
+
+<p>
+The Titanic task is a perfect example of supervised learning. We already know who has survived the disaster and who has not. This way we can train our computer on the complete dataset. Consequently, the computer learns to connect particular variables to the fact if someone has survived or not. Given a new person, of whom we don't know if he or she has survived it, the computer can make a prediction. We can produce the chances of survival for particular variables, e.g. gender, class etc. Picking the right variables is crucial for producing a model. Moreover, choosing how to process your data is important. We will put a lot of effort in choosing the right variables and how to process the data. This will take up a lot of time and is part of the trial-and-error procedure.
+A dataset consists of datapoints. These are samples described using predictor variables and a target variable. Organised in a table with rows and columns. The goal is to predict the target variable, in this case 1 or 0 representing survived or not survived respectively in our Titanic dataset, given the predictor variables, such as class, gender, age, siblings etc. 
+</p>
+
+<p>
+We can specify two different types of supervised learning: 
+</p>
+<ul class="org-ul">
+<li><b>Classification</b>: the target variable consists of categories. Predicting survival on the Titanic is a classification problem. We have to classify, based on our predictor variables, if a person belongs to the class of survived (1) or not survived (0). This is a special case of a classification problem called binary classification. For the Titanic problem we use labelled data. Consequently, we use supervised machine learning.</li>
+<li><b>Regression</b>: the target variable is continuous. For instance, a dataset containing housing price data like the year the house was built, number of bedrooms, acreage. There is a price associated with each house. The goal is to predict the price of a house, given these variables. For the reason that a price is a continuous variable, this problem is an example of regression.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgf92c08c" class="outline-3">
+<h3 id="orgf92c08c"><span class="section-number-3">2.3</span> Algorithms</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+To train our computer on the dataset we use two different algorithms. Because we approach our problem in two different ways, the results will be more trustworthy. Training our model on the data using an algorithm is called 'fitting' a model to the data. Fitting means minimizing the classification mistakes that we make. We split our data into a training and test set. We fit our model to the training data and predict on the test set. 
+</p>
+</div>
+
+<div id="outline-container-orga5d64ba" class="outline-4">
+<h4 id="orga5d64ba"><span class="section-number-4">2.3.1</span> KNearestNeighbours</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+To begin with, we will use the so-called KNearestNeighbours algorithm. It predicts a label of a datapoint by looking at the 'k' closest labelled data points. KNN takes a majority vote on what label an undecided point has to have. For instance, when we want to decide if a dot on this map is a blue square or a red triangle, we can choose our 'k' as 3 (see Figure <a href="#tab:knn">tab:knn</a>). With choosing our 'k', we create a set of decision boundaries. Our computer will look at the three closest datapoints to classify our undecided point. If two of those three are blue squares, it classifies our undecided point as a blue square. If two of those three points are red triangles, it classifies our undecided point as a red triangle. The trick is to choose the right value for 'k'. Choosing a too large value for 'k', will lead to underfitting therefore creating a smoother decision boundary. This way we will have a less complex model, because our algorithm generalizes too much and uses too little information. On the other side, choosing a too small value for 'k' will lead to overfitting. Consequently, our model will be more complex and will have a more erratic pattern. We use 'too much' information and our model becomes less reliable. These problems of overfitting and underfitting are very common in the world of machine learning. They also occur using other algorithms. Finding the right 'k' is a combination of using other algorithms to find it and a trial-and-error procedure.<sup><a id="fnr.13" class="footref" href="#fn.13">13</a></sup>
+</p>
+
+
+<div id="orgdac8256" class="figure">
+<p><img src="./KnnClassification.png" alt="KnnClassification.png" width="110px" /> 
+</p>
+<p><span class="figure-number">Figure 5: </span>Illustration of the algorithm called KNearestNeighbours</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga1d5391" class="outline-4">
+<h4 id="orga1d5391"><span class="section-number-4">2.3.2</span> Logistic regression</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+Second, we use an algorithm called logistic regression (LogReg). The name may be misleading because LogReg is commonly used for classification problems. It outputs probabilities. For example, if the dataset consists of \(n\) different classes, the algorithm calculates the chance that one specific case is classified as belonging to one of these \(n\) classes. In our case, we see \(n=2\). Therefore, we are dealing with a binary classification problem.<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup> This implies the following: if we find \(p>0.5\), the variable is classified as 1, the passenger has survived the disaster; when we see \(p<0.5\), it is classified as 0, the passenger has not survived. 
+</p>
+
+<p>
+To explain the principle of logistic regression, we will have a look at a linear function first:
+</p>
+
+\begin{equation}
+y=ax+b
+\end{equation} 
+
+<p>
+In this case there is only one predictor variable. But we have more than one predictor variable in our dataset of the Titanic. \(a\) and \(b\) are the parameters of our model. We want to fit a line to the data. Fitting, in this case, consists of choosing a slope \(a\) and an intercept \(b\). Our Titanic dataset has more than one feature, because we have more than one predictor variable. Using linear regression, our line will look something like this, where each \(x\) represents a different predictor variable. 
+</p>
+
+\begin{equation}
+y=a_1x_1+a_2x_2+ \dots + a_nx_n+b+\varepsilon_{i}  
+\end{equation}
+
+<p>
+By calculating the vertical distance between each data point and the line, we can get an impression of how accurate our model is. This distance is called the residual (\(\varepsilon\)). One option is to minimze the sum of the residuals. However, this will not work because large positive values will cancel out large negative values. Consequently, shifting the line upwards will always reduce the sum of the residuals. This is because the positive values will be \(\infty\) and the negative values will be \(-\infty\). As a result of this, the sum of the residuals will be zero. So, to make sure that our line is as close to the actual data as possible, we calculate the sum of squared residuals (see Figure <a href="#tab:ols">tab:ols</a> and see Equation \ref{eq:residual}). This is called OLS, which stands for Ordinary Least Squares. When we call fit on our logistic regression model in scitkitlearn, it performs this OLS under the hood. Scikitlearn is a popular machine learning library for Python, which we will use to train our computer (see Footnote \ref{fn:datacamp}).
+</p>
+
+\begin{equation}
+\label{eq:residual}
+\sum_{i=1}^{N}\varepsilon^2_{i}
+\end{equation}
+
+
+
+
+<div id="org51a7d6e" class="figure">
+<p><img src="./Residual.png" alt="Residual.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Ordinary Least Squares: Minimize sum of squares of residuals</p>
+</div>
+
+<p>
+The red lines in the illustration (see Figure <a href="#tab:ols">tab:ols</a>) represent \(\varepsilon^2_{i}\). 
+The equations mentioned earlier are used most commonly for linear regression. We will use logistic regression, because our target variable is not continuous: our variable is either 0 or 1. The logistic function \(\varsigma(t)\) is defined as follows:
+</p>
+
+\begin{equation}
+\label{eq:2}
+\sigma_t = \frac{e^t}{1+e^t}
+\end{equation}
+
+<p>
+Because we have three variables(i.e. age, gender and class), \(t\) in this case is of the form:
+</p>
+
+\begin{equation}
+y=a_1x_1+a_2x_2+a_3x_3+b+\varepsilon_{i} 
+\end{equation}
+
+<p>
+As the name already tells us suggests, logistic regression is based on the logistic function. This is a sigmoid function (see Figure <a href="#tab:log">tab:log</a>), which takes any real input \(t\) (\(t\in{\rm I\!R}\)), and outputs a value between zero and one, a probability.
+</p>
+
+
+<div id="orgd8ad7b6" class="figure">
+<p><img src="./LogisticCurve.png" alt="LogisticCurve.png" width="300px" />
+</p>
+<p><span class="figure-number">Figure 7: </span>The logistic function</p>
+</div>
+
+<p>
+The same principle applies to logistic regression regarding the underfitting and overfitting problem. Adding more independent variables to our model will increase the amount of explained variance. Our model will be more complex and will have a more erratic pattern, as mentioned earlier. Using too little independent variables will result in underfitting, where our model is too 'simple'. 
+</p>
+
+<p>
+After using these two algorithms, we can measure model performance. To do this, we can use metrics such as accuracy. Accuracy is the fraction of correct predictions, think of the fraction of cases where the model correctly predicts that someone survived. How these metrics work, will be explained later on. 
+</p>
+
+<p>
+To sum up, we follow this procedure: We split our dataset into a training set and test set. Then we fit or train the classifier to the training set. Subsequently, we predict on the test set and print the prediction. In the end, we compare our predictions to the known labels and compute the metric of accuracy. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8bda484" class="outline-3">
+<h3 id="org8bda484"><span class="section-number-3">2.4</span> Main questions and sub-questions</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+This research and information leads us to the following main question and sub-questions: 
+</p>
+
+<p>
+<b>Main question</b>
+</p>
+
+<p>
+<i>Is it possible to make an accurate prediction whether the passengers on board of the Titanic survived the disaster or not using the information about gender, class and age given in the dataset?</i>
+</p>
+
+<p>
+<b>Sub-questions</b> 
+</p>
+
+<ul class="org-ul">
+<li><i>What is the influence of gender on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>What is the influence of class on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>What is the influence of age on the chance of surviving after the Titanic had sunk?</i></li>
+<li><i>Is there a monotonous relationship between age and survival rate?</i></li>
+</ul>
+
+<p>
+These questions lead to the following hypotheses:
+</p>
+
+<ul class="org-ul">
+<li><b>Main question</b> : Yes this is possible, with the help of machine learning using the algorithms KNearestNeighbours and logistic regression.</li>
+<li><b>Sub-questions</b> :
+
+<ul class="org-ul">
+<li>The survival rate of women is higher than the survival rate of men.</li>
+<li>The survival rate of passengers who were travelling in a higher class is higher than those travelling in a lower class.</li>
+<li>The survival rate of children and elderly is higher than the survival rate of the adults.</li>
+<li>The relationship between age and survival rate is not monotonous.</li>
+</ul></li>
+</ul>
+
+
+
+
+<p>
+Goal is to learn from data for which the right output is known so we can make predictions on new data for which we don't know the output.
+</p>
+
+
+<p>
+How well will model perform on new data that the algorithm has never seen before. Splitting of your dataset. 
+</p>
+
+<ul class="org-ul">
+<li>Aanhalingstekens bij fitting</li>
+<li>age: protocol, children, elderly benefited, or maybe disadvantaged</li>
+<li>Verwijzen naar een equation?</li>
+</ul>
+
+
+<p>
+Choose the line that minimizes the error function / loss function. What is an error function? Explain.
+</p>
+
+<p>
+Larger area under ROC curve = better model. Area is called AUC. Popular metric for classification models. AUC using cross validation. If AUC is greater than 0,5, the model is better than just random guessing. 
+</p>
+
+
+<p>
+<code>matplotlib</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+</pre>
+</div>
+
+
+<p>
+1,2,3 - steps Introduction
+</p>
+<ol class="org-ol">
+<li>Split dataset into a training set and test set, new dataset.</li>
+<li>Fit/train classifier to the training set, what is fitting? Difference Knearest and Logistic</li>
+<li>Predict on the test set</li>
+<li>Print the prediction</li>
+<li>Compare predictions with known labels</li>
+</ol>
+
+
+<p>
+Perform your split so that your split reflects labels on your data. You want labels to be distributed as they are in the original dataset. 
+</p>
+
+<p>
+<b>Problems</b>
+</p>
+
+<p>
+Model performance is dependent on the way our data is split. Results are not reliable because of this. We solve this by using cross-validation. <i>insert image of folds</i>. Second fold as test set, fit on remaining data, predict on test set and compute metric of interest. 5-fold cross-validation. k-fold cross validation. More folds is more computationally expensive. 
+</p>
+
+<p>
+Measuring model performance using accuracy. This is a fraction of correctly classified samples. However, this is not always a useful metric. For instance, if we take a look at spam classification. 99% of your email is real and 1% is spam. We instantiate a classifier which classifies all emails as real. Computing the accuracy will give us a score of 99%, which is pretty high. But our classifier is horrible at predicting spam. <b>Class imbalance</b>. We have to use more nuanced metrics, such as the confusion matrix. <i>insert image of confusion matrix</i>. Accuracy, precision, recall, F1 score. High precision &rarr; not many real emails are predicted as spam. High recall &rarr; predicted most spam emails correctly. Confusion matrix in N dimensions? 
+</p>
+
+<ul class="org-ul">
+<li>Underfitting and overfitting</li>
+<li>Train-test split</li>
+<li>Cross-validation</li>
+<li>GridSearch</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org06c285c" class="outline-2">
+<h2 id="org06c285c"><span class="section-number-2">3</span> Preparation</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org3dcd56a" class="outline-3">
+<h3 id="org3dcd56a"><span class="section-number-3">3.1</span> A first look at the dataset</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+First we perform some numerical EDA. EDA stands for exploratory data analysis. This will help us explore our dataset and get a first impression of the information. Not necessary to build a dataframa, for the information is already organised in a table. 
+</p>
+
+<p>
+<i>code with describe etc</i> 
+</p>
+
+<p>
+Next we perform some visual EDA. Scatter matrix, plotting, binary Seaborn's countplot. Possible correlation? Explain / describe diagrams. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org98f6326" class="outline-3">
+<h3 id="org98f6326"><span class="section-number-3">3.2</span> Preprocessing techniques</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+How to deal with missing values, dummies, place of boarding, gender, cabin numbers. Map of Titanic? Need to encode categorical features numerically &rarr; convert to dummy variables. 0 = not that category. 
+</p>
+
+<p>
+Missing data
+</p>
+<ul class="org-ul">
+<li>NaN replace</li>
+<li>drop missing data</li>
+<li>impute missing data: make an educated guess</li>
+</ul>
+
+<p>
+Centering and scaling
+</p>
+<ul class="org-ul">
+<li>Features on larger scales can unduly influence the model.</li>
+<li>We want features on a similar scale. <b>Normalizing</b></li>
+<li>Standardization: substract the mean and divide by variance.</li>
+<li>Substract minimum and divide by the range</li>
+<li>Normalize so that data ranges from -1 to +1</li>
+</ul>
+
+
+
+<p>
+We have to build a classifier that needs to learn from already labeled data. Training data = already labeled data.
+</p>
+
+
+<p>
+Using GridSearchCV or RandomizedSearchCV, we can choose our parameters for KNearestNeighbours (K) and LogisticRegression (C). Large C kan lead to overfitting, small C kan lead to underfitting. 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4d14f1b" class="outline-2">
+<h2 id="org4d14f1b"><span class="section-number-2">4</span> Results</h2>
+</div>
+
+
+<div id="outline-container-orgfe2799a" class="outline-2">
+<h2 id="orgfe2799a"><span class="section-number-2">5</span> Conclusion</h2>
+</div>
+
+<div id="outline-container-org343066e" class="outline-2">
+<h2 id="org343066e"><span class="section-number-2">6</span> Discussion</h2>
+</div>
+
+<div id="outline-container-org3a03a0f" class="outline-2">
+<h2 id="org3a03a0f"><span class="section-number-2">7</span> References</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+\printbibliography
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><a href="http://www.bbc.co.uk/history/titanic">http://www.bbc.co.uk/history/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><a href="https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage">https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><a href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><a href="https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage">https://en.wikipedia.org/wiki/RMS_Titanic#Maiden_voyage</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><a href="https://www.encyclopedia-titanica.org/titanic/">https://www.encyclopedia-titanica.org/titanic/</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><a href="http://www.bbc.co.uk/history/titanic">http://www.bbc.co.uk/history/titanic</a> (consulted on the 5th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara">Quote created by Stanford University on the course of Machine Learning, taught by: Andrew Ng, Co-founder, Coursera; Adjunct Professor, Stanford University; formerly head of Baidu AI Group/Google Brain. <a href="https://www.coursera.org/learn/machine-learning">https://www.coursera.org/learn/machine-learning</a> (consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><a href="https://www.redpixie.com/blog/examples-of-machine-learning">https://www.redpixie.com/blog/examples-of-machine-learning</a>(consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.9" class="footnum" href="#fnr.9">9</a></sup> <div class="footpara"><a href="https://deepmind.com/blog/alphago-zero-learning-scratch/">https://deepmind.com/blog/alphago-zero-learning-scratch/</a>(consulted on the 6th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.10" class="footnum" href="#fnr.10">10</a></sup> <div class="footpara">New Scientist Weekly, 21 July 2018, I teach machines to hunt down cancer, Interview by Chelsea Whyte</div></div>
+
+<div class="footdef"><sup><a id="fn.11" class="footnum" href="#fnr.11">11</a></sup> <div class="footpara">Machine Learning, An Algorithmic Perspective second edition by Stephen Marsland, 2015 by Taylor &amp; Francis Group.</div></div>
+
+<div class="footdef"><sup><a id="fn.12" class="footnum" href="#fnr.12">12</a></sup> <div class="footpara"><a href="https://machinelearningmastery.com/supervised-and-unsupervised-machine-learning-algorithms/">https://machinelearningmastery.com/supervised-and-unsupervised-machine-learning-algorithms/</a>(consulted on the 26th of August, 2018).</div></div>
+
+<div class="footdef"><sup><a id="fn.13" class="footnum" href="#fnr.13">13</a></sup> <div class="footpara">DataCamp courses on Supervised Learning with scikitlearn: <a href="https://www.datacamp.com/courses/q:supervised">https://www.datacamp.com/courses/q:supervised</a> (consulted on the 13th of February, 2018). \label{fn:datacamp}</div></div>
+
+<div class="footdef"><sup><a id="fn.14" class="footnum" href="#fnr.14">14</a></sup> <div class="footpara"><a href="https://www.statisticssolutions.com/what-is-logistic-regression/">https://www.statisticssolutions.com/what-is-logistic-regression/</a>(consulted on the 5th of September, 2018).</div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Myrthe Boone</p>
+<p class="date">Created: 2018-09-21 Fri 13:00</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

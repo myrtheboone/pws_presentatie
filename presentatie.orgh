@@ -1,0 +1,87 @@
+#+OPTIONS: toc:nil num:nil
+
+* RMS TITANIC: Machine learning from disaster
+Profielwerkstuk Wiskunde D  
+
+7 februari 2019
+
+Myrthe Boone 6E
+
+#+caption: RMS Titanic
+#+attr_html: :width 400px
+[[./Titanic.png]]
+
+ Inhoudsopgave
+
++ Introductie
++ Wat is machine learning?
++ Mijn onderzoek
+  + Algoritmes
+  + Hoofd- en deelvragen
++ Resultaten
++ Conclusie
++ Discussie
++ Afsluiting
+
+* Introductie
+** Waarom dit onderwerp?
+
++ Meer weten over machine learning en programmeren in Python
++ Overal om ons heen
++ Organiseren en analyseren van de werkelijkheid
++ TU Eindhoven
+
+** Titanic
+
++ Voorspellen welke groep passagiers een grotere kans had om te overleven.
++ 'Vrouwen en kinderen eerst' beleid 
++ Geluk, geslacht, leeftijd, klasse en prijs betaald voor een ticket
+#+name: 
+#+caption: Deck Titanic
+#+attr_html: :width 600px
+#+attr_latex: :width 600
+[[./Deck3.png]]
+
+
+* Wat is machine learning?
+
++ Zonder specifiek geprogrammeerd te zijn voor de taken
++ Voorbeeld: spam emails
+
+** Soorten machine learning 
+
++ Supervised, unsupervised en reinforcement learning (foto)
++ Unsupervised: Correcte labels zijn *niet* gegeven
++ Supervised: Computer weet welke categorieën er zijn 
++ Supervised learning kan ingedeeld worden in regression en classification
+
+** Soorten machine learning 
++ Classification: categorieën
++ Regression: continue variabelen
+
+
+** Soorten machine learning
++ Titanic is supervised learning
++ Binary classification
++ 1 = overleefd
++ 0 = niet overleefd
+
+* Algoritmes
+** Werkplan
+
++ We splitsen onze dataset in een training en een test set
++ We trainen / fitten ons model op de training set
++ We voorspellen op de test set
+
+
+** KNearestNeighbours (KNN)
+
++ Voorspelt het label van een datapoint door te kijken naar de 'k' dichtstbijzijnde buren
++ 
++ 
++ 
++ 
+
+
+
+

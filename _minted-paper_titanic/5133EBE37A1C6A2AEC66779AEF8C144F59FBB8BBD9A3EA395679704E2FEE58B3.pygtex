@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{print}\PYG{p}{(}\PYG{l+m+mf}{0.07374214}\PYG{o}{*}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{l+m+mf}{0.00377371}\PYG{o}{*}\PYG{l+m+mf}{88.683228}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+m+mf}{0.07374214}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{o}{+}\PYG{l+m+mf}{0.00377371}\PYG{o}{*}\PYG{l+m+mf}{18.444447}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+m+mf}{0.07374214}\PYG{o}{*}\PYG{l+m+mi}{3}\PYG{o}{+}\PYG{l+m+mf}{0.00377371}\PYG{o}{*}\PYG{l+m+mf}{11.027500}\PYG{p}{)}
+\end{Verbatim}

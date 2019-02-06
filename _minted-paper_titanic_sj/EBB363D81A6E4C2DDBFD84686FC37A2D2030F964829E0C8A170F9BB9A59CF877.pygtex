@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{sklearn.metrics} \PYG{k+kn}{import} \PYG{n}{roc\PYGZus{}curve}\PYG{p}{,} \PYG{n}{auc}
+\PYG{n}{roc\PYGZus{}auc} \PYG{o}{=} \PYG{n}{auc}\PYG{p}{(}\PYG{n}{false\PYGZus{}positive\PYGZus{}rate}\PYG{p}{,} \PYG{n}{true\PYGZus{}positive\PYGZus{}rate}\PYG{p}{)}
+\PYG{n}{roc\PYGZus{}auc}
+\end{Verbatim}

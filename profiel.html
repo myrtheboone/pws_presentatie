@@ -1,0 +1,2603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-23 Sun 20:21 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Predicting survival on the Titanic</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Myrthe Boone" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Predicting survival on the Titanic</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#preparation">1. Preparation</a></li>
+<li><a href="#a-first-look-at-the-dataset">2. A first look at the dataset</a></li>
+<li><a href="#first-figures">3. First figures</a></li>
+<li><a href="#graphic-illustration-of-a-prediction">4. Graphic illustration of a prediction</a></li>
+</ul>
+</div>
+</div>
+<p>
+In this paper we look at the chances of surviving the Titanic using
+python. We predict the chances of an unseen set of data by using
+supervised machinelearning on the known dataset.
+</p>
+
+<p>
+We use information from <a href="http://www.encyclopedia-titanica.org">this
+site</a>.
+</p>
+
+<p>
+This is one of the first drafts to get to know the dataset and to
+experiment with the python and all the packages included.
+</p>
+
+
+<div id="outline-container-orgc198647" class="outline-2">
+<h2 id="preparation"><a id="orgc198647"></a><span class="section-number-2">1</span> Preparation</h2>
+<div class="outline-text-2" id="text-preparation">
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">import</span> seaborn <span style="color: #0000FF;">as</span> sns
+</pre>
+</div>
+
+<p>
+The adventure begins with importing the right packages. The dataset is
+downloaded from <a href="https://www.kaggle.com/c/titanic/data">kaggle site</a>
+as csv\_file. Next the data is read into a dataframe by using pandas'
+pd.read\_csv
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">data</span> = pd.read_csv(<span style="color: #008000;">'titanic.csv'</span>)
+</pre>
+</div>
+
+<p>
+Here we see the head of our dataframe. A couple of questions come to
+mind. Which variables play a role by determining the probability of
+surviving the Titanic. Sex and Cabin are not numeric values. How do we
+convert these to numeric values?
+</p>
+</div>
+</div>
+
+<div id="outline-container-org838572b" class="outline-2">
+<h2 id="a-first-look-at-the-dataset"><a id="org838572b"></a><span class="section-number-2">2</span> A first look at the dataset</h2>
+<div class="outline-text-2" id="text-a-first-look-at-the-dataset">
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data.head()
+</pre>
+</div>
+
+<pre class="example">
+   PassengerId  Survived  Pclass  \
+0            1         0       3   
+1            2         1       1   
+2            3         1       3   
+3            4         1       1   
+4            5         0       3   
+
+                                                Name     Sex   Age  SibSp  \
+0                            Braund, Mr. Owen Harris    male  22.0      1   
+1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1   
+2                             Heikkinen, Miss. Laina  female  26.0      0   
+3       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+4                           Allen, Mr. William Henry    male  35.0      0   
+
+   Parch            Ticket     Fare Cabin Embarked  
+0      0         A/5 21171   7.2500   NaN        S  
+1      0          PC 17599  71.2833   C85        C  
+2      0  STON/O2. 3101282   7.9250   NaN        S  
+3      0            113803  53.1000  C123        S  
+4      0            373450   8.0500   NaN        S  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PassengerId&lt;/th&gt;
+      &lt;th&gt;Survived&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Sex&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Parch&lt;/th&gt;
+      &lt;th&gt;Ticket&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Cabin&lt;/th&gt;
+      &lt;th&gt;Embarked&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Braund, Mr. Owen Harris&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;22.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;A/5 21171&lt;/td&gt;
+      &lt;td&gt;7.2500&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Cumings, Mrs. John Bradley (Florence Briggs Th&#x2026;&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;38.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;PC 17599&lt;/td&gt;
+      &lt;td&gt;71.2833&lt;/td&gt;
+      &lt;td&gt;C85&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Heikkinen, Miss. Laina&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;26.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;STON/O2. 3101282&lt;/td&gt;
+      &lt;td&gt;7.9250&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Futrelle, Mrs. Jacques Heath (Lily May Peel)&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;113803&lt;/td&gt;
+      &lt;td&gt;53.1000&lt;/td&gt;
+      &lt;td&gt;C123&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Allen, Mr. William Henry&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;373450&lt;/td&gt;
+      &lt;td&gt;8.0500&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<p>
+Here are the summary statistics of the dataframe. The mean,
+standarddeviation etc are given in this table.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data.describe()
+</pre>
+</div>
+
+<pre class="example">
+       PassengerId    Survived      Pclass         Age       SibSp  \
+count   891.000000  891.000000  891.000000  714.000000  891.000000   
+mean    446.000000    0.383838    2.308642   29.699118    0.523008   
+std     257.353842    0.486592    0.836071   14.526497    1.102743   
+min       1.000000    0.000000    1.000000    0.420000    0.000000   
+25%     223.500000    0.000000    2.000000   20.125000    0.000000   
+50%     446.000000    0.000000    3.000000   28.000000    0.000000   
+75%     668.500000    1.000000    3.000000   38.000000    1.000000   
+max     891.000000    1.000000    3.000000   80.000000    8.000000   
+
+            Parch        Fare  
+count  891.000000  891.000000  
+mean     0.381594   32.204208  
+std      0.806057   49.693429  
+min      0.000000    0.000000  
+25%      0.000000    7.910400  
+50%      0.000000   14.454200  
+75%      0.000000   31.000000  
+max      6.000000  512.329200  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>714.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+      <td>891.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>446.000000</td>
+      <td>0.383838</td>
+      <td>2.308642</td>
+      <td>29.699118</td>
+      <td>0.523008</td>
+      <td>0.381594</td>
+      <td>32.204208</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>257.353842</td>
+      <td>0.486592</td>
+      <td>0.836071</td>
+      <td>14.526497</td>
+      <td>1.102743</td>
+      <td>0.806057</td>
+      <td>49.693429</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.420000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>223.500000</td>
+      <td>0.000000</td>
+      <td>2.000000</td>
+      <td>20.125000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>7.910400</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>446.000000</td>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>28.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>14.454200</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>668.500000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>38.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>31.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>891.000000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>80.000000</td>
+      <td>8.000000</td>
+      <td>6.000000</td>
+      <td>512.329200</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PassengerId&lt;/th&gt;
+      &lt;th&gt;Survived&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Parch&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;714.000000&lt;/td&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;446.000000&lt;/td&gt;
+      &lt;td&gt;0.383838&lt;/td&gt;
+      &lt;td&gt;2.308642&lt;/td&gt;
+      &lt;td&gt;29.699118&lt;/td&gt;
+      &lt;td&gt;0.523008&lt;/td&gt;
+      &lt;td&gt;0.381594&lt;/td&gt;
+      &lt;td&gt;32.204208&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;257.353842&lt;/td&gt;
+      &lt;td&gt;0.486592&lt;/td&gt;
+      &lt;td&gt;0.836071&lt;/td&gt;
+      &lt;td&gt;14.526497&lt;/td&gt;
+      &lt;td&gt;1.102743&lt;/td&gt;
+      &lt;td&gt;0.806057&lt;/td&gt;
+      &lt;td&gt;49.693429&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;0.420000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;223.500000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;20.125000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;7.910400&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;446.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;3.000000&lt;/td&gt;
+      &lt;td&gt;28.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;14.454200&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;668.500000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;3.000000&lt;/td&gt;
+      &lt;td&gt;38.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;31.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;891.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;3.000000&lt;/td&gt;
+      &lt;td&gt;80.000000&lt;/td&gt;
+      &lt;td&gt;8.000000&lt;/td&gt;
+      &lt;td&gt;6.000000&lt;/td&gt;
+      &lt;td&gt;512.329200&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<p>
+It is possible to search for particular passenger in the dataset. Such
+as passengers who were older than eighty years.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data[data.Age == 80]
+</pre>
+</div>
+
+<pre class="example">
+     PassengerId  Survived  Pclass                                  Name  \
+630          631         1       1  Barkworth, Mr. Algernon Henry Wilson   
+
+      Sex   Age  SibSp  Parch Ticket  Fare Cabin Embarked  
+630  male  80.0      0      0  27042  30.0   A23        S  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>630</th>
+      <td>631</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30.0</td>
+      <td>A23</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PassengerId&lt;/th&gt;
+      &lt;th&gt;Survived&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Sex&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Parch&lt;/th&gt;
+      &lt;th&gt;Ticket&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Cabin&lt;/th&gt;
+      &lt;th&gt;Embarked&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;630&lt;/th&gt;
+      &lt;td&gt;631&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Barkworth, Mr. Algernon Henry Wilson&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;80.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;27042&lt;/td&gt;
+      &lt;td&gt;30.0&lt;/td&gt;
+      &lt;td&gt;A23&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3fbbf8d" class="outline-2">
+<h2 id="first-figures"><a id="org3fbbf8d"></a><span class="section-number-2">3</span> First figures</h2>
+<div class="outline-text-2" id="text-first-figures">
+<p>
+To get a good impression of the dataset and the influence of the
+variables, a couple of diagrams are made using <code>mathplotlib</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(data.Age,data.Survived)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Age'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Survived'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Text(0,0.5,'Survived')
+
+</pre>
+
+
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377maP.png" alt="37cee3acc6d688dc7952727caad1e09e-1377maP.png" />
+</p>
+</div>
+
+
+<p>
+Scatterplots are not always the best choice to illustrate some of the
+variables. There is not much to say about the variance because of the
+fact that a lot of points are close to eachother. A couple of values
+however stand out. We see that a passenger or more passengers travelling
+first class have paid more than 500 pounds for their ticketprice.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(data.Pclass,data.Fare)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Pclass'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Fare'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Text(0,0.5,'Fare')
+
+</pre>
+
+
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377zkV.png" alt="37cee3acc6d688dc7952727caad1e09e-1377zkV.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(data.Fare, data.Survived)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Fare'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Survived'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Text(0,0.5,'Survived')
+
+</pre>
+
+
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377Avb.png" alt="37cee3acc6d688dc7952727caad1e09e-1377Avb.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(data.Fare, data.Age)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.xlabel(<span style="color: #008000;">'Fare'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.ylabel(<span style="color: #008000;">'Age'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Text(0,0.5,'Age')
+
+</pre>
+
+
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377N5h.png" alt="37cee3acc6d688dc7952727caad1e09e-1377N5h.png" />
+</p>
+</div>
+
+<p>
+I was curious to see who had paid more than 400 pounds for their ticket.
+We see that it is easy to make a selection in our dataset using the <code>&gt;</code>
+sign
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   data[data.Fare &gt; 400]
+</pre>
+</div>
+
+<pre class="example">
+     PassengerId  Survived  Pclass                                Name  \
+258          259         1       1                    Ward, Miss. Anna   
+679          680         1       1  Cardeza, Mr. Thomas Drake Martinez   
+737          738         1       1              Lesurer, Mr. Gustave J   
+
+        Sex   Age  SibSp  Parch    Ticket      Fare        Cabin Embarked  
+258  female  35.0      0      0  PC 17755  512.3292          NaN        C  
+679    male  36.0      0      1  PC 17755  512.3292  B51 B53 B55        C  
+737    male  35.0      0      0  PC 17755  512.3292         B101        C  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>258</th>
+      <td>259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Ward, Miss. Anna</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>NaN</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>679</th>
+      <td>680</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cardeza, Mr. Thomas Drake Martinez</td>
+      <td>male</td>
+      <td>36.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B51 B53 B55</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>737</th>
+      <td>738</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Lesurer, Mr. Gustave J</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17755</td>
+      <td>512.3292</td>
+      <td>B101</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PassengerId&lt;/th&gt;
+      &lt;th&gt;Survived&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Sex&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Parch&lt;/th&gt;
+      &lt;th&gt;Ticket&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Cabin&lt;/th&gt;
+      &lt;th&gt;Embarked&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;258&lt;/th&gt;
+      &lt;td&gt;259&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Ward, Miss. Anna&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;PC 17755&lt;/td&gt;
+      &lt;td&gt;512.3292&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;679&lt;/th&gt;
+      &lt;td&gt;680&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Cardeza, Mr. Thomas Drake Martinez&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;36.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;PC 17755&lt;/td&gt;
+      &lt;td&gt;512.3292&lt;/td&gt;
+      &lt;td&gt;B51 B53 B55&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;737&lt;/th&gt;
+      &lt;td&gt;738&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Lesurer, Mr. Gustave J&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;PC 17755&lt;/td&gt;
+      &lt;td&gt;512.3292&lt;/td&gt;
+      &lt;td&gt;B101&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">df_cleaned</span> = data.dropna()
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">df_cleaned</span>[<span style="color: #008000;">'male_dummy'</span>] = (df_cleaned.Sex == <span style="color: #008000;">'male'</span>) <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">nieuwe kolom defini&#235;ren om male te veranderen in een boolean</span>
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">X</span> = df_cleaned[[<span style="color: #008000;">'Age'</span>,<span style="color: #008000;">'male_dummy'</span>, <span style="color: #008000;">'Pclass'</span>, <span style="color: #008000;">'SibSp'</span>, <span style="color: #008000;">'Fare'</span>]]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">y</span> = df_cleaned[[<span style="color: #008000;">'Survived'</span>]]
+</pre>
+</div>
+
+<pre class="example">
+/Users/myrthe/anaconda3/lib/python3.6/site-packages/ipykernel_launcher.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  
+
+
+</pre>
+
+<p>
+Here we see that we clean our dataset for the first time to make it more
+suitable for the packages we will be using. All rows with missing values
+(these are called NaNs, short for Not a Number) are deleted for
+scikit\_learn can't work with NaNs by using <code>.dropna()</code>. There are other
+ways than deleting rows to handle this problem. Replace the NaNs with
+the mean or to interpolate for example. However the choice was made to
+delete these rows. Furthermore we see that the problem of the <code>Sex</code>
+column not being a numeric value is handled. The values in the <code>Sex</code>
+column are changed into a boolean. Males are given a <code>True</code> and the
+females are given a <code>False</code>. Next a couple of variables have added to
+<code>X</code>. <code>Age</code>,=male_dummy=, <code>Pclass</code>, <code>SibSp</code>, <code>Fare</code> are all numeric
+values and therefore easy to use.
+</p>
+
+<p>
+Here we see the cleaned dataframe with the new added column <code>male_dummy</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   df_cleaned.head()
+</pre>
+</div>
+
+<pre class="example">
+    PassengerId  Survived  Pclass  \
+1             2         1       1   
+3             4         1       1   
+6             7         0       1   
+10           11         1       3   
+11           12         1       1   
+
+                                                 Name     Sex   Age  SibSp  \
+1   Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1   
+3        Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+6                             McCarthy, Mr. Timothy J    male  54.0      0   
+10                    Sandstrom, Miss. Marguerite Rut  female   4.0      1   
+11                           Bonnell, Miss. Elizabeth  female  58.0      0   
+
+    Parch    Ticket     Fare Cabin Embarked  male_dummy  
+1       0  PC 17599  71.2833   C85        C       False  
+3       0    113803  53.1000  C123        S       False  
+6       0     17463  51.8625   E46        S        True  
+10      1   PP 9549  16.7000    G6        S       False  
+11      0    113783  26.5500  C103        S       False  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>0</td>
+      <td>1</td>
+      <td>McCarthy, Mr. Timothy J</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17463</td>
+      <td>51.8625</td>
+      <td>E46</td>
+      <td>S</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Sandstrom, Miss. Marguerite Rut</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>PP 9549</td>
+      <td>16.7000</td>
+      <td>G6</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Bonnell, Miss. Elizabeth</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113783</td>
+      <td>26.5500</td>
+      <td>C103</td>
+      <td>S</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PassengerId&lt;/th&gt;
+      &lt;th&gt;Survived&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Sex&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Parch&lt;/th&gt;
+      &lt;th&gt;Ticket&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Cabin&lt;/th&gt;
+      &lt;th&gt;Embarked&lt;/th&gt;
+      &lt;th&gt;male_dummy&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Cumings, Mrs. John Bradley (Florence Briggs Th&#x2026;&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;38.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;PC 17599&lt;/td&gt;
+      &lt;td&gt;71.2833&lt;/td&gt;
+      &lt;td&gt;C85&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Futrelle, Mrs. Jacques Heath (Lily May Peel)&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;113803&lt;/td&gt;
+      &lt;td&gt;53.1000&lt;/td&gt;
+      &lt;td&gt;C123&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;McCarthy, Mr. Timothy J&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;54.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;17463&lt;/td&gt;
+      &lt;td&gt;51.8625&lt;/td&gt;
+      &lt;td&gt;E46&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Sandstrom, Miss. Marguerite Rut&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;PP 9549&lt;/td&gt;
+      &lt;td&gt;16.7000&lt;/td&gt;
+      &lt;td&gt;G6&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Bonnell, Miss. Elizabeth&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;58.0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;113783&lt;/td&gt;
+      &lt;td&gt;26.5500&lt;/td&gt;
+      &lt;td&gt;C103&lt;/td&gt;
+      &lt;td&gt;S&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.linear_model <span style="color: #0000FF;">import</span> LogisticRegression
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">logreg</span> = LogisticRegression()
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   logreg.fit(X, y)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">y_pred</span> = logreg.predict(X)
+</pre>
+</div>
+
+<pre class="example">
+/Users/myrthe/anaconda3/lib/python3.6/site-packages/sklearn/utils/validation.py:578: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+
+
+</pre>
+
+<p>
+Here we initialize the first regression called logistic regression. We
+don't split our dataframe in test and training set yet. For a general
+indication we only use the regressor and fit it on the cleaned dataset.
+After that we predict on the same dataset.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   logreg.coef_
+</pre>
+</div>
+
+<pre class="example">
+array([[-0.01636209, -2.08109476,  0.01318695,  0.2035389 ,  0.00296447]])
+
+</pre>
+
+<p>
+Here we see the outcome of our first try with the logistic regression.
+</p>
+
+<p>
+To interpret these coefficients, let's look at the order of the columns
+in <code>X</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   X.head()
+</pre>
+</div>
+
+<pre class="example">
+     Age  male_dummy  Pclass  SibSp     Fare
+1   38.0       False       1      1  71.2833
+3   35.0       False       1      1  53.1000
+6   54.0        True       1      0  51.8625
+10   4.0       False       3      1  16.7000
+11  58.0       False       1      0  26.5500
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>male_dummy</th>
+      <th>Pclass</th>
+      <th>SibSp</th>
+      <th>Fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>38.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>1</td>
+      <td>71.2833</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>35.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>1</td>
+      <td>53.1000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>54.0</td>
+      <td>True</td>
+      <td>1</td>
+      <td>0</td>
+      <td>51.8625</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>4.0</td>
+      <td>False</td>
+      <td>3</td>
+      <td>1</td>
+      <td>16.7000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>58.0</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>26.5500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;male_dummy&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;SibSp&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;38.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;71.2833&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;53.1000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;54.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;51.8625&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;16.7000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;58.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;26.5500&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5453db7" class="outline-2">
+<h2 id="graphic-illustration-of-a-prediction"><a id="org5453db7"></a><span class="section-number-2">4</span> Graphic illustration of a prediction</h2>
+<div class="outline-text-2" id="text-graphic-illustration-of-a-prediction">
+<p>
+One of the first graphic illustrations of the relation between fare, age
+and survival. The relation is not very clear but we see that the higher
+the fare the more people survived and the higher the age the less people
+survived. However, this figure is not very accurate, because of the fact
+that only three variables were used.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">survived</span> = df_cleaned[df_cleaned.Survived == 1]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">not_survived</span> = df_cleaned[df_cleaned.Survived == 0]
+
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(survived.Fare, survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.scatter(not_survived.Fare, not_survived.Age, marker=<span style="color: #008000;">'^'</span>, label = <span style="color: #008000;">'not survived'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   plt.legend()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377aDo.png" alt="37cee3acc6d688dc7952727caad1e09e-1377aDo.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">P</span> = df_cleaned[[<span style="color: #008000;">'Pclass'</span>, <span style="color: #008000;">'Fare'</span>,<span style="color: #008000;">'Age'</span>,<span style="color: #008000;">'male_dummy'</span>]]
+</pre>
+</div>
+
+<p>
+We select from our df\_cleaned only the columns with numeric values.
+This is convenient for the splitting into train and testsets, for
+scikit\_learn can only work with numbers. Difference between P and X
+here is that X also has the column siblings, whereas P only has four
+columns
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   P.head()
+</pre>
+</div>
+
+<pre class="example">
+    Pclass     Fare   Age  male_dummy
+1        1  71.2833  38.0       False
+3        1  53.1000  35.0       False
+6        1  51.8625  54.0        True
+10       3  16.7000   4.0       False
+11       1  26.5500  58.0       False
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>71.2833</td>
+      <td>38.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>53.1000</td>
+      <td>35.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>51.8625</td>
+      <td>54.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>16.7000</td>
+      <td>4.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>26.5500</td>
+      <td>58.0</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;male_dummy&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;71.2833&lt;/td&gt;
+      &lt;td&gt;38.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;53.1000&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;51.8625&lt;/td&gt;
+      &lt;td&gt;54.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;16.7000&lt;/td&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;26.5500&lt;/td&gt;
+      &lt;td&gt;58.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.linear_model <span style="color: #0000FF;">import</span> LogisticRegression
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">logreg</span> = LogisticRegression(fit_intercept=<span style="color: #D0372D;">True</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   logreg.fit(P, y)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">y_pred</span> = logreg.predict(P)
+</pre>
+</div>
+
+<pre class="example">
+/Users/myrthe/anaconda3/lib/python3.6/site-packages/sklearn/utils/validation.py:578: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+
+
+</pre>
+
+<p>
+We fit our regressor on our dataset and predict on that same dataset.
+Once again without splitting into train and testset. Just to get a
+general idea about the values of the coeffecients.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   logreg.coef_
+</pre>
+</div>
+
+<pre class="example">
+array([[ 0.00917324,  0.00337838, -0.01693475, -2.07643966]])
+
+</pre>
+
+<p>
+One could interpret the found coeffecients as follows: The coeffecients
+for class and fare are positive, which may indicate that the higher the
+class and price paid for a ticket, the higher the chance of surviving
+the Titanic. When we look at age and sex we see the exact opposite for
+the coeffecients are negative. The higher the age the lower your chances
+and if you were a man on board of the titanic your chances of surviving
+were lower.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.neighbors <span style="color: #0000FF;">import</span> KNeighborsClassifier
+</pre>
+</div>
+
+<p>
+Another regression is used in the following lines. (explanation K
+nearest neighbours)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">knn</span> = KNeighborsClassifier(n_neighbors=6)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   knn.fit(P,y)
+</pre>
+</div>
+
+<pre class="example">
+/Users/myrthe/anaconda3/lib/python3.6/site-packages/ipykernel_launcher.py:1: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  """Entry point for launching an IPython kernel.
+
+
+</pre>
+
+<pre class="example">
+KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=1, n_neighbors=6, p=2,
+           weights='uniform')
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">prediction</span> = knn.predict(P)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   P.shape
+</pre>
+</div>
+
+<pre class="example">
+(183, 4)
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">print</span>(<span style="color: #008000;">'Prediction{}'</span>.<span style="color: #006FE0;">format</span>(prediction))
+</pre>
+</div>
+
+<pre class="example">
+Prediction[1 0 0 1 0 1 1 1 1 0 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 0 1 1 1 1
+ 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 0 1 1 1 0 0 1 1 1 1 1 0 1 1 1 0 1 1
+ 0 1 0 0 0 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 1 1 0 0 0 1 1 1 1 1 0 0 1 1 0 1 1
+ 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 1 1 1 0 1 1 0 0 0 1 1 1 1 1 1 1 0 1 1 1]
+
+
+</pre>
+
+<p>
+Here we see one of our first predictions. 1 indicates the passenger has
+survived and 0 indicates that the passenger has died
+</p>
+
+<p>
+Elke persoon heeft andere karakteristieken, dus dit zijn voorspellingen
+per persoon. Dus er komt een kans uit en dan kijkt de regressor, boven
+of onder 0.5
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   knn.score(P,y)
+</pre>
+</div>
+
+<pre class="example">
+0.7486338797814208
+
+</pre>
+
+<p>
+This score gives a number between 0 and 1 and gives an impression of the
+accuracy of our model. However, this accuracy is not an indication of
+how well our model performs (explanation spam mail etc.)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   P.head()
+</pre>
+</div>
+
+<pre class="example">
+    Pclass     Fare   Age  male_dummy
+1        1  71.2833  38.0       False
+3        1  53.1000  35.0       False
+6        1  51.8625  54.0        True
+10       3  16.7000   4.0       False
+11       1  26.5500  58.0       False
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>71.2833</td>
+      <td>38.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>53.1000</td>
+      <td>35.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>51.8625</td>
+      <td>54.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>16.7000</td>
+      <td>4.0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>26.5500</td>
+      <td>58.0</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;male_dummy&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;71.2833&lt;/td&gt;
+      &lt;td&gt;38.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;53.1000&lt;/td&gt;
+      &lt;td&gt;35.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;51.8625&lt;/td&gt;
+      &lt;td&gt;54.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;16.7000&lt;/td&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;26.5500&lt;/td&gt;
+      &lt;td&gt;58.0&lt;/td&gt;
+      &lt;td&gt;False&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">q</span> = df_cleaned.Survived
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   q.head()
+</pre>
+</div>
+
+<pre class="example">
+1     1
+3     1
+6     0
+10    1
+11    1
+Name: Survived, dtype: int64
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.linear_model <span style="color: #0000FF;">import</span> LogisticRegression
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> train_test_split
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">logreg</span> = LogisticRegression()
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">P_train</span>, <span style="color: #BA36A5;">P_test</span>, <span style="color: #BA36A5;">q_train</span>, <span style="color: #BA36A5;">q_test</span> = train_test_split(P,q, test_size=0.2, random_state=42)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   logreg.fit(P_train, q_train)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">q_pred</span> = logreg.predict(P_test)
+</pre>
+</div>
+
+<p>
+Here we see the dataset being split into a test and a training set. The
+arguments give us information about how much of our data we use as a
+test\_set and how much of our data we use as a training\_set. This and
+the parameters will be varied to see which parameter gives the best
+prediction. We fit our regressor on the training\_set and predict on the
+test\_set.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">print</span>(<span style="color: #008000;">'Prediction {}'</span>.<span style="color: #006FE0;">format</span>(q_pred))
+</pre>
+</div>
+
+<pre class="example">
+Prediction [1 1 1 0 0 0 1 1 1 0 0 1 0 1 0 0 1 0 0 1 1 1 0 1 0 1 1 0 1 1 1 1 0 1 1 1 1]
+
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   P_train.head()
+</pre>
+</div>
+
+<pre class="example">
+     Pclass     Fare   Age  male_dummy
+331       1  28.5000  45.5        True
+336       1  66.6000  29.0        True
+193       2  26.0000   3.0        True
+75        3   7.6500  25.0        True
+248       1  52.5542  37.0        True
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Fare</th>
+      <th>Age</th>
+      <th>male_dummy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>331</th>
+      <td>1</td>
+      <td>28.5000</td>
+      <td>45.5</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>1</td>
+      <td>66.6000</td>
+      <td>29.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>2</td>
+      <td>26.0000</td>
+      <td>3.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>3</td>
+      <td>7.6500</td>
+      <td>25.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>1</td>
+      <td>52.5542</td>
+      <td>37.0</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="HTML">
+<p>
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+	vertical-align: middle;
+    }
+</p>
+
+<p>
+.dataframe tbody tr th {
+    vertical-align: top;
+}
+</p>
+
+<p>
+    .dataframe thead th {
+	text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Pclass&lt;/th&gt;
+      &lt;th&gt;Fare&lt;/th&gt;
+      &lt;th&gt;Age&lt;/th&gt;
+      &lt;th&gt;male_dummy&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;331&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;28.5000&lt;/td&gt;
+      &lt;td&gt;45.5&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;336&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;66.6000&lt;/td&gt;
+      &lt;td&gt;29.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;193&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;26.0000&lt;/td&gt;
+      &lt;td&gt;3.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;7.6500&lt;/td&gt;
+      &lt;td&gt;25.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;248&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;52.5542&lt;/td&gt;
+      &lt;td&gt;37.0&lt;/td&gt;
+      &lt;td&gt;True&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</p>
+
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.metrics <span style="color: #0000FF;">import</span> roc_auc_score
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">q_pred_prob</span> = logreg.predict_proba(P_test)[:,1]
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   roc_auc_score(q_test, q_pred_prob)
+</pre>
+</div>
+
+<pre class="example">
+0.8416149068322981
+
+</pre>
+
+<p>
+When the test\_size is changed from 0.4 to 0.2 , the score increases
+with more than 10%. This makes sense because a smaller test\_set gives a
+higher accuracy score.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">from</span> sklearn.model_selection <span style="color: #0000FF;">import</span> cross_val_score
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">cv_scores</span> = cross_val_score(logreg, P, q, cv=5, scoring=<span style="color: #008000;">'roc_auc'</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #0000FF;">print</span>(cv_scores)
+</pre>
+</div>
+
+<pre class="example">
+[0.86666667 0.80333333 0.74666667 0.73263889 0.92361111]
+
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #006FE0;">len</span>(P)
+</pre>
+</div>
+
+<pre class="example">
+183
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #006FE0;">len</span>(prediction)
+</pre>
+</div>
+
+<pre class="example">
+183
+
+</pre>
+
+<p>
+Seaborn countplot option? plt.figure()
+</p>
+
+<p>
+sns.countplot(x='education', hue='party', data=df, palette='RdBu')
+</p>
+
+<p>
+plt.xticks([0,1], ['No', 'Yes']) plt.show()
+</p>
+
+<p>
+Given all the variables (age, gender, place of boarding etc.), you make
+a linear function (a1x1+a2x2+anxn+b). Computer puts this in the logistic
+function for x. For a particular x, you get a value between zero and
+one. This is your chance of survival. Boundary is 0,5. X &lt; 0,5 passenger
+didn't survive. Computer tries to plot a logistic function where R2 is
+as small as possible. This is called the fitting process. The logistic
+function has to be as close to the datapoints as possible.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.countplot?
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"Pclass"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=data, palette=<span style="color: #008000;">"Set3"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377nNu.png" alt="37cee3acc6d688dc7952727caad1e09e-1377nNu.png" />
+</p>
+</div>
+
+<p>
+More people in class 3 than in class 1, makes it difficult to compare
+and draw a conclusion. Percentage? In general, we cannot draw a
+conclusion regarding survival probabilities because there were more
+people in class 3 than in one 1. In the third class, more passengers
+died than survived. In the first class, more people survived than
+perished. We cannot compare the results from the first class to the
+third class. The plot only shows us one variable. This is another reason
+why we cannot be sure about the influence of class on the chance of
+survival. <i>Simpson paradox</i>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"Age"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=data, palette=<span style="color: #008000;">"Set1"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-13770X0.png" alt="37cee3acc6d688dc7952727caad1e09e-13770X0.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"Fare"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=data)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377mhD.png" alt="37cee3acc6d688dc7952727caad1e09e-1377mhD.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   sns.<span style="color: #006FE0;">set</span>(style=<span style="color: #008000;">"darkgrid"</span>)
+<span style="color: #9B9B9B; background-color: #EDEDED;"> </span>   <span style="color: #BA36A5;">ax</span> = sns.countplot(x=<span style="color: #008000;">"male_dummy"</span>,hue=<span style="color: #008000;">"Survived"</span>, data=df_cleaned, palette=<span style="color: #008000;">"Set2"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="obipy-resources/37cee3acc6d688dc7952727caad1e09e-1377zrJ.png" alt="37cee3acc6d688dc7952727caad1e09e-1377zrJ.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Myrthe Boone</p>
+<p class="date">Created: 2018-09-23 Sun 20:21</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{cv\PYGZus{}scores} \PYG{o}{=} \PYG{n}{cross\PYGZus{}val\PYGZus{}score}\PYG{p}{(}\PYG{n}{knn}\PYG{p}{,} \PYG{n}{P\PYGZus{}titanic}\PYG{p}{,} \PYG{n}{q\PYGZus{}titanic}\PYG{p}{,} \PYG{n}{cv}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{scoring}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}roc\PYGZus{}auc\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{cv\PYGZus{}scores}\PYG{p}{)}
+\end{Verbatim}

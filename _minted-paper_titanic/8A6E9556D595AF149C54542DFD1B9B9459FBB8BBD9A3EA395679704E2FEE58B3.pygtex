@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{sns}\PYG{o}{.}\PYG{n}{set}\PYG{p}{(}\PYG{n}{style}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}darkgrid\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{ax} \PYG{o}{=} \PYG{n}{sns}\PYG{o}{.}\PYG{n}{countplot}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Fare\PYGZdq{}}\PYG{p}{,}\PYG{n}{hue}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Survived\PYGZdq{}}\PYG{p}{,} \PYG{n}{data}\PYG{o}{=}\PYG{n}{data}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k+kn}{from} \PYG{n+nn}{sklearn.linear\PYGZus{}model} \PYG{k+kn}{import} \PYG{n}{LogisticRegression}
+    \PYG{n}{logreg} \PYG{o}{=} \PYG{n}{LogisticRegression}\PYG{p}{(}\PYG{n}{fit\PYGZus{}intercept}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{P}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+    \PYG{n}{y\PYGZus{}pred} \PYG{o}{=} \PYG{n}{logreg}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{P}\PYG{p}{)}
+\end{Verbatim}
